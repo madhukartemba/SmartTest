@@ -1,4 +1,4 @@
-package com.urjanet.smarttest;
+package com.madhukartemba.smarttest.entity;
 
 import java.util.ArrayList;
 import java.util.List;

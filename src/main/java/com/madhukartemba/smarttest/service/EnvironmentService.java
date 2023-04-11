@@ -1,4 +1,4 @@
-package com.urjanet.smarttest;
+package com.madhukartemba.smarttest.service;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,6 +31,15 @@ public class EnvironmentService {
             "integrationTest",
             "contractTest");
 
+    public static void init() {
+        PrintService.formatPrint("Input project directory: " + PROJECT_DIR);
+        findOperatingSystem();
+        findSystemDirectory();
+        findProjectDirectory();
+        findProjectNames();
+        PrintService.formatPrint("\nTask Priority (decreasing): " + TASK_PRIORITY.toString());
+    }
+
     public static void init(String PROJECT_DIR) {
         EnvironmentService.PROJECT_DIR = PROJECT_DIR;
         PrintService.formatPrint("Input project directory: " + PROJECT_DIR);
@@ -59,15 +68,12 @@ public class EnvironmentService {
         return SYSTEM_DIR;
     }
 
-    public static String findProjectDirectory(String PROJECT_NAME) {
+    public static String findProjectDirectory() {
         if (PROJECT_DIR == null) {
-            String systemDir = findSystemDirectory();
-            int index = systemDir.indexOf(PROJECT_NAME);
-            if (index == -1) {
-                throw new RuntimeException(
-                        "Cannot determine the project directory as the given project name does not exist in system directory.");
+            PROJECT_DIR = findSystemDirectory();
+            if(!PROJECT_DIR.endsWith("/")) {
+                PROJECT_DIR += "/";
             }
-            PROJECT_DIR = systemDir.substring(0, index + PROJECT_NAME.length()) + "/";
             PrintService.formatPrint("Project directory: " + PROJECT_DIR);
         }
 

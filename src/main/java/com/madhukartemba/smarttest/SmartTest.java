@@ -1,4 +1,8 @@
-package com.urjanet.smarttest;
+package com.madhukartemba.smarttest;
+
+import com.madhukartemba.smarttest.entity.Command;
+import com.madhukartemba.smarttest.service.*;
+import com.madhukartemba.smarttest.utils.TestSieve;
 
 import java.awt.Color;
 import java.util.List;
@@ -13,7 +17,7 @@ public class SmartTest {
         printLogo();
 
         // Init the environment variables.
-        EnvironmentService.init(PROJECT_DIR);
+        EnvironmentService.init();
 
         // Get the list of changed files from Git
         GitService gitService = new GitService();
@@ -27,7 +31,7 @@ public class SmartTest {
         FileService fileService = new FileService();
         List<String> testFiles = fileService.getTestFiles(changedFiles);
 
-        // Convert the list of files to commands using TestSeive
+        // Convert the list of files to commands using TestSieve
         TestSieve testSieve = new TestSieve();
         List<Command> commands = testSieve.groupify(testFiles);
 

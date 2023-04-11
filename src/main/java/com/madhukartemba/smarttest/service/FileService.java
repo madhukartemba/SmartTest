@@ -1,4 +1,4 @@
-package com.urjanet.smarttest;
+package com.madhukartemba.smarttest.service;
 
 import java.awt.Color;
 import java.io.BufferedReader;

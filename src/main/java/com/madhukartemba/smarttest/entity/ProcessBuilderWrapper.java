@@ -1,4 +1,4 @@
-package com.urjanet.smarttest;
+package com.madhukartemba.smarttest.entity;
 
 public class ProcessBuilderWrapper {
     private ProcessBuilder processBuilder;
