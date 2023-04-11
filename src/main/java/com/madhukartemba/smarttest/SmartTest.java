@@ -1,15 +1,22 @@
 package com.madhukartemba.smarttest;
 
 import com.madhukartemba.smarttest.entity.Command;
+import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.service.*;
+import com.madhukartemba.smarttest.util.ArgsParser;
 import com.madhukartemba.smarttest.util.TestSieve;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Map;
 
 public class SmartTest {
 
     public static void main(String[] args) throws Exception {
+
+        // Set the user provided paramters
+        Map<String, String> argsMap = ArgsParser.parseArgs(args);
+        ParametersService.setParameters(argsMap);
 
         // Print the logo.
         printLogo();
@@ -51,7 +58,11 @@ public class SmartTest {
 
         // Execute the processes using ProcessService
         ProcessService processService = new ProcessService();
-        processService.parallelExecute(commands);
+        if (Parameters.PARALLEL_EXECUTE) {
+            processService.parallelExecute(commands);
+        } else {
+            processService.execute(commands);
+        }
 
     }
 

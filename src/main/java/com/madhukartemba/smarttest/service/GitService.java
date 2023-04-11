@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.madhukartemba.smarttest.SmartTest;
+import com.madhukartemba.smarttest.entity.Parameters;
 
 public class GitService {
     private final int GIT_OUTPUT_LINE_COUNT = 20;
@@ -117,7 +118,7 @@ public class GitService {
 
     public boolean isOfficialMerge(String line) {
 
-        Pattern pattern = Pattern.compile("Merge pull request #\\d+ from Urjanet\\/");
+        Pattern pattern = Pattern.compile(Parameters.OFFICIAL_MERGE_REQUEST_PATTERN);
         Matcher matcher = pattern.matcher(line);
 
         return matcher.find();

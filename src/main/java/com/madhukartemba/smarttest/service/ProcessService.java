@@ -1,6 +1,7 @@
 package com.madhukartemba.smarttest.service;
 
 import com.madhukartemba.smarttest.entity.Command;
+import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.entity.ProcessBuilderWrapper;
 import com.madhukartemba.smarttest.util.CommandBuilder;
 
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProcessService {
-    private static final int MAX_PARALLEL_PROCESSES = 4;
     private static final String OUTPUT_DIR_NAME = "SmartTestOutput/";
     private static final String OUTPUT_FILE_NAME = "smartTestOutput.txt";
     private String PROJECT_DIR;
@@ -56,7 +56,7 @@ public class ProcessService {
 
         runCommandsParallel(finalCommands, outputStreams, processNames);
 
-        createAndPopulateOutputFile(outputStreams, false);
+        createAndPopulateOutputFile(outputStreams, Parameters.DELETE_CHILD_FILES);
     }
 
     public void runCommandsParallel(List<String> commands, List<String> outputStreams, List<String> processNames)
@@ -167,7 +167,7 @@ public class ProcessService {
 
     private static List<List<ProcessBuilderWrapper>> splitProcessBuilderWrappers(
             List<ProcessBuilderWrapper> processBuilderWrappers) {
-        int sublistSize = MAX_PARALLEL_PROCESSES;
+        int sublistSize = Parameters.MAX_PARALLEL_THREADS;
         List<List<ProcessBuilderWrapper>> splitProcessBuilderWrappers = new ArrayList<>();
 
         for (int i = 0; i < processBuilderWrappers.size(); i += sublistSize) {

@@ -2,10 +2,12 @@ package com.madhukartemba.smarttest.service;
 
 import java.awt.Color;
 
+import com.madhukartemba.smarttest.entity.Parameters;
+
 public class PrintService {
 
     private static final String RESET = "\033[0m";
-    private static final Color DEFAULT_COLOR = Color.BLUE;
+    private static final Color DEFAULT_COLOR = Parameters.DEFAULT_COLOR;
     private static final String DEFAULT_COLOR_CODE = getColorCode(DEFAULT_COLOR);
     private static final String SEPERATOR = ":";
 
