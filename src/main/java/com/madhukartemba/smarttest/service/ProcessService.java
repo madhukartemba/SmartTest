@@ -75,6 +75,8 @@ public class ProcessService {
 
         totalCount = totalProcessBuilders.size();
 
+        PrintService.formatPrint("\nTotal number of processes: " + totalCount + "\n");
+
         runProcessBuilders(totalProcessBuilders);
 
         executionComplete = true;
