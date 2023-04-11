@@ -96,7 +96,7 @@ public class ExplorerService {
             }
         }
 
-        PrintService.println("Started to explore...\n");
+        PrintService.println("\nStarted to explore...\n", Color.GREEN);
         PrintService.print("ROOT", Color.GREEN);
 
         int prevVisitedSize = 0;
