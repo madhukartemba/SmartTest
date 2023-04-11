@@ -104,9 +104,9 @@ public class FileService {
         }
 
         PrintService.formatPrint(
-                "\nTotal potentially affected files: " + (completeRunRequired ? "ALL" : visitedFiles.size()));
+                "\nTotal potentially affected files: " + visitedFiles.size());
         PrintService.formatPrint(
-                "Total potentially affected test files: " + (completeRunRequired ? "ALL" : affectedTestFiles));
+                "Total potentially affected test files: " + affectedTestFiles);
     }
 
     public String getFullClassName(String fileName) {
