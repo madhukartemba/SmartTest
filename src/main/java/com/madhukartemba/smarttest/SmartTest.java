@@ -51,13 +51,18 @@ public class SmartTest {
             changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
         }
 
-        if (gitChangedFiles == null || gitChangedFiles.isEmpty()) {
+        if (explorerService.isCompleteRunRequired()) {
+            changedFiles = explorerService.exploreAll();
+        }
+
+        if (changedFiles == null || changedFiles.isEmpty()) {
             exitWithCode("The list of changed files found by explorer is empty!", Color.YELLOW, 0);
         }
 
         // Extract the test files from the set of changed files.
         FileService fileService = new FileService();
-        List<String> testFiles = fileService.getTestFiles(changedFiles);
+        List<String> testFiles = explorerService.isCompleteRunRequired() ? changedFiles
+                : fileService.getTestFiles(changedFiles);
 
         if (testFiles == null || testFiles.isEmpty()) {
             exitWithCode("There are no affected test files!", Color.GREEN, 0);
@@ -85,6 +90,9 @@ public class SmartTest {
         processService.printResults(timer);
 
         printEndMessage();
+
+        // Return the exit code.
+        System.exit(processService.isBuildSuccessful() ? 0 : 1);
 
     }
 

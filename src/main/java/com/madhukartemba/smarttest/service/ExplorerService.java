@@ -11,12 +11,14 @@ import java.util.stream.Collectors;
 public class ExplorerService {
 
     private FileService fileService;
+    private boolean completeRunRequired = false;
 
     public ExplorerService() {
         fileService = new FileService();
     }
 
     public List<String> exploreViaClassname(List<String> inputFiles) throws Exception {
+        completeRunRequired = false;
 
         PrintService.boldPrintln("\n\nStarting to explore affected files via class name...\n");
         PrintService.formatPrint("Number of changed files: " + inputFiles.size());
@@ -74,13 +76,15 @@ public class ExplorerService {
         PrintService.print(" END", Color.GREEN);
 
         PrintService.println("\n\nExploration complete!", Color.GREEN);
-        fileService.analyseFiles(visitedFiles);
+        completeRunRequired = fileService.analyseFiles(visitedFiles);
 
         return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
 
     }
 
     public List<String> exploreViaPackageName(List<String> inputFiles) throws Exception {
+
+        completeRunRequired = false;
 
         PrintService.boldPrintln("\n\nStarting to explore affected files via package name...\n");
         PrintService.formatPrint("Number of changed files: " + inputFiles.size());
@@ -138,9 +142,20 @@ public class ExplorerService {
         PrintService.print(" -->");
         PrintService.print(" END", Color.GREEN);
 
-        PrintService.println("\n\nExploration complete!");
-        fileService.analyseFiles(visitedFiles);
+        PrintService.println("\n\nExploration complete!", Color.GREEN);
+        completeRunRequired = fileService.analyseFiles(visitedFiles);
 
         return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
+    }
+
+    public List<String> exploreAll() throws Exception {
+        PrintService.println("\nExploring all files...", Color.GREEN);
+        List<String> output = fileService.findAllTestFiles();
+        PrintService.println("Exploration complete!", Color.GREEN);
+        return output;
+    }
+
+    public boolean isCompleteRunRequired() {
+        return completeRunRequired;
     }
 }

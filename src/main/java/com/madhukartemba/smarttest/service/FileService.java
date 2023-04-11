@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,6 +17,9 @@ import java.util.stream.Collectors;
 public class FileService {
     private String PROJECT_DIR;
     private ProcessBuilder processBuilder;
+    private boolean completeRunRequired = false;
+
+    private static List<String> ignoredFiles = Arrays.asList(".gitignore", "README.md");
 
     public FileService() {
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
@@ -60,17 +64,39 @@ public class FileService {
         return inputFiles.stream().filter(filePath -> isTestFile(filePath)).collect(Collectors.toList());
     }
 
-    public void analyseFiles(Set<String> visitedFiles) {
+    public boolean analyseFiles(Set<String> visitedFiles) {
+
+        completeRunRequired = false;
+
         int affectedTestFiles = 0;
+        int affectedNonJavaFiles = 0;
 
         for (String visitedFile : visitedFiles) {
             if (isTestFile(visitedFile)) {
                 affectedTestFiles++;
+            } else if (!isJavaFile(visitedFile) && !isIgnored(visitedFile)) {
+                affectedNonJavaFiles++;
             }
         }
 
-        PrintService.formatPrint("\nTotal potentially affected files: " + visitedFiles.size());
-        PrintService.formatPrint("Total potentially affected test files: " + affectedTestFiles);
+        if (affectedNonJavaFiles > 0) {
+            if (affectedTestFiles == 0) {
+                PrintService.println("Only the non-java files have been changed, will run all the tests.",
+                        Color.YELLOW);
+                completeRunRequired = true;
+            } else {
+                PrintService.print(
+                        "Found " + affectedNonJavaFiles + " affected non-java files, a full test run is recommended.",
+                        Color.YELLOW);
+            }
+        }
+
+        PrintService.formatPrint(
+                "\nTotal potentially affected files: " + (completeRunRequired ? "ALL" : visitedFiles.size()));
+        PrintService.formatPrint(
+                "Total potentially affected test files: " + (completeRunRequired ? "ALL" : affectedTestFiles));
+
+        return completeRunRequired;
     }
 
     public String getFullClassName(String fileName) {
@@ -173,6 +199,27 @@ public class FileService {
         return res;
     }
 
+    public List<String> findAllTestFiles() throws Exception {
+        List<String> res = new ArrayList<>();
+
+        processBuilder.command("grep", "-r", "-l", "-w", "--exclude-from=.gitignore", "@Test", ".");
+        Process grepProcess = processBuilder.start();
+        BufferedReader grepOutput = new BufferedReader(new InputStreamReader(grepProcess.getInputStream()));
+
+        String referencedFile = grepOutput.readLine();
+
+        // Add test files that reference changed file to list
+        while (referencedFile != null) {
+            if (isTestFile(referencedFile)) {
+                referencedFile = referencedFile.substring(2);
+                res.add(referencedFile);
+            }
+            referencedFile = grepOutput.readLine();
+        }
+
+        return res;
+    }
+
     public void writeClassNamesToFile(String fileName, Set<String> classNameSet) {
         fileName = PROJECT_DIR + fileName;
         File file = new File(fileName);
@@ -203,5 +250,19 @@ public class FileService {
             PrintService.println("Error reading file, " + e.getMessage(), Color.RED);
         }
         return output;
+    }
+
+    public boolean isIgnored(String filePath) {
+        for (String ignoredFile : ignoredFiles) {
+            if (filePath.endsWith(ignoredFile)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isCompleteRunRequired() {
+        return completeRunRequired;
     }
 }
