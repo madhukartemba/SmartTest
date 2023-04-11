@@ -199,14 +199,14 @@ public class ProcessService {
             PrintService.print("Process ");
             if (processBuilderWrapper.isSuccessful()) {
                 successfulCount++;
-                PrintService.formatPrint(
+                PrintService.boldFormatPrint(
                         processBuilderWrapper.getName() +
                                 ": BUILD SUCCESSFUL",
                         Color.WHITE,
                         Color.GREEN);
             } else {
                 unsuccessfulCount++;
-                PrintService.formatPrint(processBuilderWrapper.getName() +
+                PrintService.boldFormatPrint(processBuilderWrapper.getName() +
                         ": BUILD FAILED WITH EXIT CODE " + processBuilderWrapper.getExitCode(),
                         Color.WHITE,
                         Color.RED);
@@ -242,9 +242,9 @@ public class ProcessService {
         PrintService.println("\nNumber of successful processes: " + getSuccessfulCount(), Color.GREEN);
         PrintService.println("Number of unsuccessful processes: " + getUnsuccessfulCount(), Color.RED);
         if (isBuildSuccessful()) {
-            PrintService.println("\n\nBUILD SUCCESSFUL\n\n", Color.GREEN);
+            PrintService.boldPrintln("\n\nBUILD SUCCESSFUL\n\n", Color.GREEN);
         } else {
-            PrintService.println("\n\nBUILD FAILED\n\n", Color.RED);
+            PrintService.boldPrintln("\n\nBUILD FAILED\n\n", Color.RED);
         }
     }
 

@@ -7,6 +7,7 @@ import com.madhukartemba.smarttest.entity.Parameters;
 public class PrintService {
 
     private static final String RESET = "\033[0m";
+    private static final String BOLD = "\033[1m";
     private static final Color DEFAULT_COLOR = Parameters.DEFAULT_COLOR;
     private static final String DEFAULT_COLOR_CODE = getColorCode(DEFAULT_COLOR);
     private static final String SEPERATOR = ":";
@@ -42,6 +43,41 @@ public class PrintService {
         print(strs[0] + SEPERATOR, color1);
         for (int i = 1; i < strs.length; i++) {
             print(strs[i], color2);
+        }
+        System.out.println();
+    }
+
+    public static void boldPrint(String str, Color color) {
+        String colorCode = getColorCode(color);
+        System.out.print(BOLD + colorCode + str + RESET);
+    }
+
+    public static void boldPrintln(String str, Color color) {
+        String colorCode = getColorCode(color);
+        System.out.println(BOLD + colorCode + str + RESET);
+    }
+
+    public static void boldPrint(String str) {
+        System.out.print(BOLD + DEFAULT_COLOR_CODE + str + RESET);
+    }
+
+    public static void boldPrintln(String str) {
+        System.out.println(BOLD + DEFAULT_COLOR_CODE + str + RESET);
+    }
+
+    public static void boldFormatPrint(String str) {
+        formatPrint(str, DEFAULT_COLOR, Color.YELLOW);
+    }
+
+    public static void boldFormatPrint(String str, Color color2) {
+        formatPrint(str, DEFAULT_COLOR, color2);
+    }
+
+    public static void boldFormatPrint(String str, Color color1, Color color2) {
+        String strs[] = str.split(SEPERATOR);
+        boldPrint(strs[0] + SEPERATOR, color1);
+        for (int i = 1; i < strs.length; i++) {
+            boldPrint(strs[i], color2);
         }
         System.out.println();
     }
