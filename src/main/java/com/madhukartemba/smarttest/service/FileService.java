@@ -81,12 +81,12 @@ public class FileService {
 
         if (affectedNonJavaFiles > 0) {
             if (affectedFiles == 0) {
-                PrintService.println("Only the non-java files have been changed, will run all the tests.",
+                PrintService.println("\nOnly the non-java files have been changed, will run all the tests.",
                         Color.YELLOW);
                 completeRunRequired = true;
             } else {
                 PrintService.print(
-                        "Found " + affectedNonJavaFiles + " affected non-java file"
+                        "\nFound " + affectedNonJavaFiles + " affected non-java file"
                                 + (affectedNonJavaFiles == 1 ? "" : "s")
                                 + ", a full test run is recommended.",
                         Color.YELLOW);
