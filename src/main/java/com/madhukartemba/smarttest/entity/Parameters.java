@@ -14,6 +14,7 @@ public class Parameters {
             "gradleCommand",
             "gradleOption",
             "maxParallelThreads",
+            "exploreViaPackage",
             "deleteChildFiles",
             "officalMergeRequestPattern");
 
@@ -22,6 +23,7 @@ public class Parameters {
     public static String GRADLE_OPTION_NAME = "--tests";
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
     public static int MAX_PARALLEL_THREADS = 3;
+    public static boolean EXPLORE_VIA_PACKAGE = false;
     public static boolean PARALLEL_EXECUTE = true;
     public static boolean DELETE_CHILD_FILES = false;
 
@@ -32,9 +34,9 @@ public class Parameters {
         PrintService.println("gradleCommand: " + GRADLE_COMMAND_NAME);
         PrintService.println("gradleOption: " + GRADLE_OPTION_NAME);
         PrintService.println("maxParallelThreads: " + MAX_PARALLEL_THREADS);
+        PrintService.println("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
         PrintService.println("deleteChildFiles: " + DELETE_CHILD_FILES);
         PrintService.println("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
-        PrintService.println("\n");
     }
 
 }

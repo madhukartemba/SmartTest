@@ -14,6 +14,11 @@ public class ParametersService {
             Parameters.MAX_PARALLEL_THREADS = maxParallelThreads;
         }
 
+        if (argsMap.containsKey("exploreViaPackage")) {
+            boolean exploreViaPackage = argsMap.get("exploreViaPackage").equals("true");
+            Parameters.EXPLORE_VIA_PACKAGE = exploreViaPackage;
+        }
+
         if (argsMap.containsKey("parallelExecute")) {
             boolean parallelExecute = argsMap.get("parallelExecute").equals("true");
             Parameters.PARALLEL_EXECUTE = parallelExecute;

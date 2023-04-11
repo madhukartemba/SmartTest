@@ -37,7 +37,14 @@ public class SmartTest {
 
         // Pass the list of changed files to ExplorerService.
         ExplorerService explorerService = new ExplorerService();
-        List<String> changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
+
+        List<String> changedFiles = null;
+
+        if (Parameters.EXPLORE_VIA_PACKAGE) {
+            changedFiles = explorerService.exploreViaPackageName(gitChangedFiles);
+        } else {
+            changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
+        }
 
         if (gitChangedFiles == null || gitChangedFiles.isEmpty()) {
             exitWithCode("The list of changed files found by explorer is empty!", Color.YELLOW, 0);
