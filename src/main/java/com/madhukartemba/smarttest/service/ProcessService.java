@@ -15,6 +15,10 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 public class ProcessService {
@@ -189,34 +193,47 @@ public class ProcessService {
     }
 
     private void runProcessBuilders(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
-        // Start each process in parallel
+        // Start each process in parallel.
         for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
             processBuilderWrapper.start();
         }
 
-        // Wait for all processes to complete
-        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
-            processBuilderWrapper.waitForCompletion();
-        }
+        // Wait for all processes to complete.
+        waitForProcesses(processBuilderWrappers);
 
-        // Print the command result
+        // Store the result.
         for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
-            PrintService.print("Process ");
             if (processBuilderWrapper.isSuccessful()) {
                 successfulCount++;
-                PrintService.boldFormatPrint(
-                        processBuilderWrapper.getName() +
-                                ": BUILD SUCCESSFUL",
-                        Color.WHITE,
-                        Color.decode("#23D18B"));
             } else {
                 unsuccessfulCount++;
-                PrintService.boldFormatPrint(processBuilderWrapper.getName() +
-                        ": BUILD FAILED WITH EXIT CODE " + processBuilderWrapper.getExitCode(),
-                        Color.WHITE,
-                        Color.RED);
             }
         }
+    }
+
+    public static void waitForProcesses(List<ProcessBuilderWrapper> processBuilderWrappers)
+            throws InterruptedException {
+        ExecutorService executor = Executors.newFixedThreadPool(processBuilderWrappers.size());
+        List<Future<Void>> futures = new ArrayList<>();
+
+        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
+            futures.add(executor.submit(() -> {
+                processBuilderWrapper.waitForCompletion();
+                processBuilderWrapper.printResult();
+                return null;
+            }));
+        }
+
+        for (Future<Void> future : futures) {
+            try {
+                future.get();
+            } catch (ExecutionException e) {
+                // Handle exception
+                e.printStackTrace();
+            }
+        }
+
+        executor.shutdown();
     }
 
     public boolean isBuildSuccessful() {
@@ -251,7 +268,7 @@ public class ProcessService {
         return totalCount;
     }
 
-    //Print the results, print in the OG 'BUILD SUCCESSFUL' color from VS Code :)
+    // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VS Code :)
     public void printResults(Timer timer) {
         if (isBuildSuccessful()) {
             PrintService.formatPrint(
