@@ -51,10 +51,6 @@ public class SmartTest {
             changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
         }
 
-        if (explorerService.isCompleteRunRequired()) {
-            changedFiles = explorerService.exploreAll();
-        }
-
         if (changedFiles == null || changedFiles.isEmpty()) {
             exitWithCode("The list of changed files found by explorer is empty!", Color.YELLOW, 0);
         }

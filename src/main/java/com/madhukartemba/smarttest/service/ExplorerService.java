@@ -27,6 +27,12 @@ public class ExplorerService {
         Set<String> blackListFiles = new HashSet<>();
         Set<String> visitedClassNames = new HashSet<>();
 
+        completeRunRequired = fileService.analyseFiles(inputFiles);
+
+        if (completeRunRequired) {
+            return exploreAll();
+        }
+
         for (String inputFile : inputFiles) {
             if (fileService.isJavaFile(inputFile)) {
                 javaFileQueue.add(inputFile);
@@ -76,7 +82,6 @@ public class ExplorerService {
         PrintService.print(" END", Color.GREEN);
 
         PrintService.println("\n\nExploration complete!", Color.GREEN);
-        completeRunRequired = fileService.analyseFiles(visitedFiles);
 
         return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
 
@@ -92,6 +97,12 @@ public class ExplorerService {
         Set<String> visitedFiles = new HashSet<>();
         Set<String> blackListFiles = new HashSet<>();
         Set<String> visitedPackages = new HashSet<>();
+
+        completeRunRequired = fileService.analyseFiles(inputFiles);
+
+        if (completeRunRequired) {
+            return exploreAll();
+        }
 
         for (String inputFile : inputFiles) {
             if (fileService.isJavaFile(inputFile)) {
@@ -143,7 +154,6 @@ public class ExplorerService {
         PrintService.print(" END", Color.GREEN);
 
         PrintService.println("\n\nExploration complete!", Color.GREEN);
-        completeRunRequired = fileService.analyseFiles(visitedFiles);
 
         return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
     }

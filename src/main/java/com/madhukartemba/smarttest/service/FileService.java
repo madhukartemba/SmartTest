@@ -64,7 +64,7 @@ public class FileService {
         return inputFiles.stream().filter(filePath -> isTestFile(filePath)).collect(Collectors.toList());
     }
 
-    public boolean analyseFiles(Set<String> visitedFiles) {
+    public boolean analyseFiles(List<String> visitedFiles) {
 
         completeRunRequired = false;
 
@@ -90,11 +90,6 @@ public class FileService {
                         Color.YELLOW);
             }
         }
-
-        PrintService.formatPrint(
-                "\nTotal potentially affected files: " + (completeRunRequired ? "ALL" : visitedFiles.size()));
-        PrintService.formatPrint(
-                "Total potentially affected test files: " + (completeRunRequired ? "ALL" : affectedTestFiles));
 
         return completeRunRequired;
     }
