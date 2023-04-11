@@ -1,0 +1,3 @@
+# SmartTest
+This is smart testing tool which only runs the required tests in gradle!
+A work in progress...
