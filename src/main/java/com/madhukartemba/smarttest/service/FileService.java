@@ -86,7 +86,9 @@ public class FileService {
                 completeRunRequired = true;
             } else {
                 PrintService.print(
-                        "Found " + affectedNonJavaFiles + " affected non-java files, a full test run is recommended.",
+                        "Found " + affectedNonJavaFiles + " affected non-java file"
+                                + (affectedNonJavaFiles == 1 ? "" : "s")
+                                + ", a full test run is recommended.",
                         Color.YELLOW);
             }
         }
