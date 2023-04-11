@@ -68,17 +68,19 @@ public class FileService {
 
         completeRunRequired = false;
 
-        int affectedTestFiles = 0;
+        int affectedFiles = 0;
         int affectedNonJavaFiles = 0;
 
         for (String visitedFile : visitedFiles) {
             if (!isJavaFile(visitedFile) && !isIgnored(visitedFile)) {
                 affectedNonJavaFiles++;
+            } else {
+                affectedFiles++;
             }
         }
 
         if (affectedNonJavaFiles > 0) {
-            if (affectedTestFiles == 0) {
+            if (affectedFiles == 0) {
                 PrintService.println("Only the non-java files have been changed, will run all the tests.",
                         Color.YELLOW);
                 completeRunRequired = true;
