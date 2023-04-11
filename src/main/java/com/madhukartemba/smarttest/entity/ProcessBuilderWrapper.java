@@ -40,12 +40,12 @@ public class ProcessBuilderWrapper {
         if (isSuccessful()) {
             PrintService.boldFormatPrint(
                     this.getName() +
-                            ": BUILD SUCCESSFUL",
+                            ": BUILD SUCCESSFUL in " + timer.getElapsedTime(),
                     Color.WHITE,
                     Color.decode("#23D18B"));
         } else {
             PrintService.boldFormatPrint(this.getName() +
-                    ": BUILD FAILED WITH EXIT CODE " + this.getExitCode(),
+                    ": BUILD FAILED WITH EXIT CODE " + this.getExitCode() + " in " + timer.getElapsedTime(),
                     Color.WHITE,
                     Color.RED);
         }
