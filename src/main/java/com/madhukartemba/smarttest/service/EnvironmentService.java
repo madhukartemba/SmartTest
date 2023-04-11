@@ -91,7 +91,7 @@ public class EnvironmentService {
             for (String subFolder : subFolders) {
 
                 for (String dirName : TEST_DIR_TO_TASK_MAP.keySet()) {
-                    String path = PROJECT_DIR + subFolder + "/src/" + dirName;
+                    String path = PROJECT_DIR + subFolder + "/" + (subFolder.equals("src") ? "" : "src/") + dirName;
                     if (folderExists(path)) {
                         PROJECT_NAMES.add(subFolder);
                         break;

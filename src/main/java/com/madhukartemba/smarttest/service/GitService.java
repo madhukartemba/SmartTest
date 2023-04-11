@@ -89,7 +89,7 @@ public class GitService {
         for (int i = 0; i < GIT_OUTPUT_LINE_COUNT; i++) {
             String currLine = gitOutput.readLine();
             if (currLine == null) {
-                throw new RuntimeException("The git log output ended before an offical merge was found.");
+                SmartTest.exitWithCode("The git log output ended before an offical merge was found.", Color.RED, 1);
             }
             if (isOfficialMerge(currLine)) {
                 if (skipCount-- <= 0) {

@@ -17,7 +17,7 @@ public class Parameters {
             "deleteChildFiles",
             "officalMergeRequestPattern");
 
-    public static Color DEFAULT_COLOR = Color.decode("#ADD8E6");
+    public static Color DEFAULT_COLOR = Color.decode("#03A9F4");
     public static String GRADLE_COMMAND_NAME = "./gradlew";
     public static String GRADLE_OPTION_NAME = "--tests";
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
