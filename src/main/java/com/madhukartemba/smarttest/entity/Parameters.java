@@ -26,7 +26,7 @@ public class Parameters {
     public static boolean DELETE_CHILD_FILES = false;
 
     public static void printValues() {
-        PrintService.boldPrintln("Paramters\n", Color.GREEN);
+        PrintService.boldPrintln("Parameters\n");
         PrintService.println("defaultColor: " + DEFAULT_COLOR);
         PrintService.println("parallelExecute: " + PARALLEL_EXECUTE);
         PrintService.println("gradleCommand: " + GRADLE_COMMAND_NAME);
