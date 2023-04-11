@@ -165,10 +165,7 @@ public class ExplorerService {
         List<String> output = fileService.findAllTestFiles();
         PrintService.println("Exploration complete!", Color.GREEN);
 
-        PrintService.formatPrint(
-                "\nTotal potentially affected files: ALL");
-        PrintService.formatPrint(
-                "Total potentially affected test files: ALL");
+        fileService.analyseResult(output.stream().collect(Collectors.toSet()));
 
         return output;
     }
