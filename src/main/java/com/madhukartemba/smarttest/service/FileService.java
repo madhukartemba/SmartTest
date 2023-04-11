@@ -72,9 +72,7 @@ public class FileService {
         int affectedNonJavaFiles = 0;
 
         for (String visitedFile : visitedFiles) {
-            if (isTestFile(visitedFile)) {
-                affectedTestFiles++;
-            } else if (!isJavaFile(visitedFile) && !isIgnored(visitedFile)) {
+            if (!isJavaFile(visitedFile) && !isIgnored(visitedFile)) {
                 affectedNonJavaFiles++;
             }
         }
