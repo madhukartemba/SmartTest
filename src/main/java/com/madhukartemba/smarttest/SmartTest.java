@@ -89,7 +89,7 @@ public class SmartTest {
     }
 
     public static void printEndMessage() {
-        PrintService.boldPrintln("\n\nThanks for using this program :)\n\n");
+        PrintService.boldPrintln("Thanks for using this program :)\n\n", Color.GREEN);
     }
 
     public static void exitWithCode(String message, Color color, int exitCode) {
