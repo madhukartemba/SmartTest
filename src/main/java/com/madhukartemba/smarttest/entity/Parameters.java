@@ -16,7 +16,8 @@ public class Parameters {
             "maxParallelThreads",
             "exploreViaPackage",
             "deleteChildFiles",
-            "officalMergeRequestPattern");
+            "officalMergeRequestPattern",
+            "fullTest");
 
     public static Color DEFAULT_COLOR = Color.decode("#03A9F4");
     public static String GRADLE_COMMAND_NAME = "./gradlew";
@@ -26,6 +27,7 @@ public class Parameters {
     public static boolean EXPLORE_VIA_PACKAGE = false;
     public static boolean PARALLEL_EXECUTE = true;
     public static boolean DELETE_CHILD_FILES = false;
+    public static boolean FULL_TEST = false;
 
     public static void printValues() {
         PrintService.boldPrintln("Parameters\n");
@@ -37,6 +39,7 @@ public class Parameters {
         PrintService.println("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
         PrintService.println("deleteChildFiles: " + DELETE_CHILD_FILES);
         PrintService.println("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
+        PrintService.println("fullTest: " + FULL_TEST);
     }
 
 }

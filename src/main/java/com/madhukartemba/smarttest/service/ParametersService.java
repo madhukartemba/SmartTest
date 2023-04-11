@@ -19,6 +19,11 @@ public class ParametersService {
             Parameters.EXPLORE_VIA_PACKAGE = exploreViaPackage;
         }
 
+        if (argsMap.containsKey("fullTest")) {
+            boolean fullTest = argsMap.get("fullTest").equals("true");
+            Parameters.FULL_TEST = fullTest;
+        }
+
         if (argsMap.containsKey("parallelExecute")) {
             boolean parallelExecute = argsMap.get("parallelExecute").equals("true");
             Parameters.PARALLEL_EXECUTE = parallelExecute;

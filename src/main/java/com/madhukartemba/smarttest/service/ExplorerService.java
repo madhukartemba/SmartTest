@@ -8,6 +8,8 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.madhukartemba.smarttest.entity.Parameters;
+
 public class ExplorerService {
 
     private FileService fileService;
@@ -18,9 +20,16 @@ public class ExplorerService {
     }
 
     public List<String> exploreViaClassname(List<String> inputFiles) throws Exception {
-        completeRunRequired = false;
+
+        if (Parameters.FULL_TEST) {
+            completeRunRequired = true;
+            PrintService.boldPrintln("\n\nFull test command is given, will run all the tests...");
+            return exploreAll();
+        }
 
         PrintService.boldPrintln("\n\nStarting to explore affected files via class name...\n");
+        completeRunRequired = false;
+
         PrintService.formatPrint("Number of changed files: " + inputFiles.size());
         Queue<String> javaFileQueue = new ArrayDeque<>();
         Set<String> visitedFiles = new HashSet<>();
@@ -89,6 +98,12 @@ public class ExplorerService {
     }
 
     public List<String> exploreViaPackageName(List<String> inputFiles) throws Exception {
+
+        if (Parameters.FULL_TEST) {
+            completeRunRequired = true;
+            PrintService.boldPrintln("\n\nFull test command is given, will run all the tests...");
+            return exploreAll();
+        }
 
         completeRunRequired = false;
 
