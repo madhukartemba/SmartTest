@@ -79,6 +79,9 @@ public class SmartTest {
             processService.execute(commands);
         }
 
+        // Process is complete, stop the timer.
+        timer.stop();
+
         processService.printResults(timer);
 
         printEndMessage();

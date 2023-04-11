@@ -1,12 +1,16 @@
 package com.madhukartemba.smarttest.util;
 
+import java.awt.Color;
+
+import com.madhukartemba.smarttest.service.PrintService;
+
 public class Timer {
     long startTime;
     long endTime;
 
     public Timer() {
-        startTime = 0;
-        endTime = 0;
+        startTime = -1;
+        endTime = -1;
     }
 
     public void start() {
@@ -18,6 +22,18 @@ public class Timer {
     }
 
     public String getElapsedTime() {
+
+        // If not it was started then print a warning.
+        if (startTime == -1) {
+            PrintService.println("The timer was never started! Will calculate the elapsed time from the start.",
+                    Color.RED);
+        }
+
+        // Stop if not stopped.
+        if (endTime == -1) {
+            this.stop();
+        }
+
         long elapsedTime = endTime - startTime;
         int hours = (int) (elapsedTime / (60 * 60 * 1000));
         int minutes = (int) ((elapsedTime / (60 * 1000)) % 60);
