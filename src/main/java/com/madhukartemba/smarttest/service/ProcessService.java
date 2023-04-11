@@ -22,6 +22,7 @@ public class ProcessService {
     private String PROJECT_DIR;
     private String OUTPUT_DIR;
     private boolean executionComplete = false;
+    private int totalCount = 0;
     private int successfulCount = 0;
     private int unsuccessfulCount = 0;
 
@@ -65,6 +66,9 @@ public class ProcessService {
     public void runCommandsParallel(List<String> commands, List<String> outputStreams, List<String> processNames)
             throws Exception {
         List<ProcessBuilderWrapper> totalProcessBuilders = createProcessBuilders(commands, outputStreams, processNames);
+
+        totalCount = totalProcessBuilders.size();
+
         List<List<ProcessBuilderWrapper>> splitProcessBuilders = splitProcessBuilderWrappers(totalProcessBuilders);
 
         int totalSets = splitProcessBuilders.size();
@@ -203,7 +207,7 @@ public class ProcessService {
                         processBuilderWrapper.getName() +
                                 ": BUILD SUCCESSFUL",
                         Color.WHITE,
-                        Color.GREEN);
+                        Color.decode("#23D18B"));
             } else {
                 unsuccessfulCount++;
                 PrintService.boldFormatPrint(processBuilderWrapper.getName() +
@@ -238,12 +242,30 @@ public class ProcessService {
         return unsuccessfulCount;
     }
 
+    public int getTotalCount() {
+        if (!executionComplete) {
+            throw new RuntimeException(
+                    "Cannot get the unsuccessful processes count as the processes have not started/completed.");
+        }
+        return totalCount;
+    }
+
     public void printResults() {
-        PrintService.println("\nNumber of successful processes: " + getSuccessfulCount(), Color.GREEN);
-        PrintService.println("Number of unsuccessful processes: " + getUnsuccessfulCount(), Color.RED);
         if (isBuildSuccessful()) {
-            PrintService.boldPrintln("\n\nBUILD SUCCESSFUL\n\n", Color.GREEN);
+            PrintService.formatPrint(
+                    "\nNumber of successful processes: " + getSuccessfulCount() + " out of " + getTotalCount(),
+                    Color.GREEN);
+            PrintService.formatPrint(
+                    "Number of unsuccessful processes: " + getUnsuccessfulCount() + " out of " + getTotalCount(),
+                    Color.GREEN);
+            PrintService.boldPrintln("\n\nBUILD SUCCESSFUL\n\n", Color.decode("#23D18B"));
         } else {
+            PrintService.formatPrint(
+                    "\nNumber of successful processes: " + getSuccessfulCount() + " out of " + getTotalCount(),
+                    Color.GREEN);
+            PrintService.formatPrint(
+                    "Number of unsuccessful processes: " + getUnsuccessfulCount() + " out of " + getTotalCount(),
+                    Color.RED);
             PrintService.boldPrintln("\n\nBUILD FAILED\n\n", Color.RED);
         }
     }
