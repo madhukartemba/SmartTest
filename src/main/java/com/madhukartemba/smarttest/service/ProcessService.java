@@ -22,8 +22,8 @@ public class ProcessService {
     private String PROJECT_DIR;
     private String OUTPUT_DIR;
     private boolean executionComplete = false;
-    private int successfulCount = -1;
-    private int unsuccessfulCount = -1;
+    private int successfulCount = 0;
+    private int unsuccessfulCount = 0;
 
     public ProcessService() {
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
