@@ -31,7 +31,7 @@ public class GitService {
 
     public List<String> getChangedFiles() throws Exception {
 
-        PrintService.boldPrintln("\n\nGetting the changed files from Git...");
+        PrintService.boldPrintln("\n\nGetting the changed files from Git...\n");
 
         List<String> changedFiles = new ArrayList<>();
 
