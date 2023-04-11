@@ -61,13 +61,13 @@ public class ExplorerService {
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
                 PrintService.print(" -->");
-                PrintService.print(" " + currentVisitedSize, Color.GREEN);
+                PrintService.print(" " + currentVisitedSize, Color.YELLOW);
             }
         }
 
         if (prevVisitedSize != visitedFiles.size()) {
             PrintService.print(" -->");
-            PrintService.print(" " + visitedFiles.size(), Color.GREEN);
+            PrintService.print(" " + visitedFiles.size(), Color.YELLOW);
         }
 
         PrintService.print(" -->");
@@ -123,12 +123,20 @@ public class ExplorerService {
             javaFileQueue.addAll(foundFiles);
 
             int currentVisitedSize = visitedFiles.size();
-            if (prevVisitedSize < currentVisitedSize) {
+            if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
                 PrintService.print(" -->");
-                PrintService.print(" " + currentVisitedSize, Color.GREEN);
+                PrintService.print(" " + currentVisitedSize, Color.YELLOW);
             }
         }
+
+        if (prevVisitedSize != visitedFiles.size()) {
+            PrintService.print(" -->");
+            PrintService.print(" " + visitedFiles.size(), Color.YELLOW);
+        }
+
+        PrintService.print(" -->");
+        PrintService.print(" END", Color.GREEN);
 
         PrintService.println("\n\nExploration complete!");
         fileService.analyseFiles(visitedFiles);
