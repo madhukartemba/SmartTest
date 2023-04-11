@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class ProcessService {
@@ -74,17 +75,7 @@ public class ProcessService {
 
         totalCount = totalProcessBuilders.size();
 
-        List<List<ProcessBuilderWrapper>> splitProcessBuilders = splitProcessBuilderWrappers(totalProcessBuilders);
-
-        int totalSets = splitProcessBuilders.size();
-        int setId = 1;
-
-        PrintService.formatPrint("Total process sets: " + totalSets);
-
-        for (List<ProcessBuilderWrapper> processBuilders : splitProcessBuilders) {
-            PrintService.formatPrint("\nRunning process set: " + (setId++) + " out of " + totalSets);
-            runProcessBuilders(processBuilders);
-        }
+        runProcessBuilders(totalProcessBuilders);
 
         executionComplete = true;
 
@@ -179,27 +170,9 @@ public class ProcessService {
         }
     }
 
-    private List<List<ProcessBuilderWrapper>> splitProcessBuilderWrappers(
-            List<ProcessBuilderWrapper> processBuilderWrappers) {
-        int sublistSize = Parameters.MAX_PARALLEL_THREADS;
-        List<List<ProcessBuilderWrapper>> splitProcessBuilderWrappers = new ArrayList<>();
-
-        for (int i = 0; i < processBuilderWrappers.size(); i += sublistSize) {
-            int endIndex = Math.min(i + sublistSize, processBuilderWrappers.size());
-            splitProcessBuilderWrappers.add(processBuilderWrappers.subList(i, endIndex));
-        }
-
-        return splitProcessBuilderWrappers;
-    }
-
     private void runProcessBuilders(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
-        // Start each process in parallel.
-        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
-            processBuilderWrapper.start();
-        }
-
-        // Wait for all processes to complete.
-        waitForProcesses(processBuilderWrappers);
+        // Run parallely.
+        parallelRun(processBuilderWrappers);
 
         // Store the result.
         for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
@@ -208,6 +181,31 @@ public class ProcessService {
             } else {
                 unsuccessfulCount++;
             }
+        }
+    }
+
+    public void parallelRun(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(Parameters.MAX_PARALLEL_THREADS);
+
+        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
+            Runnable task = () -> {
+                try {
+                    processBuilderWrapper.start();
+                    processBuilderWrapper.waitForCompletion();
+                    processBuilderWrapper.printResult();
+                } catch (Exception e) {
+                    // Handle exception
+                    e.printStackTrace();
+                }
+            };
+            executorService.execute(task);
+        }
+        executorService.shutdown();
+        try {
+            // This will terminate after 3 hours
+            executorService.awaitTermination(3L, TimeUnit.HOURS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
