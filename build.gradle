@@ -17,3 +17,10 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.madhukartemba.smarttest.SmartTest'
+    }
+    archiveName = 'SmartTest.jar'
+}
