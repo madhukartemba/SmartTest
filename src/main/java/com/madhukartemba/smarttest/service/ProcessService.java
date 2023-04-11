@@ -1,8 +1,8 @@
 package com.madhukartemba.smarttest.service;
 
 import com.madhukartemba.smarttest.entity.Command;
-import com.madhukartemba.smarttest.utils.CommandBuilder;
 import com.madhukartemba.smarttest.entity.ProcessBuilderWrapper;
+import com.madhukartemba.smarttest.util.CommandBuilder;
 
 import java.awt.Color;
 import java.io.BufferedReader;

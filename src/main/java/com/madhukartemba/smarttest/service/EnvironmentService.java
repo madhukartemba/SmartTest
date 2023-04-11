@@ -1,11 +1,14 @@
 package com.madhukartemba.smarttest.service;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.madhukartemba.smarttest.SmartTest;
 
 public class EnvironmentService {
 
@@ -71,7 +74,7 @@ public class EnvironmentService {
     public static String findProjectDirectory() {
         if (PROJECT_DIR == null) {
             PROJECT_DIR = findSystemDirectory();
-            if(!PROJECT_DIR.endsWith("/")) {
+            if (!PROJECT_DIR.endsWith("/")) {
                 PROJECT_DIR += "/";
             }
             PrintService.formatPrint("Project directory: " + PROJECT_DIR);
@@ -99,6 +102,10 @@ public class EnvironmentService {
             }
 
             PrintService.formatPrint("\nFound projects: " + PROJECT_NAMES.toString());
+        }
+
+        if (PROJECT_NAMES == null || PROJECT_NAMES.isEmpty()) {
+            SmartTest.exitWithCode("Cannot find any java projects in the current directory!", Color.RED, 1);
         }
 
         return PROJECT_NAMES;

@@ -2,7 +2,7 @@ package com.madhukartemba.smarttest;
 
 import com.madhukartemba.smarttest.entity.Command;
 import com.madhukartemba.smarttest.service.*;
-import com.madhukartemba.smarttest.utils.TestSieve;
+import com.madhukartemba.smarttest.util.TestSieve;
 
 import java.awt.Color;
 import java.util.List;
@@ -38,7 +38,7 @@ public class SmartTest {
         List<String> testFiles = fileService.getTestFiles(changedFiles);
 
         if (testFiles.isEmpty()) {
-            exitWithCode("There are no affected test files!", Color.YELLOW, 0);
+            exitWithCode("There are no affected test files!", Color.GREEN, 0);
         }
 
         // Convert the list of files to commands using TestSieve
