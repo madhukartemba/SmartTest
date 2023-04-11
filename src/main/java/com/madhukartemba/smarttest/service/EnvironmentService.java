@@ -35,7 +35,6 @@ public class EnvironmentService {
             "contractTest");
 
     public static void init() {
-        PrintService.formatPrint("Input project directory: " + PROJECT_DIR);
         findOperatingSystem();
         findSystemDirectory();
         findProjectDirectory();

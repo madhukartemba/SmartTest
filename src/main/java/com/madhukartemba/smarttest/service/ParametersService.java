@@ -52,7 +52,7 @@ public class ParametersService {
         } catch (NumberFormatException e) {
             // Handle invalid color string
             PrintService.println("\nInvalid color string given in args: " + colorString, Color.RED);
-            return Color.BLUE;
+            return Color.decode("#ADD8E6");
         }
     }
 

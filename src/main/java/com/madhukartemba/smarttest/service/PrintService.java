@@ -30,7 +30,11 @@ public class PrintService {
     }
 
     public static void formatPrint(String str) {
-        formatPrint(str, Color.BLUE, Color.YELLOW);
+        formatPrint(str, DEFAULT_COLOR, Color.YELLOW);
+    }
+
+    public static void formatPrint(String str, Color color2) {
+        formatPrint(str, DEFAULT_COLOR, color2);
     }
 
     public static void formatPrint(String str, Color color1, Color color2) {

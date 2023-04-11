@@ -21,6 +21,9 @@ public class ProcessService {
     private static final String OUTPUT_FILE_NAME = "smartTestOutput.txt";
     private String PROJECT_DIR;
     private String OUTPUT_DIR;
+    private boolean executionComplete = false;
+    private int successfulCount = -1;
+    private int unsuccessfulCount = -1;
 
     public ProcessService() {
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
@@ -73,6 +76,8 @@ public class ProcessService {
             PrintService.formatPrint("\nRunning process set: " + (setId++) + " out of " + totalSets);
             runProcessBuilders(processBuilders);
         }
+
+        executionComplete = true;
 
     }
 
@@ -142,7 +147,7 @@ public class ProcessService {
                 + ".txt";
     }
 
-    private static void createOutputDirectory(String directoryPath) {
+    private void createOutputDirectory(String directoryPath) {
         File directory = new File(directoryPath);
 
         // Create the directory if it does not exist
@@ -165,7 +170,7 @@ public class ProcessService {
         }
     }
 
-    private static List<List<ProcessBuilderWrapper>> splitProcessBuilderWrappers(
+    private List<List<ProcessBuilderWrapper>> splitProcessBuilderWrappers(
             List<ProcessBuilderWrapper> processBuilderWrappers) {
         int sublistSize = Parameters.MAX_PARALLEL_THREADS;
         List<List<ProcessBuilderWrapper>> splitProcessBuilderWrappers = new ArrayList<>();
@@ -178,7 +183,7 @@ public class ProcessService {
         return splitProcessBuilderWrappers;
     }
 
-    private static void runProcessBuilders(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
+    private void runProcessBuilders(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
         // Start each process in parallel
         for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
             processBuilderWrapper.start();
@@ -193,17 +198,53 @@ public class ProcessService {
         for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
             PrintService.print("Process ");
             if (processBuilderWrapper.isSuccessful()) {
+                successfulCount++;
                 PrintService.formatPrint(
                         processBuilderWrapper.getName() +
                                 ": BUILD SUCCESSFUL",
                         Color.WHITE,
                         Color.GREEN);
             } else {
+                unsuccessfulCount++;
                 PrintService.formatPrint(processBuilderWrapper.getName() +
                         ": BUILD FAILED WITH EXIT CODE " + processBuilderWrapper.getExitCode(),
                         Color.WHITE,
                         Color.RED);
             }
+        }
+    }
+
+    public boolean isBuildSuccessful() {
+        if (!executionComplete) {
+            throw new RuntimeException(
+                    "Cannot get the unsuccessful process count as the processes have not started/completed yet.");
+        }
+        return unsuccessfulCount == 0;
+    }
+
+    public int getSuccessfulCount() {
+        if (!executionComplete) {
+            throw new RuntimeException(
+                    "Cannot get the successful process count as the processes have not started/completed yet.");
+        }
+        return successfulCount;
+    }
+
+    public int getUnsuccessfulCount() {
+        if (!executionComplete) {
+            throw new RuntimeException(
+                    "Cannot get the unsuccessful processes count as the processes have not started/completed.");
+        }
+        return unsuccessfulCount;
+    }
+
+    public void printResults() {
+        PrintService.println("\nNumber of successful processes: " + getSuccessfulCount(), Color.GREEN);
+        PrintService.println("Number of unsuccessful processes: " + getUnsuccessfulCount(), Color.RED);
+        if (isBuildSuccessful()) {
+            PrintService.println("\n\nBUILD SUCCESSFUL\n\n", Color.GREEN);
+        } else {
+            PrintService.println("\n\nBUILD FAILED\n\n", Color.RED);
         }
     }
 

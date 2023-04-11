@@ -21,6 +21,9 @@ public class SmartTest {
         // Print the logo.
         printLogo();
 
+        // Value of all the paramters
+        Parameters.printValues();
+
         // Init the environment variables.
         EnvironmentService.init();
 
@@ -28,7 +31,7 @@ public class SmartTest {
         GitService gitService = new GitService();
         List<String> gitChangedFiles = gitService.getChangedFiles();
 
-        if (gitChangedFiles.isEmpty()) {
+        if (gitChangedFiles == null || gitChangedFiles.isEmpty()) {
             exitWithCode("The list of changed files determined by Git is empty!", Color.YELLOW, 0);
         }
 
@@ -36,7 +39,7 @@ public class SmartTest {
         ExplorerService explorerService = new ExplorerService();
         List<String> changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
 
-        if (gitChangedFiles.isEmpty()) {
+        if (gitChangedFiles == null || gitChangedFiles.isEmpty()) {
             exitWithCode("The list of changed files found by explorer is empty!", Color.YELLOW, 0);
         }
 
@@ -44,7 +47,7 @@ public class SmartTest {
         FileService fileService = new FileService();
         List<String> testFiles = fileService.getTestFiles(changedFiles);
 
-        if (testFiles.isEmpty()) {
+        if (testFiles == null || testFiles.isEmpty()) {
             exitWithCode("There are no affected test files!", Color.GREEN, 0);
         }
 
@@ -52,7 +55,7 @@ public class SmartTest {
         TestSieve testSieve = new TestSieve();
         List<Command> commands = testSieve.groupify(testFiles);
 
-        if (commands.isEmpty()) {
+        if (commands == null || commands.isEmpty()) {
             exitWithCode("There are no generated commands for the given test files!", Color.RED, 1);
         }
 
@@ -63,6 +66,8 @@ public class SmartTest {
         } else {
             processService.execute(commands);
         }
+
+        processService.printResults();
 
     }
 
