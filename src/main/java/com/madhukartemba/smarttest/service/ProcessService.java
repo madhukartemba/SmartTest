@@ -4,6 +4,7 @@ import com.madhukartemba.smarttest.entity.Command;
 import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.entity.ProcessBuilderWrapper;
 import com.madhukartemba.smarttest.util.CommandBuilder;
+import com.madhukartemba.smarttest.util.Timer;
 
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -250,7 +251,8 @@ public class ProcessService {
         return totalCount;
     }
 
-    public void printResults() {
+    //Print the results, print in the OG 'BUILD SUCCESSFUL' color from VS Code :)
+    public void printResults(Timer timer) {
         if (isBuildSuccessful()) {
             PrintService.formatPrint(
                     "\nNumber of successful processes: " + getSuccessfulCount() + " out of " + getTotalCount(),
@@ -258,7 +260,8 @@ public class ProcessService {
             PrintService.formatPrint(
                     "Number of unsuccessful processes: " + getUnsuccessfulCount() + " out of " + getTotalCount(),
                     Color.GREEN);
-            PrintService.boldPrintln("\n\nBUILD SUCCESSFUL\n\n", Color.decode("#23D18B"));
+            PrintService.boldPrintln("\n\nBUILD SUCCESSFUL in " + timer.getElapsedTime() + "\n\n",
+                    Color.decode("#23D18B"));
         } else {
             PrintService.formatPrint(
                     "\nNumber of successful processes: " + getSuccessfulCount() + " out of " + getTotalCount(),
@@ -266,7 +269,7 @@ public class ProcessService {
             PrintService.formatPrint(
                     "Number of unsuccessful processes: " + getUnsuccessfulCount() + " out of " + getTotalCount(),
                     Color.RED);
-            PrintService.boldPrintln("\n\nBUILD FAILED\n\n", Color.RED);
+            PrintService.boldPrintln("\n\nBUILD FAILED in " + timer.getElapsedTime() + "\n\n", Color.RED);
         }
     }
 

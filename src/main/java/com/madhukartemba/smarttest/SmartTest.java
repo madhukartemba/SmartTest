@@ -5,6 +5,7 @@ import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.service.*;
 import com.madhukartemba.smarttest.util.ArgsParser;
 import com.madhukartemba.smarttest.util.TestSieve;
+import com.madhukartemba.smarttest.util.Timer;
 
 import java.awt.Color;
 import java.util.List;
@@ -13,6 +14,10 @@ import java.util.Map;
 public class SmartTest {
 
     public static void main(String[] args) throws Exception {
+
+        // Start the timer.
+        Timer timer = new Timer();
+        timer.start();
 
         // Set the user provided parameters.
         Map<String, String> argsMap = ArgsParser.parseArgs(args);
@@ -74,8 +79,14 @@ public class SmartTest {
             processService.execute(commands);
         }
 
-        processService.printResults();
+        processService.printResults(timer);
 
+        printEndMessage();
+
+    }
+
+    public static void printEndMessage() {
+        PrintService.boldPrintln("\n\nThanks for using this program :)\n\n");
     }
 
     public static void exitWithCode(String message, Color color, int exitCode) {
