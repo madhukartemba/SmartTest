@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.madhukartemba.smarttest.SmartTest;
+
 public class GitService {
     private final int GIT_OUTPUT_LINE_COUNT = 20;
     private String PROJECT_DIR;
@@ -33,6 +35,10 @@ public class GitService {
         List<String> changedFiles = new ArrayList<>();
 
         String currentBranchName = getCurrentBranchName();
+
+        if (currentBranchName == null || currentBranchName.isEmpty()) {
+            SmartTest.exitWithCode("Cannot get the current Git branch name!", Color.RED, 1);
+        }
 
         int skipCount = 0;
 

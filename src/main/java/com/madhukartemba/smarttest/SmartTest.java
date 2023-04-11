@@ -9,8 +9,6 @@ import java.util.List;
 
 public class SmartTest {
 
-    private final static String PROJECT_DIR = "/opt/odin/";
-
     public static void main(String[] args) throws Exception {
 
         // Print the logo.
@@ -23,22 +21,43 @@ public class SmartTest {
         GitService gitService = new GitService();
         List<String> gitChangedFiles = gitService.getChangedFiles();
 
+        if (gitChangedFiles.isEmpty()) {
+            exitWithCode("The list of changed files determined by Git is empty!", Color.YELLOW, 0);
+        }
+
         // Pass the list of changed files to ExplorerService
         ExplorerService explorerService = new ExplorerService();
         List<String> changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
+
+        if (gitChangedFiles.isEmpty()) {
+            exitWithCode("The list of changed files found by explorer is empty!", Color.YELLOW, 0);
+        }
 
         // Extract the test files from the set of changed files
         FileService fileService = new FileService();
         List<String> testFiles = fileService.getTestFiles(changedFiles);
 
+        if (testFiles.isEmpty()) {
+            exitWithCode("There are no affected test files!", Color.YELLOW, 0);
+        }
+
         // Convert the list of files to commands using TestSieve
         TestSieve testSieve = new TestSieve();
         List<Command> commands = testSieve.groupify(testFiles);
+
+        if (commands.isEmpty()) {
+            exitWithCode("There are no generated commands for the given test files!", Color.RED, 1);
+        }
 
         // Execute the processes using ProcessService
         ProcessService processService = new ProcessService();
         processService.parallelExecute(commands);
 
+    }
+
+    public static void exitWithCode(String message, Color color, int exitCode) {
+        PrintService.println("\n\n" + message + "\n", color);
+        System.exit(exitCode);
     }
 
     private static void printLogo() {
