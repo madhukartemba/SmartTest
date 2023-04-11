@@ -64,7 +64,7 @@ public class FileService {
         return inputFiles.stream().filter(filePath -> isTestFile(filePath)).collect(Collectors.toList());
     }
 
-    public boolean analyseFiles(List<String> visitedFiles) {
+    public boolean analyseGitFiles(List<String> visitedFiles) {
 
         completeRunRequired = false;
 
@@ -92,6 +92,21 @@ public class FileService {
         }
 
         return completeRunRequired;
+    }
+
+    public void analyseResult(Set<String> visitedFiles) {
+        int affectedTestFiles = 0;
+
+        for (String visitedFile : visitedFiles) {
+            if (isTestFile(visitedFile)) {
+                affectedTestFiles++;
+            }
+        }
+
+        PrintService.formatPrint(
+                "\nTotal potentially affected files: " + (completeRunRequired ? "ALL" : visitedFiles.size()));
+        PrintService.formatPrint(
+                "Total potentially affected test files: " + (completeRunRequired ? "ALL" : affectedTestFiles));
     }
 
     public String getFullClassName(String fileName) {

@@ -27,7 +27,7 @@ public class ExplorerService {
         Set<String> blackListFiles = new HashSet<>();
         Set<String> visitedClassNames = new HashSet<>();
 
-        completeRunRequired = fileService.analyseFiles(inputFiles);
+        completeRunRequired = fileService.analyseGitFiles(inputFiles);
 
         if (completeRunRequired) {
             return exploreAll();
@@ -82,6 +82,7 @@ public class ExplorerService {
         PrintService.print(" END", Color.GREEN);
 
         PrintService.println("\n\nExploration complete!", Color.GREEN);
+        fileService.analyseResult(visitedFiles);
 
         return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
 
@@ -98,7 +99,7 @@ public class ExplorerService {
         Set<String> blackListFiles = new HashSet<>();
         Set<String> visitedPackages = new HashSet<>();
 
-        completeRunRequired = fileService.analyseFiles(inputFiles);
+        completeRunRequired = fileService.analyseGitFiles(inputFiles);
 
         if (completeRunRequired) {
             return exploreAll();
@@ -154,6 +155,7 @@ public class ExplorerService {
         PrintService.print(" END", Color.GREEN);
 
         PrintService.println("\n\nExploration complete!", Color.GREEN);
+        fileService.analyseResult(visitedFiles);
 
         return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
     }
@@ -162,6 +164,12 @@ public class ExplorerService {
         PrintService.println("\nExploring all files...", Color.GREEN);
         List<String> output = fileService.findAllTestFiles();
         PrintService.println("Exploration complete!", Color.GREEN);
+
+        PrintService.formatPrint(
+                "\nTotal potentially affected files: ALL");
+        PrintService.formatPrint(
+                "Total potentially affected test files: ALL");
+
         return output;
     }
 
