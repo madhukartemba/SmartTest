@@ -82,7 +82,7 @@ public class ExplorerService {
 
     public List<String> exploreViaPackageName(List<String> inputFiles) throws Exception {
 
-        PrintService.println("\n\nStarting to explore affected files via package name...", Color.BLUE);
+        PrintService.println("\n\nStarting to explore affected files via package name...");
         PrintService.formatPrint("Number of changed files: " + inputFiles.size());
         Queue<String> javaFileQueue = new ArrayDeque<>();
         Set<String> visitedFiles = new HashSet<>();

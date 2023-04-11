@@ -37,7 +37,7 @@ public class ProcessService {
     }
 
     public void execute(List<Command> commands) throws Exception {
-        PrintService.println("\n\nStarting to run process...", Color.BLUE);
+        PrintService.println("\n\nStarting to run process...");
 
         List<String> finalCommands = Arrays.asList(CommandBuilder.build(commands, EnvironmentService.TASK_PRIORITY));
         List<String> outputStreams = Arrays.asList(OUTPUT_DIR + OUTPUT_FILE_NAME);
@@ -50,7 +50,7 @@ public class ProcessService {
 
     public void parallelExecute(List<Command> commands) throws Exception {
 
-        PrintService.println("\n\nStarting to run processes...", Color.BLUE);
+        PrintService.println("\n\nStarting to run processes...");
 
         List<String> finalCommands = CommandBuilder.parallelBuild(commands);
         List<String> outputStreams = createOutputStreams(commands);
