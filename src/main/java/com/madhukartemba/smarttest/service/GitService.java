@@ -83,7 +83,7 @@ public class GitService {
 
     public String getMerge(int skipCount) throws Exception {
 
-        String command = Parameters.GIT_COMMAND;
+        String command = Parameters.GIT_COMMAND.trim();
 
         if (!command.contains("-n")) {
 
