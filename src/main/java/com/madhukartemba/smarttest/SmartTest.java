@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class SmartTest {
 
+    private static String VERSION = "1.0.0";
+
     public static void main(String[] args) throws Exception {
 
         // Start the timer.
@@ -24,7 +26,7 @@ public class SmartTest {
         ParametersService.setParameters(argsMap);
 
         // Print the logo.
-        printLogo();
+        printLogoAndVersion();
 
         // Value of all the paramters.
         Parameters.printValues();
@@ -101,10 +103,11 @@ public class SmartTest {
         System.exit(exitCode);
     }
 
-    private static void printLogo() {
-        PrintService.println(
+    private static void printLogoAndVersion() {
+        PrintService.boldPrintln(
                 "\r\n   _____                      __ ______          __ \r\n  / ___/____ ___  ____ ______/ //_  __/__  _____/ /_\r\n  \\__ \\/ __ `__ \\/ __ `/ ___/ __// / / _ \\/ ___/ __/\r\n ___/ / / / / / / /_/ / /  / /_ / / /  __(__  ) /_  \r\n/____/_/ /_/ /_/\\__,_/_/   \\__//_/  \\___/____/\\__/  \r\n                                                    \r\n",
                 Color.GREEN);
+        PrintService.boldFormatPrint("Version: " + VERSION + "\n\n");
     }
 
 }

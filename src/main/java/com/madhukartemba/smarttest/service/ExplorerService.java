@@ -78,13 +78,13 @@ public class ExplorerService {
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
                 PrintService.print(" -->");
-                PrintService.print(" " + currentVisitedSize, Color.YELLOW);
+                PrintService.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
             }
         }
 
         if (prevVisitedSize != visitedFiles.size()) {
             PrintService.print(" -->");
-            PrintService.print(" " + visitedFiles.size(), Color.YELLOW);
+            PrintService.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
         }
 
         PrintService.print(" -->");
@@ -157,13 +157,13 @@ public class ExplorerService {
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
                 PrintService.print(" -->");
-                PrintService.print(" " + currentVisitedSize, Color.YELLOW);
+                PrintService.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
             }
         }
 
         if (prevVisitedSize != visitedFiles.size()) {
             PrintService.print(" -->");
-            PrintService.print(" " + visitedFiles.size(), Color.YELLOW);
+            PrintService.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
         }
 
         PrintService.print(" -->");
@@ -183,7 +183,7 @@ public class ExplorerService {
         List<String> output = fileService.findAllTestFiles();
 
         PrintService.print(" -->");
-        PrintService.print(" " + output.size(), Color.YELLOW);
+        PrintService.print(" " + output.size(), Parameters.DEFAULT_COLOR_2);
 
         PrintService.print(" -->");
         PrintService.boldPrint(" END", Color.GREEN);

@@ -49,8 +49,12 @@ public class ParametersService {
             Parameters.OFFICIAL_MERGE_REQUEST_PATTERN = officialMergeRequestPattern;
         }
 
-        if (argsMap.containsKey("defaultColor")) {
-            Parameters.DEFAULT_COLOR = getColorFromString(argsMap.get("defaultColor"));
+        if (argsMap.containsKey("defaultColor1")) {
+            Parameters.DEFAULT_COLOR_1 = getColorFromString(argsMap.get("defaultColor1"));
+        }
+
+        if (argsMap.containsKey("defaultColor2")) {
+            Parameters.DEFAULT_COLOR_2 = getColorFromString(argsMap.get("defaultColor2"));
         }
 
     }

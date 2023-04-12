@@ -8,8 +8,9 @@ public class PrintService {
 
     private static final String RESET = "\033[0m";
     private static final String BOLD = "\033[1m";
-    private static final Color DEFAULT_COLOR = Parameters.DEFAULT_COLOR;
-    private static final String DEFAULT_COLOR_CODE = getColorCode(DEFAULT_COLOR);
+    private static final Color DEFAULT_COLOR_1 = Parameters.DEFAULT_COLOR_1;
+    private static final String DEFAULT_COLOR_1_CODE = getColorCode(DEFAULT_COLOR_1);
+    private static final Color DEFAULT_COLOR_2 = Parameters.DEFAULT_COLOR_2;
     private static final String SEPERATOR = ":";
 
     public static void print(String str, Color color) {
@@ -23,19 +24,19 @@ public class PrintService {
     }
 
     public static void print(String str) {
-        System.out.print(DEFAULT_COLOR_CODE + str + RESET);
+        System.out.print(DEFAULT_COLOR_1_CODE + str + RESET);
     }
 
     public static void println(String str) {
-        System.out.println(DEFAULT_COLOR_CODE + str + RESET);
+        System.out.println(DEFAULT_COLOR_1_CODE + str + RESET);
     }
 
     public static void formatPrint(String str) {
-        formatPrint(str, DEFAULT_COLOR, Color.YELLOW);
+        formatPrint(str, DEFAULT_COLOR_1, DEFAULT_COLOR_2);
     }
 
     public static void formatPrint(String str, Color color2) {
-        formatPrint(str, DEFAULT_COLOR, color2);
+        formatPrint(str, DEFAULT_COLOR_1, color2);
     }
 
     public static void formatPrint(String str, Color color1, Color color2) {
@@ -58,19 +59,19 @@ public class PrintService {
     }
 
     public static void boldPrint(String str) {
-        System.out.print(BOLD + DEFAULT_COLOR_CODE + str + RESET);
+        System.out.print(BOLD + DEFAULT_COLOR_1_CODE + str + RESET);
     }
 
     public static void boldPrintln(String str) {
-        System.out.println(BOLD + DEFAULT_COLOR_CODE + str + RESET);
+        System.out.println(BOLD + DEFAULT_COLOR_1_CODE + str + RESET);
     }
 
     public static void boldFormatPrint(String str) {
-        formatPrint(str, DEFAULT_COLOR, Color.YELLOW);
+        boldFormatPrint(str, DEFAULT_COLOR_1, DEFAULT_COLOR_2);
     }
 
     public static void boldFormatPrint(String str, Color color2) {
-        formatPrint(str, DEFAULT_COLOR, color2);
+        boldFormatPrint(str, DEFAULT_COLOR_1, color2);
     }
 
     public static void boldFormatPrint(String str, Color color1, Color color2) {

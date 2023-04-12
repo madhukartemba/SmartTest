@@ -19,7 +19,8 @@ public class Parameters {
             "officalMergeRequestPattern",
             "fullTest");
 
-    public static Color DEFAULT_COLOR = Color.decode("#03A9F4");
+    public static Color DEFAULT_COLOR_1 = Color.decode("#03A9F4");
+    public static Color DEFAULT_COLOR_2 = Color.decode("#FFD300");
     public static String GRADLE_COMMAND_NAME = "./gradlew";
     public static String GRADLE_OPTION_NAME = "--tests";
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
@@ -31,15 +32,16 @@ public class Parameters {
 
     public static void printValues() {
         PrintService.boldPrintln("Parameters\n");
-        PrintService.println("defaultColor: " + DEFAULT_COLOR);
-        PrintService.println("parallelExecute: " + PARALLEL_EXECUTE);
-        PrintService.println("gradleCommand: " + GRADLE_COMMAND_NAME);
-        PrintService.println("gradleOption: " + GRADLE_OPTION_NAME);
-        PrintService.println("maxParallelThreads: " + MAX_PARALLEL_THREADS);
-        PrintService.println("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
-        PrintService.println("deleteChildFiles: " + DELETE_CHILD_FILES);
-        PrintService.println("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
-        PrintService.println("fullTest: " + FULL_TEST);
+        PrintService.formatPrint("defaultColor1: " + DEFAULT_COLOR_1);
+        PrintService.formatPrint("defaultColor2: " + DEFAULT_COLOR_2);
+        PrintService.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
+        PrintService.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
+        PrintService.formatPrint("gradleOption: " + GRADLE_OPTION_NAME);
+        PrintService.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS);
+        PrintService.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
+        PrintService.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES);
+        PrintService.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
+        PrintService.formatPrint("fullTest: " + FULL_TEST);
     }
 
 }

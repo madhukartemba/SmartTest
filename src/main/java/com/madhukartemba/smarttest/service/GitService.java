@@ -13,7 +13,7 @@ import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameters;
 
 public class GitService {
-    private final int GIT_OUTPUT_LINE_COUNT = 20;
+    private final int GIT_OUTPUT_LINE_COUNT = 100;
     private String PROJECT_DIR;
     private ProcessBuilder processBuilder;
 
@@ -46,7 +46,7 @@ public class GitService {
         if (currentBranchName.equals("main") || currentBranchName.equals("master")) {
             PrintService.println(
                     "Currently on " + currentBranchName
-                            + "  branch, will compare the files against the previous official merge.",
+                            + " branch, will compare the files against the previous official merge.",
                     Color.YELLOW);
             skipCount = 1;
         }
