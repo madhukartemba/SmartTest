@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class SmartTest {
 
-    private static String VERSION = "1.0.0";
+    public static String VERSION = "1.0.0";
 
     public static void main(String[] args) throws Exception {
 
@@ -102,7 +102,9 @@ public class SmartTest {
 
     public static void exitWithCode(String message, Color color, int exitCode) {
         PrintService.boldPrintln("\n\n" + message + "\n\n", color);
-        printEndMessage();
+        if (exitCode == 0) {
+            printEndMessage();
+        }
         System.exit(exitCode);
     }
 

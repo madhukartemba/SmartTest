@@ -3,10 +3,18 @@ package com.madhukartemba.smarttest.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameters;
 
 public class ArgsParser {
     public static Map<String, String> parseArgs(String[] args) {
+
+        for (String arg : args) {
+            if (arg.equals("-v") || arg.equals("--version")) {
+                System.out.println(SmartTest.VERSION);
+                System.exit(0);
+            }
+        }
 
         Parameters.printHelp(args);
 
