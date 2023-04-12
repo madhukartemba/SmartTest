@@ -46,7 +46,7 @@ public class GitService {
         if (currentBranchName.equals("main") || currentBranchName.equals("master")) {
             PrintService.println(
                     "Currently on " + currentBranchName
-                            + " branch, will compare the files against the previous official merge.",
+                            + " branch, will compare the files against the previous official merge.\n",
                     Color.YELLOW);
             skipCount = 1;
         }
@@ -97,7 +97,7 @@ public class GitService {
 
         }
 
-        PrintService.formatPrint("\nUsing Git command: " + command + "\n");
+        PrintService.formatPrint("Using Git command: " + command + "\n");
 
         processBuilder.command(command.split("\\s"));
         Process gitProcess = processBuilder.start();
