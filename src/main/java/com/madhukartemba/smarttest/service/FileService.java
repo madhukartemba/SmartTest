@@ -86,7 +86,7 @@ public class FileService {
                 completeRunRequired = true;
             } else {
                 PrintService.println(
-                        "\nFound " + affectedNonJavaFiles + " affected non-java file"
+                        "\nFound " + affectedNonJavaFiles + " changed non-java file"
                                 + (affectedNonJavaFiles == 1 ? "" : "s")
                                 + ". It is recommended to perform a full test run.",
                         Color.YELLOW);
