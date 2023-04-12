@@ -129,7 +129,7 @@ public class GitService {
         if (matcher.find()) {
             return matcher.group(1);
         } else {
-            return "NOT FOUND";
+            return extractMergeSHA(line);
         }
     }
 
