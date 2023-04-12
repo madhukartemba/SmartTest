@@ -108,6 +108,16 @@ public class SmartTest {
         System.exit(exitCode);
     }
 
+    public static void checkForShellInjection(String command, String expectedCommand) {
+        command.trim();
+        if (!command.startsWith(expectedCommand + " ") || command.contains("&&")) {
+            SmartTest.exitWithCode(
+                    "POTENTIAL SHELL INJECTION ATTACK: The git command should not contain any other command.",
+                    Color.RED,
+                    1);
+        }
+    }
+
     private static void printLogoAndVersion() {
         PrintService.boldPrintln(
                 "\r\n   _____                      __ ______          __ \r\n  / ___/____ ___  ____ ______/ //_  __/__  _____/ /_\r\n  \\__ \\/ __ `__ \\/ __ `/ ___/ __// / / _ \\/ ___/ __/\r\n ___/ / / / / / / /_/ / /  / /_ / / /  __(__  ) /_  \r\n/____/_/ /_/ /_/\\__,_/_/   \\__//_/  \\___/____/\\__/  \r\n                                                    \r\n",

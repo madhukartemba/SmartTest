@@ -3,6 +3,7 @@ package com.madhukartemba.smarttest.service;
 import java.awt.Color;
 import java.util.Map;
 
+import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameters;
 
 public class ParametersService {
@@ -42,11 +43,13 @@ public class ParametersService {
         if (argsMap.containsKey("gradleCommand")) {
             String gradleCommand = argsMap.get("gradleCommand");
             Parameters.GRADLE_COMMAND_NAME = gradleCommand;
+            SmartTest.checkForShellInjection(gradleCommand, "./gradlew");
         }
 
         if (argsMap.containsKey("gitCommand")) {
             String gitCommand = argsMap.get("gitCommand");
             Parameters.GIT_COMMAND = gitCommand;
+            SmartTest.checkForShellInjection(gitCommand, "./gradlew");
         }
 
         if (argsMap.containsKey("gradleOption")) {
