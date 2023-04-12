@@ -3,8 +3,13 @@ package com.madhukartemba.smarttest.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.madhukartemba.smarttest.entity.Parameters;
+
 public class ArgsParser {
     public static Map<String, String> parseArgs(String[] args) {
+
+        Parameters.printHelp(args);
+
         Map<String, String> argsMap = new HashMap<String, String>();
 
         for (String arg : args) {

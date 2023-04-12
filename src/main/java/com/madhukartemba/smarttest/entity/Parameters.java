@@ -8,15 +8,17 @@ import com.madhukartemba.smarttest.service.PrintService;
 
 public class Parameters {
 
-    public static List<String> paramterNames = Arrays.asList(
-            "defaultColor",
-            "parallelExecute",
+    public static List<String> parameterNames = Arrays.asList(
+            "defaultColor1",
+            "defaultColor2",
             "gradleCommand",
             "gradleOption",
             "maxParallelThreads",
+            "gitCommand",
+            "officialMergeRequestPattern",
+            "parallelExecute",
             "exploreViaPackage",
             "deleteChildFiles",
-            "officalMergeRequestPattern",
             "fullTest",
             "printOutput");
 
@@ -47,6 +49,68 @@ public class Parameters {
         PrintService.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
         PrintService.formatPrint("fullTest: " + FULL_TEST);
         PrintService.formatPrint("printOutput: " + PRINT_OUTPUT);
+    }
+
+    public static void printHelp(String args[]) {
+        for (String arg : args) {
+            if (arg.equals("-h") || arg.equals("--help")) {
+                // Print out the help information and options
+                PrintService.println("Usage: SmartTest [options]");
+                PrintService.println("Options:");
+                PrintService.println("  --argName=value  Description of argument");
+                PrintService.println("  -h, --help       Print this help message and exit");
+                PrintService.println("Program Options: (argName: value default-value)");
+
+                // Print out the default values of the program options
+                for (String paramName : parameterNames) {
+                    Object paramValue = null;
+                    switch (paramName) {
+                        case "defaultColor1":
+                            paramValue = "HEXCODE " + DEFAULT_COLOR_1.toString();
+                            break;
+                        case "defaultColor2":
+                            paramValue = "HEXCODE " + DEFAULT_COLOR_2.toString();
+                            break;
+                        case "parallelExecute":
+                            paramValue = "(true or false) " + PARALLEL_EXECUTE;
+                            break;
+                        case "gradleCommand":
+                            paramValue = "string " + GRADLE_COMMAND_NAME;
+                            break;
+                        case "gradleOption":
+                            paramValue = "string " + GRADLE_OPTION_NAME;
+                            break;
+                        case "maxParallelThreads":
+                            paramValue = "number " + MAX_PARALLEL_THREADS;
+                            break;
+                        case "exploreViaPackage":
+                            paramValue = "(true or false) " + EXPLORE_VIA_PACKAGE;
+                            break;
+                        case "deleteChildFiles":
+                            paramValue = "(true or false) " + DELETE_CHILD_FILES;
+                            break;
+                        case "officialMergeRequestPattern":
+                            paramValue = "string " + OFFICIAL_MERGE_REQUEST_PATTERN;
+                            break;
+                        case "fullTest":
+                            paramValue = "(true or false) " + FULL_TEST;
+                            break;
+                        case "printOutput":
+                            paramValue = "(true or false) " + PRINT_OUTPUT;
+                            break;
+                        case "gitCommand":
+                            paramValue = "string " + GIT_COMMAND;
+                            break;
+                        default:
+                            break;
+                    }
+                    PrintService.formatPrint("  " + paramName + ": " + paramValue);
+                }
+
+                System.exit(0);
+            }
+        }
+
     }
 
 }
