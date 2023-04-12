@@ -91,6 +91,12 @@ public class GitService {
 
         }
 
+        if (!command.contains("--oneline")) {
+
+            command += " --oneline";
+
+        }
+
         processBuilder.command(command.split("\\s"));
         Process gitProcess = processBuilder.start();
         BufferedReader gitOutput = new BufferedReader(new InputStreamReader(gitProcess.getInputStream()));
