@@ -82,7 +82,16 @@ public class GitService {
     }
 
     public String getMerge(int skipCount) throws Exception {
-        processBuilder.command("sh", "-c", "git log --merges --oneline -n " + GIT_OUTPUT_LINE_COUNT);
+
+        String command = Parameters.GIT_COMMAND;
+
+        if (!command.contains("-n")) {
+
+            command += " -n " + GIT_OUTPUT_LINE_COUNT;
+
+        }
+
+        processBuilder.command(command.split("\\s"));
         Process gitProcess = processBuilder.start();
         BufferedReader gitOutput = new BufferedReader(new InputStreamReader(gitProcess.getInputStream()));
 

@@ -24,6 +24,7 @@ public class Parameters {
     public static String GRADLE_COMMAND_NAME = "./gradlew";
     public static String GRADLE_OPTION_NAME = "--tests";
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
+    public static String GIT_COMMAND = "git log --merges --oneline";
     public static int MAX_PARALLEL_THREADS = 3;
     public static boolean EXPLORE_VIA_PACKAGE = false;
     public static boolean PARALLEL_EXECUTE = true;
@@ -40,6 +41,7 @@ public class Parameters {
         PrintService.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS);
         PrintService.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
         PrintService.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES);
+        PrintService.formatPrint("gitCommand: " + GIT_COMMAND);
         PrintService.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
         PrintService.formatPrint("fullTest: " + FULL_TEST);
     }

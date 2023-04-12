@@ -39,6 +39,11 @@ public class ParametersService {
             Parameters.GRADLE_COMMAND_NAME = gradleCommand;
         }
 
+        if (argsMap.containsKey("gitCommand")) {
+            String gitCommand = argsMap.get("gitCommand");
+            Parameters.GIT_COMMAND = gitCommand;
+        }
+
         if (argsMap.containsKey("gradleOption")) {
             String gradleOption = argsMap.get("gradleOption");
             Parameters.GRADLE_OPTION_NAME = gradleOption;
