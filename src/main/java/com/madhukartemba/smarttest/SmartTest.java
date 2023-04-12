@@ -34,9 +34,9 @@ public class SmartTest {
 
         // Get the list of changed files from Git.
         GitService gitService = new GitService();
-        List<String> gitChangedFiles = gitService.getChangedFiles();
+        List<String> gitChangedFiles = Parameters.FULL_TEST ? null : gitService.getChangedFiles();
 
-        if (gitChangedFiles == null || gitChangedFiles.isEmpty()) {
+        if (!Parameters.FULL_TEST && (gitChangedFiles == null || gitChangedFiles.isEmpty())) {
             exitWithCode("The list of changed files determined by Git is empty!", Color.YELLOW, 0);
         }
 

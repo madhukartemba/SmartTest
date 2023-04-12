@@ -50,7 +50,7 @@ public class ExplorerService {
         }
 
         PrintService.println("\nStarted to explore...\n", Color.GREEN);
-        PrintService.print("ROOT", Color.GREEN);
+        PrintService.boldPrint("ROOT", Color.GREEN);
 
         int prevVisitedSize = 0;
 
@@ -88,7 +88,7 @@ public class ExplorerService {
         }
 
         PrintService.print(" -->");
-        PrintService.print(" END", Color.GREEN);
+        PrintService.boldPrint(" END", Color.GREEN);
 
         PrintService.println("\n\nExploration complete!", Color.GREEN);
         fileService.analyseResult(visitedFiles);
@@ -128,7 +128,7 @@ public class ExplorerService {
         }
 
         PrintService.println("\nStarted to explore...\n", Color.GREEN);
-        PrintService.print("ROOT", Color.GREEN);
+        PrintService.boldPrint("ROOT", Color.GREEN);
 
         int prevVisitedSize = 0;
 
@@ -167,7 +167,7 @@ public class ExplorerService {
         }
 
         PrintService.print(" -->");
-        PrintService.print(" END", Color.GREEN);
+        PrintService.boldPrint(" END", Color.GREEN);
 
         PrintService.println("\n\nExploration complete!", Color.GREEN);
         fileService.analyseResult(visitedFiles);
@@ -176,9 +176,19 @@ public class ExplorerService {
     }
 
     public List<String> exploreAll() throws Exception {
-        PrintService.println("\nExploring all files...", Color.GREEN);
+        PrintService.println("\nExploring all files...\n", Color.GREEN);
+
+        PrintService.boldPrint("ROOT", Color.GREEN);
+
         List<String> output = fileService.findAllTestFiles();
-        PrintService.println("Exploration complete!", Color.GREEN);
+
+        PrintService.print(" -->");
+        PrintService.print(" " + output.size(), Color.YELLOW);
+
+        PrintService.print(" -->");
+        PrintService.boldPrint(" END", Color.GREEN);
+
+        PrintService.println("\n\nExploration complete!", Color.GREEN);
 
         fileService.analyseResult(output.stream().collect(Collectors.toSet()));
 
