@@ -99,7 +99,7 @@ public class SmartTest {
     }
 
     public static void exitWithCode(String message, Color color, int exitCode) {
-        PrintService.println("\n\n" + message + "\n\n", color);
+        PrintService.boldPrintln("\n\n" + message + "\n\n", color);
         printEndMessage();
         System.exit(exitCode);
     }

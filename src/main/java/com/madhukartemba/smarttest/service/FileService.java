@@ -168,7 +168,7 @@ public class FileService {
         processBuilder.command("grep", "-r", "-l", "--exclude-from=.gitignore", packageName + ".*", ".");
         Process grepProcess = processBuilder.start();
         BufferedReader grepOutput = new BufferedReader(new InputStreamReader(grepProcess.getInputStream()));
-
+        grepProcess.waitFor();
         String referencedFile = grepOutput.readLine();
 
         // Add test files that reference changed file to list
@@ -195,7 +195,7 @@ public class FileService {
         processBuilder.command("grep", "-r", "-l", "-w", "--exclude-from=.gitignore", className, ".");
         Process grepProcess = processBuilder.start();
         BufferedReader grepOutput = new BufferedReader(new InputStreamReader(grepProcess.getInputStream()));
-
+        grepProcess.waitFor();
         String referencedFile = grepOutput.readLine();
 
         // Add test files that reference changed file to list
@@ -217,7 +217,7 @@ public class FileService {
         processBuilder.command("grep", "-r", "-l", "-w", "--exclude-from=.gitignore", "@Test", ".");
         Process grepProcess = processBuilder.start();
         BufferedReader grepOutput = new BufferedReader(new InputStreamReader(grepProcess.getInputStream()));
-
+        grepProcess.waitFor();
         String referencedFile = grepOutput.readLine();
 
         // Add test files that reference changed file to list
@@ -237,7 +237,7 @@ public class FileService {
         File file = new File(fileName);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
-            // write empty string to clear the file
+            // Write empty string to clear the file
             writer.write("");
             for (String className : classNameSet) {
                 writer.write(className);

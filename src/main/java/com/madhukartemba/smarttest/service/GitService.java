@@ -59,9 +59,12 @@ public class GitService {
                 "Comparing the staged and committed changes wrt. official merge: " + mergeNumber);
         PrintService.println(mergeLine, Color.GREEN);
 
-        processBuilder.command("sh", "-c", "git diff --name-only --staged " + mergeSHA);
+        String command = "git diff --name-only --staged " + mergeSHA;
+
+        processBuilder.command(command.split("\\s"));
         Process gitProcess = processBuilder.start();
         BufferedReader gitOutput = new BufferedReader(new InputStreamReader(gitProcess.getInputStream()));
+        gitProcess.waitFor();
 
         String fileName = gitOutput.readLine();
 
@@ -74,9 +77,10 @@ public class GitService {
     }
 
     public String getCurrentBranchName() throws Exception {
-        processBuilder.command("sh", "-c", "git branch --show-current");
+        processBuilder.command("git branch --show-current".split("\\s"));
         Process gitProcess = processBuilder.start();
         BufferedReader gitOutput = new BufferedReader(new InputStreamReader(gitProcess.getInputStream()));
+        gitProcess.waitFor();
 
         return gitOutput.readLine();
     }
@@ -102,6 +106,7 @@ public class GitService {
         processBuilder.command(command.split("\\s"));
         Process gitProcess = processBuilder.start();
         BufferedReader gitOutput = new BufferedReader(new InputStreamReader(gitProcess.getInputStream()));
+        gitProcess.waitFor();
 
         for (int i = 0; i < GIT_OUTPUT_LINE_COUNT; i++) {
             String currLine = gitOutput.readLine();
