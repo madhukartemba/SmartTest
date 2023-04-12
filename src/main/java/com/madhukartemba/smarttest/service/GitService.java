@@ -89,8 +89,10 @@ public class GitService {
 
         String command = Parameters.GIT_COMMAND.trim();
 
-        if (!command.startsWith("git")) {
-            SmartTest.exitWithCode("POTENTIAL SHELL INJECTION ATTACK: The git command must start with 'git'", Color.RED,
+        if (!command.startsWith("git ") || command.contains("&&")) {
+            SmartTest.exitWithCode(
+                    "POTENTIAL SHELL INJECTION ATTACK: The git command should not contain any other command.",
+                    Color.RED,
                     1);
         }
 
