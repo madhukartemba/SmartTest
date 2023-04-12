@@ -1,8 +1,5 @@
 .gradle/
 bin/
 build/
-gradle/
-gradlew
-gradlew.bat
 .idea/
 .vscode/
