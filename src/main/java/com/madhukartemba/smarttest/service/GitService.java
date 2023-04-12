@@ -97,6 +97,8 @@ public class GitService {
 
         }
 
+        PrintService.formatPrint("\nUsing Git command: " + command + "\n");
+
         processBuilder.command(command.split("\\s"));
         Process gitProcess = processBuilder.start();
         BufferedReader gitOutput = new BufferedReader(new InputStreamReader(gitProcess.getInputStream()));
