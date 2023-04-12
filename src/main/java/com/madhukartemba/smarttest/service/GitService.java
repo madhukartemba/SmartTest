@@ -129,7 +129,7 @@ public class GitService {
         if (matcher.find()) {
             return matcher.group(1);
         } else {
-            throw new RuntimeException("Cannot extract the merge PR number for the line: " + line);
+            return "NOT FOUND";
         }
     }
 
