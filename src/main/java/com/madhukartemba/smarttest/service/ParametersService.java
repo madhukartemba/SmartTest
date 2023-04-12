@@ -24,6 +24,11 @@ public class ParametersService {
             Parameters.FULL_TEST = fullTest;
         }
 
+        if (argsMap.containsKey("printOutput")) {
+            boolean printOutput = argsMap.get("printOutput").equals("true");
+            Parameters.PRINT_OUTPUT = printOutput;
+        }
+
         if (argsMap.containsKey("parallelExecute")) {
             boolean parallelExecute = argsMap.get("parallelExecute").equals("true");
             Parameters.PARALLEL_EXECUTE = parallelExecute;

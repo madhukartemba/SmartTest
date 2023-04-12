@@ -248,6 +248,22 @@ public class FileService {
         }
     }
 
+    public String printFromFile(String fileName) {
+        String output = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String line = reader.readLine();
+            while (line != null) {
+                PrintService.formatPrint(line);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            PrintService.println("Error reading file, " + e.getMessage(), Color.RED);
+        }
+        return output;
+    }
+
     public String getStringFromFile(String fileName) {
         String output = "";
         try {

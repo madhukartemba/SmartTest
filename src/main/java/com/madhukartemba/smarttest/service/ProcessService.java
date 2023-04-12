@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class ProcessService {
     private static final String OUTPUT_DIR_NAME = "SmartTestOutput/";
     private static final String OUTPUT_FILE_NAME = "smartTestOutput.txt";
+    private FileService fileService;
     private String PROJECT_DIR;
     private String OUTPUT_DIR;
     private boolean executionComplete = false;
@@ -33,6 +34,7 @@ public class ProcessService {
     private int unsuccessfulCount = 0;
 
     public ProcessService() {
+        this.fileService = new FileService();
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
@@ -270,6 +272,13 @@ public class ProcessService {
 
     // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VS Code :)
     public void printResults(Timer timer) {
+
+        if (Parameters.PRINT_OUTPUT) {
+            PrintService.boldPrintln("\n\n Output \n\n");
+            fileService.printFromFile(OUTPUT_DIR + OUTPUT_FILE_NAME);
+            PrintService.boldPrintln("\n\n Output Ended");
+        }
+
         if (isBuildSuccessful()) {
             PrintService.formatPrint(
                     "\nNumber of successful processes: " + getSuccessfulCount() + " out of " + getTotalCount(),

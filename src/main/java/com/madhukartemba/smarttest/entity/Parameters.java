@@ -17,7 +17,8 @@ public class Parameters {
             "exploreViaPackage",
             "deleteChildFiles",
             "officalMergeRequestPattern",
-            "fullTest");
+            "fullTest",
+            "printOutput");
 
     public static Color DEFAULT_COLOR_1 = Color.decode("#03A9F4");
     public static Color DEFAULT_COLOR_2 = Color.decode("#FFD300");
@@ -30,6 +31,7 @@ public class Parameters {
     public static boolean PARALLEL_EXECUTE = true;
     public static boolean DELETE_CHILD_FILES = false;
     public static boolean FULL_TEST = false;
+    public static boolean PRINT_OUTPUT = false;
 
     public static void printValues() {
         PrintService.boldPrintln("Parameters\n");
@@ -44,6 +46,7 @@ public class Parameters {
         PrintService.formatPrint("gitCommand: " + GIT_COMMAND);
         PrintService.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
         PrintService.formatPrint("fullTest: " + FULL_TEST);
+        PrintService.formatPrint("printOutput: " + PRINT_OUTPUT);
     }
 
 }
