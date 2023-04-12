@@ -35,6 +35,7 @@ public class ProcessBuilderWrapper {
         this.timer.stop();
     }
 
+    // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
     public void printResult() {
         PrintService.print("Process ");
         if (isSuccessful()) {

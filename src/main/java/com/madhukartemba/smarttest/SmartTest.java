@@ -94,6 +94,8 @@ public class SmartTest {
 
     }
 
+    // Print the end message
+    // Print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
     public static void printEndMessage() {
         PrintService.boldPrintln("Thanks for using this program :)\n\n", Color.decode("#23D18B"));
     }

@@ -254,7 +254,29 @@ public class FileService {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine();
             while (line != null) {
-                PrintService.formatPrint(line);
+                String successString = "BUILD SUCCESSFUL";
+                String failedString = "BUILD FAILED";
+                int successIndex = line.indexOf(successString);
+                int failedIndex = line.indexOf(failedString);
+                if (successIndex >= 0) {
+                    String prefix = line.substring(0, successIndex);
+                    String suffix = line.substring(successIndex + successString.length());
+
+                    PrintService.print(prefix);
+                    // Print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
+                    PrintService.boldPrint(successString, Color.decode("#23D18B"));
+                    PrintService.println(suffix);
+                } else if (failedIndex >= 0) {
+                    String prefix = line.substring(0, successIndex);
+                    String suffix = line.substring(successIndex + successString.length());
+
+                    PrintService.print(prefix);
+                    PrintService.boldPrint(successString, Color.RED);
+                    PrintService.println(suffix);
+                } else {
+                    PrintService.formatPrint(line);
+                }
+
                 line = reader.readLine();
             }
             reader.close();

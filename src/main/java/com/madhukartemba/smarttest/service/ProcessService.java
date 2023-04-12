@@ -270,7 +270,7 @@ public class ProcessService {
         return totalCount;
     }
 
-    // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VS Code :)
+    // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
     public void printResults(Timer timer) {
 
         if (Parameters.PRINT_OUTPUT) {
