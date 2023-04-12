@@ -49,7 +49,7 @@ public class ParametersService {
         if (argsMap.containsKey("gitCommand")) {
             String gitCommand = argsMap.get("gitCommand");
             Parameters.GIT_COMMAND = gitCommand;
-            SmartTest.checkForShellInjection(gitCommand, "./gradlew");
+            SmartTest.checkForShellInjection(gitCommand, "git");
         }
 
         if (argsMap.containsKey("gradleOption")) {

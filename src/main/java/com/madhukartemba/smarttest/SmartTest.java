@@ -112,7 +112,7 @@ public class SmartTest {
         command.trim();
         if (!command.startsWith(expectedCommand + " ") || command.contains("&&")) {
             SmartTest.exitWithCode(
-                    "POTENTIAL SHELL INJECTION ATTACK: The git command should not contain any other command.",
+                    "POTENTIAL SHELL INJECTION ATTACK: The given command should not contain any unexpected command. Expected command: " + expectedCommand,
                     Color.RED,
                     1);
         }
