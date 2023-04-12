@@ -95,11 +95,12 @@ public class SmartTest {
     }
 
     public static void printEndMessage() {
-        PrintService.boldPrintln("Thanks for using this program :)\n\n", Color.GREEN);
+        PrintService.boldPrintln("Thanks for using this program :)\n\n", Color.decode("#23D18B"));
     }
 
     public static void exitWithCode(String message, Color color, int exitCode) {
-        PrintService.println("\n\n" + message + "\n", color);
+        PrintService.println("\n\n" + message + "\n\n", color);
+        printEndMessage();
         System.exit(exitCode);
     }
 
