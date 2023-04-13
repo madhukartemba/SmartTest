@@ -267,11 +267,11 @@ public class FileService {
                     PrintService.boldPrint(successString, Color.decode("#23D18B"));
                     PrintService.println(suffix);
                 } else if (failedIndex >= 0) {
-                    String prefix = line.substring(0, successIndex);
-                    String suffix = line.substring(successIndex + successString.length());
+                    String prefix = line.substring(0, failedIndex);
+                    String suffix = line.substring(failedIndex + failedString.length());
 
                     PrintService.print(prefix);
-                    PrintService.boldPrint(successString, Color.RED);
+                    PrintService.boldPrint(failedString, Color.RED);
                     PrintService.println(suffix);
                 } else {
                     PrintService.formatPrint(line);
