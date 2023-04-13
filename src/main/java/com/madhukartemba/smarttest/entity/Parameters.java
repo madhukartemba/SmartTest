@@ -42,7 +42,6 @@ public class Parameters {
         PrintService.formatPrint("defaultColor2: " + DEFAULT_COLOR_2);
         PrintService.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
         PrintService.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
-        PrintService.formatPrint("gradleOption: " + GRADLE_OPTION_NAME);
         PrintService.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS
                 + (USER_PROVIDED_THREAD_COUNT ? " (user provided)" : " (determined automatically)"));
         PrintService.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
