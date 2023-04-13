@@ -13,7 +13,6 @@ public class Parameters {
             "defaultColor1",
             "defaultColor2",
             "gradleCommand",
-            "gradleOption",
             "maxParallelThreads",
             "gitCommand",
             "officialMergeRequestPattern",
@@ -26,7 +25,7 @@ public class Parameters {
     public static Color DEFAULT_COLOR_1 = Color.decode("#03A9F4");
     public static Color DEFAULT_COLOR_2 = Color.decode("#FFD300");
     public static String GRADLE_COMMAND_NAME = "./gradlew";
-    public static String GRADLE_OPTION_NAME = "--tests";
+    public static final String GRADLE_OPTION_NAME = "--tests";
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
     public static String GIT_COMMAND = "git log --merges";
     public static int MAX_PARALLEL_THREADS = ThreadUtil.getOptimalThreadCount();
@@ -79,9 +78,6 @@ public class Parameters {
                             break;
                         case "gradleCommand":
                             paramValue = "string " + GRADLE_COMMAND_NAME;
-                            break;
-                        case "gradleOption":
-                            paramValue = "string " + GRADLE_OPTION_NAME;
                             break;
                         case "maxParallelThreads":
                             paramValue = "number " + ThreadUtil.getOptimalThreadCount() + " (determined automatically)";

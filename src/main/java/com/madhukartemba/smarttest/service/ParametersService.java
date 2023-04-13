@@ -53,11 +53,6 @@ public class ParametersService {
             SmartTest.checkForShellInjection(gitCommand, "git");
         }
 
-        if (argsMap.containsKey("gradleOption")) {
-            String gradleOption = argsMap.get("gradleOption");
-            Parameters.GRADLE_OPTION_NAME = gradleOption;
-        }
-
         if (argsMap.containsKey("officialMergeRequestPattern")) {
             String officialMergeRequestPattern = argsMap.get("officialMergeRequestPattern");
             Parameters.OFFICIAL_MERGE_REQUEST_PATTERN = officialMergeRequestPattern;
