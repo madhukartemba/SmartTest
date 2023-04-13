@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.madhukartemba.smarttest.service.PrintService;
+import com.madhukartemba.smarttest.util.ThreadUtil;
 
 public class Parameters {
 
@@ -29,6 +30,7 @@ public class Parameters {
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
     public static String GIT_COMMAND = "git log --merges";
     public static int MAX_PARALLEL_THREADS = 3;
+    public static boolean USER_PROVIDED_THREAD_COUNT = false;
     public static boolean EXPLORE_VIA_PACKAGE = false;
     public static boolean PARALLEL_EXECUTE = true;
     public static boolean DELETE_CHILD_FILES = false;
@@ -42,7 +44,7 @@ public class Parameters {
         PrintService.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
         PrintService.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
         PrintService.formatPrint("gradleOption: " + GRADLE_OPTION_NAME);
-        PrintService.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS);
+        PrintService.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS + (USER_PROVIDED_THREAD_COUNT ? " (automatic)" : " (user provided)"));
         PrintService.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
         PrintService.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES);
         PrintService.formatPrint("gitCommand: " + GIT_COMMAND);
@@ -81,7 +83,7 @@ public class Parameters {
                             paramValue = "string " + GRADLE_OPTION_NAME;
                             break;
                         case "maxParallelThreads":
-                            paramValue = "number " + MAX_PARALLEL_THREADS;
+                            paramValue = "number " + ThreadUtil.getOptimalThreadCount();
                             break;
                         case "exploreViaPackage":
                             paramValue = "(true or false) " + EXPLORE_VIA_PACKAGE;
