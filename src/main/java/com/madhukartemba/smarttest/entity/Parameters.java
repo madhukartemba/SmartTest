@@ -80,7 +80,7 @@ public class Parameters {
                             paramValue = "string " + GRADLE_COMMAND_NAME;
                             break;
                         case "maxParallelThreads":
-                            paramValue = "number " + ThreadUtil.getOptimalThreadCount() + " (determined automatically)";
+                            paramValue = "number " + MAX_PARALLEL_THREADS + " (determined automatically)";
                             break;
                         case "exploreViaPackage":
                             paramValue = "(true or false) " + EXPLORE_VIA_PACKAGE;

@@ -12,7 +12,7 @@ public class ParametersService {
 
         if (argsMap.containsKey("maxParallelThreads")) {
             int maxParallelThreads = Integer.parseInt(argsMap.get("maxParallelThreads"));
-            Parameters.MAX_PARALLEL_THREADS = maxParallelThreads;
+            Parameters.MAX_PARALLEL_THREADS = Math.max(1, maxParallelThreads);
             Parameters.USER_PROVIDED_THREAD_COUNT = true;
         }
 
