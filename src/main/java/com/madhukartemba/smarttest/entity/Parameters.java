@@ -44,7 +44,8 @@ public class Parameters {
         PrintService.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
         PrintService.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
         PrintService.formatPrint("gradleOption: " + GRADLE_OPTION_NAME);
-        PrintService.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS + (USER_PROVIDED_THREAD_COUNT ? " (automatic)" : " (user provided)"));
+        PrintService.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS
+                + (USER_PROVIDED_THREAD_COUNT ? " (user provided)" : " (determined automatically)"));
         PrintService.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
         PrintService.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES);
         PrintService.formatPrint("gitCommand: " + GIT_COMMAND);
@@ -83,7 +84,7 @@ public class Parameters {
                             paramValue = "string " + GRADLE_OPTION_NAME;
                             break;
                         case "maxParallelThreads":
-                            paramValue = "number " + ThreadUtil.getOptimalThreadCount();
+                            paramValue = "number " + ThreadUtil.getOptimalThreadCount() + " (determined automatically)";
                             break;
                         case "exploreViaPackage":
                             paramValue = "(true or false) " + EXPLORE_VIA_PACKAGE;
