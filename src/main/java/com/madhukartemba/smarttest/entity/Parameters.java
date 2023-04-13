@@ -29,7 +29,7 @@ public class Parameters {
     public static String GRADLE_OPTION_NAME = "--tests";
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
     public static String GIT_COMMAND = "git log --merges";
-    public static int MAX_PARALLEL_THREADS = 3;
+    public static int MAX_PARALLEL_THREADS = ThreadUtil.getOptimalThreadCount();
     public static boolean USER_PROVIDED_THREAD_COUNT = false;
     public static boolean EXPLORE_VIA_PACKAGE = false;
     public static boolean PARALLEL_EXECUTE = true;
