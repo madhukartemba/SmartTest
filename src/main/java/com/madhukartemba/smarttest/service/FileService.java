@@ -154,7 +154,16 @@ public class FileService {
 
     public String extractTestDirName(String filePath) {
         String[] parts = filePath.split("/");
-        return parts[2]; // index 2 corresponds to the test folder name
+        int i = 0;
+        while (i < parts.length && EnvironmentService.TEST_DIR_TO_TASK_MAP.containsKey(parts[i]) == false) {
+            i++;
+        }
+
+        if (i == parts.length) {
+            throw new RuntimeException("Did not find the test directory name for the file path: " + filePath);
+        }
+
+        return parts[i];
     }
 
     public List<String> findFilesUsingPackageName(String packageName, Set<String> visitedFiles) throws Exception {
