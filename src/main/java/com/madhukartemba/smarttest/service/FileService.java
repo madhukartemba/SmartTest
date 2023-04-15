@@ -183,7 +183,9 @@ public class FileService {
         // Add test files that reference changed file to list
         while (referencedFile != null) {
             if (isJavaFile(referencedFile) && !visitedFiles.contains(referencedFile)) {
-                referencedFile = referencedFile.substring(2);
+                if (referencedFile.startsWith("./")) {
+                    referencedFile = referencedFile.substring(2);
+                }
                 visitedFiles.add(referencedFile);
                 res.add(referencedFile);
             }
@@ -210,7 +212,9 @@ public class FileService {
         // Add test files that reference changed file to list
         while (referencedFile != null) {
             if (isJavaFile(referencedFile) && !visitedFiles.contains(referencedFile)) {
-                referencedFile = referencedFile.substring(2);
+                if (referencedFile.startsWith("./")) {
+                    referencedFile = referencedFile.substring(2);
+                }
                 visitedFiles.add(referencedFile);
                 res.add(referencedFile);
             }
@@ -232,7 +236,9 @@ public class FileService {
         // Add test files that reference changed file to list
         while (referencedFile != null) {
             if (isTestFile(referencedFile)) {
-                referencedFile = referencedFile.substring(2);
+                if (referencedFile.startsWith("./")) {
+                    referencedFile = referencedFile.substring(2);
+                }
                 res.add(referencedFile);
             }
             referencedFile = grepOutput.readLine();
