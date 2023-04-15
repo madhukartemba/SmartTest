@@ -16,7 +16,10 @@ public class CommandBuilder {
         StringBuilder outputCommand = new StringBuilder();
 
         outputCommand.append(command.getCommandName() + " ");
-        outputCommand.append(command.getProjectName() + ":" + command.getTaskName());
+        if (!command.getProjectName().equals("src")) {
+            outputCommand.append(command.getProjectName() + ":");
+        }
+        outputCommand.append(command.getTaskName());
         for (String arg : command.getArgs()) {
             outputCommand.append(" " + command.getOptionName() + " " + arg);
         }
@@ -143,7 +146,10 @@ public class CommandBuilder {
 
     public static String buildWithoutCommandName(Command command) {
         StringBuilder outputCommand = new StringBuilder();
-        outputCommand.append(" " + command.getProjectName() + ":" + command.getTaskName());
+        if (!command.getProjectName().equals("src")) {
+            outputCommand.append(command.getProjectName() + ":");
+        }
+        outputCommand.append(command.getTaskName());
         for (String arg : command.getArgs()) {
             outputCommand.append(" " + command.getOptionName() + " " + arg);
         }

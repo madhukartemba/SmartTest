@@ -115,6 +115,10 @@ public class FileService {
         String packageName = extractPackageName(fileName);
         String className = extractClassName(fileName);
 
+        if (packageName == null) {
+            return className;
+        }
+
         return packageName + "." + className;
     }
 
