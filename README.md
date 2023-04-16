@@ -28,16 +28,16 @@
 ### Unix based systems
 <ol>
 <li>You can install it by running the install.sh file from the terminal.</li>
-<li>Go to the install folder and type <code>sudo chmod +x install.sh</code></li>
+<li>Go to the install folder and type <code>sudo chmod +x install.sh</code>.</li>
 <li>After that you can run the install.sh file by giving <code>sudo ./install.sh</code>. This will install the program in your system.</li>
-<li>To uninstall this program, you can type <code>sudo chmod +x remvoe.sh</code></li>
+<li>To uninstall this program, you can type <code>sudo chmod +x remvoe.sh</code>.</li>
 <li>After that you can run the remove.sh file by giving <code>sudo ./remove.sh</code>. This will uninstall the program from your system.</li>
 </ol>
 
 ### Other
 <ol>
 <li> There will be a SmartTest.run file in the install folder. You can run it directly by typing <code>./path/to/SmartTest.run</code>.</li>
-<li>These is also an SmartTest.jar file which can be run via <code>java -jar /path/to/SmartTest.jar</code></li>
+<li>These is also an SmartTest.jar file which can be run via <code>java -jar /path/to/SmartTest.jar</code>.</li>
 </ol>
 
 <br><br>
