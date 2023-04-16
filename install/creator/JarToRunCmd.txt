@@ -1,0 +1,1 @@
+cat stub.sh SmartTest.jar > SmartTest.run && chmod +x SmartTest.run
