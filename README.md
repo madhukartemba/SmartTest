@@ -36,7 +36,7 @@
 
 ### Other
 <ol>
-<li> There will be a SmartTest.run file in the install folder. You can run it directly by typing <code>./SmartTest.run</code>. Make sure to use the correct path when running it somewhere else.</li>
+<li> There will be a SmartTest.run file in the install folder. You can run it directly by typing <code>./path/to/SmartTest.run</code>.</li>
 <li>These is also an SmartTest.jar file which can be run via <code>java -jar /path/to/SmartTest.jar</code></li>
 </ol>
 
