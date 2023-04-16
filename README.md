@@ -44,6 +44,7 @@
 ## Usage
 
 <p>You can run this program after installation by typing SmartTest in your terminal within your Gradle Java Project.</p>
+<p><b>Note: Your test classes must end in 'Test.java' or 'IT.java' to be detected by the program.</b></p>
 <br>
 
 <p>SmartTest takes the following parameters:</p>
@@ -59,6 +60,7 @@ Madhukar Temba
 <br><br>
 **Warning:** The developer of this software is not responsible for any loss of data or damage caused by the use of this program. Use it at your own risk.
 
+<br><br>
 ## License
 [MIT License](https://opensource.org/license/mit)
 
