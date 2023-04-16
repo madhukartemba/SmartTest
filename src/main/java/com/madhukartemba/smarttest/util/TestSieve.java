@@ -61,8 +61,6 @@ public class TestSieve {
             String projectName = fileService.extractProjectName(filePath);
             String testDirName = fileService.extractTestDirName(filePath);
 
-            System.out.println("File: " + filePath + " test dir name: " + testDirName);
-
             if (!isValid(filePath, projectName, testDirName)) {
                 continue;
             }

@@ -64,8 +64,6 @@ public class ProcessService {
         List<String> outputStreams = createOutputStreams(commands);
         List<String> processNames = generateProcessNames(commands);
 
-        System.out.println(finalCommands.toString());
-
         createOutputDirectory(OUTPUT_DIR);
 
         runCommandsParallel(finalCommands, outputStreams, processNames);
