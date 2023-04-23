@@ -8,11 +8,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileService {
     private String PROJECT_DIR;
@@ -199,30 +203,40 @@ public class FileService {
         return res;
     }
 
-    public List<String> findFilesUsingClassName(String className, Set<String> visitedFiles) throws Exception {
+    public List<String> findFilesUsingClassName(String className, Set<String> visitedFiles) throws IOException {
         List<String> res = new ArrayList<>();
 
         if (className == null || className.isEmpty()) {
-            PrintService.println("Empty class name was given as input to: findFilesUsingClassName", Color.RED);
-            return res;
+            throw new IllegalArgumentException("Empty class name was given as input to: findFilesUsingClassName");
         }
 
-        processBuilder.command("grep", "-r", "-l", "-w", "--exclude-from=.gitignore", className, ".");
-        Process grepProcess = processBuilder.start();
-        BufferedReader grepOutput = new BufferedReader(new InputStreamReader(grepProcess.getInputStream()));
-        grepProcess.waitFor();
-        String referencedFile = grepOutput.readLine();
+        String[] extensions = { "java" };
+        Path start = Paths.get(".");
+        int maxDepth = Integer.MAX_VALUE;
 
-        // Add test files that reference changed file to list
-        while (referencedFile != null) {
-            if (isJavaFile(referencedFile) && !visitedFiles.contains(referencedFile)) {
+        try (Stream<Path> stream = Files.find(start, maxDepth,
+                (path, attr) -> {
+                    try {
+                        return attr.isRegularFile()
+                                && Arrays.stream(extensions)
+                                        .anyMatch(ext -> path.toString().endsWith("." + ext))
+                                && Files.lines(path).anyMatch(line -> line.contains(className));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return false;
+                })) {
+            stream.forEach(path -> {
+                String referencedFile = path.toString();
                 if (referencedFile.startsWith("./")) {
                     referencedFile = referencedFile.substring(2);
                 }
-                visitedFiles.add(referencedFile);
-                res.add(referencedFile);
-            }
-            referencedFile = grepOutput.readLine();
+                if (!visitedFiles.contains(referencedFile)) {
+                    visitedFiles.add(referencedFile);
+                    res.add(referencedFile);
+                }
+            });
         }
 
         return res;
