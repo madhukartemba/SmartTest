@@ -4,9 +4,16 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.regex.Pattern;
 
 public class FileCleaner {
+
+    public static void main(String[] args) throws IOException {
+        Path path = Paths.get("input.txt");
+        System.out.println(clean(path));
+    }
+
     /**
      * This function will accept a file path and will return a string after removing
      * all the comments and strings from the file.
@@ -19,12 +26,13 @@ public class FileCleaner {
         // Read the input file into a string
         String input = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-        // Define the regular expression pattern to match comments and string literals
+        // Define the regular expression pattern to match comments, string literals and
+        // endline characters.
         Pattern pattern = Pattern.compile(
-                "\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\.[^'\\\\]*)*'|/\\*.*?\\*/|//.*?$",
+                "\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\.[^'\\\\]*)*'|/\\*.*?\\*/|//.*?$|\n",
                 Pattern.DOTALL | Pattern.MULTILINE);
 
-        // Remove all comments and string literals from the input string
+        // Remove all comments, string literals and endlines from the input string
         return pattern.matcher(input).replaceAll("");
     }
 

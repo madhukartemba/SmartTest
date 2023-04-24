@@ -18,6 +18,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.madhukartemba.smarttest.util.CodeParser;
+import com.madhukartemba.smarttest.util.FileCleaner;
+
 public class FileService {
     private String PROJECT_DIR;
     private ProcessBuilder processBuilder;
@@ -214,13 +217,28 @@ public class FileService {
         Path start = Paths.get(".");
         int maxDepth = Integer.MAX_VALUE;
 
+        CodeParser codeParser = new CodeParser(className);
+
         try (Stream<Path> stream = Files.find(start, maxDepth,
                 (path, attr) -> {
                     try {
-                        return attr.isRegularFile()
-                                && Arrays.stream(extensions)
-                                        .anyMatch(ext -> path.toString().endsWith("." + ext))
-                                && Files.lines(path).anyMatch(line -> line.contains(className));
+
+                        if (!attr.isRegularFile()) {
+                            return false;
+                        }
+
+                        if (!Arrays.stream(extensions).anyMatch(ext -> path.toString().endsWith("." + ext))) {
+                            return false;
+                        }
+
+                        if (visitedFiles.contains(path.toString())) {
+                            return false;
+                        }
+
+                        String cleanFile = FileCleaner.clean(path);
+
+                        return codeParser.containsKeyword(cleanFile);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

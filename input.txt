@@ -9,6 +9,7 @@ This is a test
 
 // This is a test
 
+\n This is an endline command
 
 public class RemoveComments {
     public static void main(String[] args) throws IOException {
@@ -16,7 +17,7 @@ public class RemoveComments {
         String input = new String(Files.readAllBytes(Paths.get("input.java")), StandardCharsets.UTF_8);
 
         // Define the regular expression pattern to match comments
-        Pattern pattern = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL | Pattern.MULTILINE);
+        Pattern pattern = Pattern.compile("/\n\\*.*?\\*/", Pattern.DOTALL | Pattern.MULTILINE);
 
         // Remove all comments from the input string
         String output = pattern.matcher(input).replaceAll("");
