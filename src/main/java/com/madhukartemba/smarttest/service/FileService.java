@@ -231,7 +231,13 @@ public class FileService {
                             return false;
                         }
 
-                        if (visitedFiles.contains(path.toString())) {
+                        String filePath = path.toString();
+
+                        if (filePath.startsWith("./")) {
+                            filePath = filePath.substring(2);
+                        }
+
+                        if (visitedFiles.contains(filePath)) {
                             return false;
                         }
 
