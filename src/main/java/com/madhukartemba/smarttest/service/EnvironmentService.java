@@ -48,6 +48,9 @@ public class EnvironmentService {
     public static void init(String PROJECT_DIR) {
         PrintService.boldPrintln("\nEnvironment\n");
         EnvironmentService.PROJECT_DIR = PROJECT_DIR;
+        if (!PROJECT_DIR.endsWith("/")) {
+            PROJECT_DIR += "/";
+        }
         PrintService.formatPrint("Input project directory: " + PROJECT_DIR);
         findOperatingSystem();
         findSystemDirectory();
@@ -133,7 +136,8 @@ public class EnvironmentService {
 
     private static void checkDir() {
         ON_SYSTEM_DIR = true;
-        if (!SYSTEM_DIR.equals(PROJECT_DIR) && PROJECT_DIR.endsWith("/") && !SYSTEM_DIR.equals(PROJECT_DIR.substring(0, PROJECT_DIR.length() - 1))) {
+        if (!SYSTEM_DIR.equals(PROJECT_DIR) && PROJECT_DIR.endsWith("/")
+                && !SYSTEM_DIR.equals(PROJECT_DIR.substring(0, PROJECT_DIR.length() - 1))) {
             ON_SYSTEM_DIR = false;
         }
     }
