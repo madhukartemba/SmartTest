@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class ProcessService {
+public class TestRunnerService {
     private static final String OUTPUT_DIR_NAME = "SmartTestOutput/";
     private static final String OUTPUT_FILE_NAME = "smartTestOutput.txt";
     private FileService fileService;
@@ -33,13 +33,13 @@ public class ProcessService {
     private int successfulCount = 0;
     private int unsuccessfulCount = 0;
 
-    public ProcessService() {
+    public TestRunnerService() {
         this.fileService = new FileService();
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
-    public ProcessService(String PROJECT_DIR) {
+    public TestRunnerService(String PROJECT_DIR) {
         this.PROJECT_DIR = PROJECT_DIR;
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }

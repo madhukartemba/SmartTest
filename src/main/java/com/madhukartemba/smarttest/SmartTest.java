@@ -75,22 +75,22 @@ public class SmartTest {
         }
 
         // Execute the processes using ProcessService.
-        ProcessService processService = new ProcessService();
+        TestRunnerService testRunnerService = new TestRunnerService();
         if (Parameters.PARALLEL_EXECUTE) {
-            processService.parallelExecute(commands);
+            testRunnerService.parallelExecute(commands);
         } else {
-            processService.execute(commands);
+            testRunnerService.execute(commands);
         }
 
         // Process is complete, stop the timer.
         timer.stop();
 
-        processService.printResults(timer);
+        testRunnerService.printResults(timer);
 
         printEndMessage();
 
         // Return the exit code.
-        System.exit(processService.isBuildSuccessful() ? 0 : 1);
+        System.exit(testRunnerService.isBuildSuccessful() ? 0 : 1);
 
     }
 
