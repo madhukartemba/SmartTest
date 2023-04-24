@@ -282,7 +282,8 @@ public class RunnerService {
     }
 
     protected String createOutputStreamFileName(Command command, int streamId) {
-        return OUTPUT_DIR + command.getProjectName() + "-" + command.getTaskName() + "-output" + streamId
+        return OUTPUT_DIR + (command.getProjectName() == null ? "" : command.getProjectName() + "-")
+                + command.getTaskName() + "-output" + streamId
                 + ".txt";
     }
 }
