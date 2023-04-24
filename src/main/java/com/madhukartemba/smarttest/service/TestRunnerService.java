@@ -37,11 +37,10 @@ public class TestRunnerService extends RunnerService {
 
         List<String> finalCommands = Arrays.asList(CommandBuilder.build(commands, EnvironmentService.TASK_PRIORITY));
         List<String> outputStreams = Arrays.asList(OUTPUT_DIR + OUTPUT_FILE_NAME);
-        List<String> processNames = Arrays.asList("AllTests");
 
         createOutputDirectory(OUTPUT_DIR);
 
-        runCommandsParallel(finalCommands, outputStreams, processNames);
+        runCommandsParallel(finalCommands, outputStreams, outputStreams);
     }
 
     @Override
@@ -51,11 +50,10 @@ public class TestRunnerService extends RunnerService {
 
         List<String> finalCommands = CommandBuilder.parallelBuild(commands);
         List<String> outputStreams = createOutputStreams(commands);
-        List<String> processNames = generateProcessNames(commands);
 
         createOutputDirectory(OUTPUT_DIR);
 
-        runCommandsParallel(finalCommands, outputStreams, processNames);
+        runCommandsParallel(finalCommands, outputStreams, outputStreams);
 
         createAndPopulateOutputFile(outputStreams, Parameters.DELETE_CHILD_FILES);
     }
@@ -66,7 +64,7 @@ public class TestRunnerService extends RunnerService {
 
         totalCount = totalProcessBuilders.size();
 
-        PrintService.formatPrint("\nTotal number of processes: " + totalCount + "\n");
+        PrintService.formatPrint("\nTotal number of test processes: " + totalCount + "\n");
 
         runProcessBuilders(totalProcessBuilders);
 

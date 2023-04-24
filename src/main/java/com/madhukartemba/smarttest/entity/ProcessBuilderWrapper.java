@@ -41,7 +41,7 @@ public class ProcessBuilderWrapper {
         if (isSuccessful()) {
             PrintService.boldFormatPrint(
                     this.getName() +
-                            ": BUILD SUCCESSFUL in " + timer.getElapsedTime(),
+                            " : BUILD SUCCESSFUL in " + timer.getElapsedTime(),
                     Color.WHITE,
                     Color.decode("#23D18B"));
         } else {
