@@ -16,7 +16,7 @@ public class CommandBuilder {
         StringBuilder outputCommand = new StringBuilder();
 
         outputCommand.append(command.getCommandName() + " ");
-        if (!command.getProjectName().equals("src")) {
+        if (command.getProjectName() != null && !command.getProjectName().equals("src")) {
             outputCommand.append(command.getProjectName() + ":");
         }
         outputCommand.append(command.getTaskName());
@@ -146,7 +146,7 @@ public class CommandBuilder {
 
     public static String buildWithoutCommandName(Command command) {
         StringBuilder outputCommand = new StringBuilder();
-        if (!command.getProjectName().equals("src")) {
+        if (command.getProjectName() != null && !command.getProjectName().equals("src")) {
             outputCommand.append(command.getProjectName() + ":");
         }
         outputCommand.append(command.getTaskName());

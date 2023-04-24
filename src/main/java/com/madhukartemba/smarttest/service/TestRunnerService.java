@@ -15,32 +15,20 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
-public class TestRunnerService {
+public class TestRunnerService extends RunnerService {
     private static final String OUTPUT_DIR_NAME = "SmartTestOutput/";
     private static final String OUTPUT_FILE_NAME = "smartTestOutput.txt";
     private FileService fileService;
-    private String PROJECT_DIR;
     private String OUTPUT_DIR;
-    private boolean executionComplete = false;
-    private int totalCount = 0;
-    private int successfulCount = 0;
-    private int unsuccessfulCount = 0;
 
     public TestRunnerService() {
         this.fileService = new FileService();
-        this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
     public TestRunnerService(String PROJECT_DIR) {
-        this.PROJECT_DIR = PROJECT_DIR;
+        super(PROJECT_DIR);
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
@@ -56,6 +44,7 @@ public class TestRunnerService {
         runCommandsParallel(finalCommands, outputStreams, processNames);
     }
 
+    @Override
     public void parallelExecute(List<Command> commands) throws Exception {
 
         PrintService.boldPrintln("\n\nStarting to run processes...\n");
@@ -85,7 +74,7 @@ public class TestRunnerService {
 
     }
 
-    private List<ProcessBuilderWrapper> createProcessBuilders(List<String> commands, List<String> outputStreams,
+    protected List<ProcessBuilderWrapper> createProcessBuilders(List<String> commands, List<String> outputStreams,
             List<String> processNames) {
         List<ProcessBuilderWrapper> processBuilderWrappers = new ArrayList<>();
         int streamId = 0;
@@ -138,14 +127,6 @@ public class TestRunnerService {
         return outputStreams;
     }
 
-    private List<String> generateProcessNames(List<Command> commands) {
-        return commands.stream().map(command -> generateProcessName(command)).collect(Collectors.toList());
-    }
-
-    private String generateProcessName(Command command) {
-        return command.getProjectName() + "->" + command.getTaskName();
-    }
-
     private String createOutputStreamFileName(Command command, int streamId) {
         return OUTPUT_DIR + command.getProjectName() + "-" + command.getTaskName() + "-output" + streamId
                 + ".txt";
@@ -172,70 +153,6 @@ public class TestRunnerService {
             }
             PrintService.println("Output directory cleaned successfully.", Color.GREEN);
         }
-    }
-
-    private void runProcessBuilders(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
-        // Run parallely.
-        parallelRun(processBuilderWrappers);
-
-        // Store the result.
-        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
-            if (processBuilderWrapper.isSuccessful()) {
-                successfulCount++;
-            } else {
-                unsuccessfulCount++;
-            }
-        }
-    }
-
-    public void parallelRun(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
-        ExecutorService executorService = Executors.newFixedThreadPool(Parameters.MAX_PARALLEL_THREADS);
-
-        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
-            Runnable task = () -> {
-                try {
-                    processBuilderWrapper.start();
-                    processBuilderWrapper.waitForCompletion();
-                    processBuilderWrapper.printResult();
-                } catch (Exception e) {
-                    // Handle exception
-                    e.printStackTrace();
-                }
-            };
-            executorService.execute(task);
-        }
-        executorService.shutdown();
-        try {
-            // This will terminate after 3 hours
-            executorService.awaitTermination(3L, TimeUnit.HOURS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void waitForProcesses(List<ProcessBuilderWrapper> processBuilderWrappers)
-            throws InterruptedException {
-        ExecutorService executor = Executors.newFixedThreadPool(processBuilderWrappers.size());
-        List<Future<Void>> futures = new ArrayList<>();
-
-        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
-            futures.add(executor.submit(() -> {
-                processBuilderWrapper.waitForCompletion();
-                processBuilderWrapper.printResult();
-                return null;
-            }));
-        }
-
-        for (Future<Void> future : futures) {
-            try {
-                future.get();
-            } catch (ExecutionException e) {
-                // Handle exception
-                e.printStackTrace();
-            }
-        }
-
-        executor.shutdown();
     }
 
     public boolean isBuildSuccessful() {
