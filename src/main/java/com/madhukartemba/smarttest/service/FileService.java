@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -241,7 +242,13 @@ public class FileService {
                             return false;
                         }
 
-                        String cleanFile = FileCleaner.clean(path);
+                        String inputString = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+                        if (!codeParser.containsKeyword(inputString)) {
+                            return false;
+                        }
+
+                        String cleanFile = FileCleaner.clean(inputString);
 
                         return codeParser.containsKeyword(cleanFile);
 

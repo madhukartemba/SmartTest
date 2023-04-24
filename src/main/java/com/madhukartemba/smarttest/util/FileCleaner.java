@@ -36,4 +36,24 @@ public class FileCleaner {
         return pattern.matcher(input).replaceAll("");
     }
 
+    /**
+     * This function will accept a file path and will return a string after removing
+     * all the comments and strings from the file.
+     * 
+     * @param input string.
+     * @return Cleaned file as a string.
+     * @throws IOException
+     */
+    public static String clean(String input) throws IOException {
+
+        // Define the regular expression pattern to match comments, string literals and
+        // endline characters.
+        Pattern pattern = Pattern.compile(
+                "\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\.[^'\\\\]*)*'|/\\*.*?\\*/|//.*?$|\n",
+                Pattern.DOTALL | Pattern.MULTILINE);
+
+        // Remove all comments, string literals and endlines from the input string
+        return pattern.matcher(input).replaceAll("");
+    }
+
 }
