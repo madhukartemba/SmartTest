@@ -5,12 +5,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 public class FileCleaner {
 
-    private static HashMap<Path, String> fileToCleanOutputCache = new HashMap<>();
+    private static ConcurrentHashMap<Path, String> fileToCleanOutputCache = new ConcurrentHashMap<>();
 
     public static void main(String[] args) throws IOException {
         Path path = Paths.get("input.txt");
