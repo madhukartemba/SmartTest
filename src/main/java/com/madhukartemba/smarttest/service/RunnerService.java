@@ -44,39 +44,49 @@ public class RunnerService {
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
+    public void execute(List<Command> commands) throws Exception {
+        execute(commands, false, true, false);
+    }
+
     public void execute(List<Command> commands, boolean cleanDirectory) throws Exception {
+        execute(commands, cleanDirectory, true, false);
+    }
+
+    public void execute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput) throws Exception {
+        execute(commands, cleanDirectory, addToFinalOutput, Parameters.DELETE_CHILD_FILES);
+    }
+
+    public void execute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput,
+            boolean deleteChildFiles) throws Exception {
 
         List<String> finalCommands = Arrays.asList(CommandBuilder.build(commands, EnvironmentService.TASK_PRIORITY));
         List<String> outputStreams = Arrays.asList(OUTPUT_DIR + OUTPUT_FILE_NAME);
 
-        createOutputDirectory(OUTPUT_DIR, cleanDirectory);
-
-        runCommandsParallel(finalCommands, outputStreams, outputStreams);
+        baseExecute(finalCommands, outputStreams, cleanDirectory, addToFinalOutput, deleteChildFiles);
     }
 
-    public void parallelExecute(List<Command> commands, boolean cleanDirectory) throws Exception {
+    public void parallelExecute(List<Command> commands) throws Exception {
+        parallelExecute(commands, false, true, false);
+    }
 
-        List<String> finalCommands = CommandBuilder.parallelBuild(commands);
-        List<String> outputStreams = createOutputStreams(commands);
-
-        createOutputDirectory(OUTPUT_DIR, cleanDirectory);
-
-        runCommandsParallel(finalCommands, outputStreams, outputStreams);
+    public void parallelExecute(List<Command> commands, boolean cleanDirectory)
+            throws Exception {
+        parallelExecute(commands, cleanDirectory, true, false);
     }
 
     public void parallelExecute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput)
+            throws Exception {
+        parallelExecute(commands, cleanDirectory, addToFinalOutput, Parameters.DELETE_CHILD_FILES);
+    }
+
+    public void parallelExecute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput,
+            boolean deleteChildFiles)
             throws Exception {
 
         List<String> finalCommands = CommandBuilder.parallelBuild(commands);
         List<String> outputStreams = createOutputStreams(commands);
 
-        createOutputDirectory(OUTPUT_DIR, cleanDirectory);
-
-        runCommandsParallel(finalCommands, outputStreams, outputStreams);
-
-        if (addToFinalOutput) {
-            createAndPopulateOutputFile(outputStreams, Parameters.DELETE_CHILD_FILES);
-        }
+        baseExecute(finalCommands, outputStreams, cleanDirectory, addToFinalOutput, deleteChildFiles);
     }
 
     public static void waitForProcesses(List<ProcessBuilderWrapper> processBuilderWrappers)
@@ -102,6 +112,19 @@ public class RunnerService {
         }
 
         executor.shutdown();
+    }
+
+    protected void baseExecute(List<String> finalCommands, List<String> outputStreams, boolean cleanDirectory,
+            boolean addToFinalOutput,
+            boolean deleteChildFiles) throws Exception {
+        createOutputDirectory(OUTPUT_DIR, cleanDirectory);
+
+        runCommandsParallel(finalCommands, outputStreams, outputStreams);
+
+        if (addToFinalOutput) {
+            createAndPopulateOutputFile(outputStreams, deleteChildFiles);
+        }
+
     }
 
     protected List<ProcessBuilderWrapper> createProcessBuilders(List<String> commands, List<String> outputStreams,
