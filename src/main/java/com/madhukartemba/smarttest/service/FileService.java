@@ -25,17 +25,28 @@ public class FileService {
     private String PROJECT_DIR;
     private ProcessBuilder processBuilder;
     private boolean completeRunRequired = false;
+    private Path startPath = null;
 
     private static List<String> ignoredFiles = Arrays.asList(".gitignore", "README.md");
 
     public FileService() {
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
+        if (EnvironmentService.ON_SYSTEM_DIR) {
+            startPath = Paths.get(".");
+        } else {
+            startPath = Paths.get(PROJECT_DIR);
+        }
         processBuilder = new ProcessBuilder();
         processBuilder.directory(new File(PROJECT_DIR));
     }
 
     public FileService(String PROJECT_DIR) {
         this.PROJECT_DIR = PROJECT_DIR;
+        if (EnvironmentService.ON_SYSTEM_DIR) {
+            startPath = Paths.get(".");
+        } else {
+            startPath = Paths.get(PROJECT_DIR);
+        }
         processBuilder = new ProcessBuilder();
         processBuilder.directory(new File(PROJECT_DIR));
     }
@@ -214,12 +225,11 @@ public class FileService {
         }
 
         String[] extensions = { "java" };
-        Path start = Paths.get(".");
         int maxDepth = Integer.MAX_VALUE;
 
         CodeParser codeParser = new CodeParser(className);
 
-        try (Stream<Path> stream = Files.find(start, maxDepth,
+        try (Stream<Path> stream = Files.find(startPath, maxDepth,
                 (path, attr) -> {
                     try {
 

@@ -15,6 +15,7 @@ public class EnvironmentService {
     public static String PROJECT_DIR = null;
     public static String SYSTEM_DIR = null;
     public static String OS_NAME = null;
+    public static boolean ON_SYSTEM_DIR = false;
 
     public static List<String> PROJECT_NAMES = null;
 
@@ -40,6 +41,7 @@ public class EnvironmentService {
         findSystemDirectory();
         findProjectDirectory();
         findProjectNames();
+        checkDir();
         PrintService.formatPrint("\nTask Priority (decreasing): " + TASK_PRIORITY.toString());
     }
 
@@ -50,6 +52,7 @@ public class EnvironmentService {
         findOperatingSystem();
         findSystemDirectory();
         findProjectNames();
+        checkDir();
         PrintService.formatPrint("\nTask Priority (decreasing): " + TASK_PRIORITY.toString());
     }
 
@@ -126,6 +129,13 @@ public class EnvironmentService {
     public static boolean folderExists(String folderPath) {
         File folder = new File(folderPath);
         return folder.exists() && folder.isDirectory();
+    }
+
+    private static void checkDir() {
+        ON_SYSTEM_DIR = true;
+        if (!SYSTEM_DIR.equals(PROJECT_DIR) && !SYSTEM_DIR.equals(PROJECT_DIR.substring(0, PROJECT_DIR.length() - 1))) {
+            ON_SYSTEM_DIR = false;
+        }
     }
 
 }
