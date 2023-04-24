@@ -45,11 +45,11 @@ public class RunnerService {
     }
 
     public void execute(List<Command> commands) throws Exception {
-        execute(commands, false, true, false);
+        execute(commands, false);
     }
 
     public void execute(List<Command> commands, boolean cleanDirectory) throws Exception {
-        execute(commands, cleanDirectory, true, false);
+        execute(commands, cleanDirectory, true);
     }
 
     public void execute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput) throws Exception {
@@ -66,12 +66,12 @@ public class RunnerService {
     }
 
     public void parallelExecute(List<Command> commands) throws Exception {
-        parallelExecute(commands, false, true, false);
+        parallelExecute(commands, false);
     }
 
     public void parallelExecute(List<Command> commands, boolean cleanDirectory)
             throws Exception {
-        parallelExecute(commands, cleanDirectory, true, false);
+        parallelExecute(commands, cleanDirectory, true);
     }
 
     public void parallelExecute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput)
