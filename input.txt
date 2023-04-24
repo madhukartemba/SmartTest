@@ -1,0 +1,27 @@
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.util.regex.*;
+
+/*
+This is a test
+*/
+
+// This is a test
+
+
+public class RemoveComments {
+    public static void main(String[] args) throws IOException {
+        // Read the input file into a string
+        String input = new String(Files.readAllBytes(Paths.get("input.java")), StandardCharsets.UTF_8);
+
+        // Define the regular expression pattern to match comments
+        Pattern pattern = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL | Pattern.MULTILINE);
+
+        // Remove all comments from the input string
+        String output = pattern.matcher(input).replaceAll("");
+
+        // Write the output string to a file
+        Files.write(Paths.get("output.java"), output.getBytes(StandardCharsets.UTF_8));
+    }
+}
