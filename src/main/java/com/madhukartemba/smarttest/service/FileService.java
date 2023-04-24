@@ -60,7 +60,7 @@ public class FileService {
             return false;
         }
 
-        if(EnvironmentService.ON_SYSTEM_DIR == false) {
+        if (EnvironmentService.ON_SYSTEM_DIR) {
             filePath = PROJECT_DIR + filePath;
         }
 
@@ -145,7 +145,7 @@ public class FileService {
     }
 
     public String extractPackageName(String filePath) {
-        if(EnvironmentService.ON_SYSTEM_DIR == false) {
+        if (EnvironmentService.ON_SYSTEM_DIR) {
             filePath = PROJECT_DIR + filePath;
         }
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

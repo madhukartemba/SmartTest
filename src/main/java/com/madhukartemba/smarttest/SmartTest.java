@@ -112,7 +112,8 @@ public class SmartTest {
         command.trim();
         if (!command.startsWith(expectedCommand + " ") || command.contains("&&")) {
             SmartTest.exitWithCode(
-                    "POTENTIAL SHELL INJECTION ATTACK: The given command should not contain any unexpected command. Expected command: " + expectedCommand,
+                    "POTENTIAL SHELL INJECTION ATTACK: The given command should not contain any unexpected command. Expected command: "
+                            + expectedCommand,
                     Color.RED,
                     1);
         }
