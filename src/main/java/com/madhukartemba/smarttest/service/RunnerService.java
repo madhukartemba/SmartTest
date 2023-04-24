@@ -62,8 +62,21 @@ public class RunnerService {
         createOutputDirectory(OUTPUT_DIR, cleanDirectory);
 
         runCommandsParallel(finalCommands, outputStreams, outputStreams);
+    }
 
-        createAndPopulateOutputFile(outputStreams, Parameters.DELETE_CHILD_FILES);
+    public void parallelExecute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput)
+            throws Exception {
+
+        List<String> finalCommands = CommandBuilder.parallelBuild(commands);
+        List<String> outputStreams = createOutputStreams(commands);
+
+        createOutputDirectory(OUTPUT_DIR, cleanDirectory);
+
+        runCommandsParallel(finalCommands, outputStreams, outputStreams);
+
+        if (addToFinalOutput) {
+            createAndPopulateOutputFile(outputStreams, Parameters.DELETE_CHILD_FILES);
+        }
     }
 
     public static void waitForProcesses(List<ProcessBuilderWrapper> processBuilderWrappers)
@@ -188,9 +201,13 @@ public class RunnerService {
     protected void createAndPopulateOutputFile(List<String> outputStreams, boolean deleteChildFiles) throws Exception {
         // Merge the output files into a single file
         try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter(OUTPUT_DIR + OUTPUT_FILE_NAME))) {
+                new FileWriter(OUTPUT_DIR + OUTPUT_FILE_NAME, true))) {
             for (String outputFile : outputStreams) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(outputFile))) {
+
+                    writer.append("\nOUTPUT FROM: " + outputFile + "\n");
+                    writer.newLine();
+
                     String line;
                     while ((line = reader.readLine()) != null) {
                         writer.write(line);
