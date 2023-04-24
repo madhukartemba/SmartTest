@@ -5,9 +5,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class FileCleaner {
+
+    private static HashMap<Path, String> fileToCleanOutputCache = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
         Path path = Paths.get("input.txt");
@@ -23,6 +26,11 @@ public class FileCleaner {
      * @throws IOException
      */
     public static String clean(Path path) throws IOException {
+
+        if (fileToCleanOutputCache.containsKey(path)) {
+            return fileToCleanOutputCache.get(path);
+        }
+
         // Read the input file into a string
         String input = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 
@@ -33,7 +41,11 @@ public class FileCleaner {
                 Pattern.DOTALL | Pattern.MULTILINE);
 
         // Remove all comments, string literals and endlines from the input string
-        return pattern.matcher(input).replaceAll("");
+        String output = pattern.matcher(input).replaceAll("");
+
+        fileToCleanOutputCache.put(path, output);
+
+        return output;
     }
 
     /**
