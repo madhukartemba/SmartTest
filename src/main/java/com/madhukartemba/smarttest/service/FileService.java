@@ -250,7 +250,7 @@ public class FileService {
                     }
 
                     return false;
-                })) {
+                }).parallel()) {
             stream.forEach(path -> {
                 String referencedFile = path.toString();
                 if (referencedFile.startsWith("./")) {
