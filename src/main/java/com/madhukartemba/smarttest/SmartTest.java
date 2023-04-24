@@ -77,9 +77,9 @@ public class SmartTest {
         // Execute the processes using ProcessService.
         TestRunnerService testRunnerService = new TestRunnerService();
         if (Parameters.PARALLEL_EXECUTE) {
-            testRunnerService.parallelExecute(commands);
+            testRunnerService.parallelExecute(commands, false);
         } else {
-            testRunnerService.execute(commands);
+            testRunnerService.execute(commands, false);
         }
 
         // Process is complete, stop the timer.

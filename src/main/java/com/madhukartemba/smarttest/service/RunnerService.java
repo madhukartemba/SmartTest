@@ -1,6 +1,11 @@
 package com.madhukartemba.smarttest.service;
 
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,48 +23,75 @@ import com.madhukartemba.smarttest.util.CommandBuilder;
 
 public class RunnerService {
 
+    protected static final String OUTPUT_DIR_NAME = "SmartTestOutput/";
+    protected static final String OUTPUT_FILE_NAME = "smartTestOutput.txt";
+
     protected boolean executionComplete = false;
     protected int totalCount = 0;
     protected int successfulCount = 0;
     protected int unsuccessfulCount = 0;
     protected String PROJECT_DIR;
+    protected String OUTPUT_DIR;
 
     public RunnerService() {
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
+        this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
     public RunnerService(String PROJECT_DIR) {
         this.PROJECT_DIR = PROJECT_DIR;
+        this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
-    public void execute(List<Command> commands) throws Exception {
+    public void execute(List<Command> commands, boolean cleanDirectory) throws Exception {
+
         List<String> finalCommands = Arrays.asList(CommandBuilder.build(commands, EnvironmentService.TASK_PRIORITY));
-        List<String> processNames = generateProcessNames(commands);
+        List<String> outputStreams = Arrays.asList(OUTPUT_DIR + OUTPUT_FILE_NAME);
 
-        runCommandsParallel(finalCommands, processNames);
+        createOutputDirectory(OUTPUT_DIR, cleanDirectory);
+
+        runCommandsParallel(finalCommands, outputStreams, outputStreams);
     }
 
-    public void parallelExecute(List<Command> commands) throws Exception {
+    public void parallelExecute(List<Command> commands, boolean cleanDirectory) throws Exception {
 
         List<String> finalCommands = CommandBuilder.parallelBuild(commands);
-        List<String> processNames = generateProcessNames(commands);
+        List<String> outputStreams = createOutputStreams(commands);
 
-        runCommandsParallel(finalCommands, processNames);
+        createOutputDirectory(OUTPUT_DIR, cleanDirectory);
+
+        runCommandsParallel(finalCommands, outputStreams, outputStreams);
+
+        createAndPopulateOutputFile(outputStreams, Parameters.DELETE_CHILD_FILES);
     }
 
-    public void runCommandsParallel(List<String> commands, List<String> processNames)
-            throws Exception {
-        List<ProcessBuilderWrapper> totalProcessBuilders = createProcessBuilders(commands, processNames);
+    public static void waitForProcesses(List<ProcessBuilderWrapper> processBuilderWrappers)
+            throws InterruptedException {
+        ExecutorService executor = Executors.newFixedThreadPool(processBuilderWrappers.size());
+        List<Future<Void>> futures = new ArrayList<>();
 
-        totalCount = totalProcessBuilders.size();
+        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
+            futures.add(executor.submit(() -> {
+                processBuilderWrapper.waitForCompletion();
+                processBuilderWrapper.printResult();
+                return null;
+            }));
+        }
 
-        runProcessBuilders(totalProcessBuilders);
+        for (Future<Void> future : futures) {
+            try {
+                future.get();
+            } catch (ExecutionException e) {
+                // Handle exception
+                e.printStackTrace();
+            }
+        }
 
-        executionComplete = true;
-
+        executor.shutdown();
     }
 
-    protected List<ProcessBuilderWrapper> createProcessBuilders(List<String> commands, List<String> processNames) {
+    protected List<ProcessBuilderWrapper> createProcessBuilders(List<String> commands, List<String> outputStreams,
+            List<String> processNames) {
         List<ProcessBuilderWrapper> processBuilderWrappers = new ArrayList<>();
         int streamId = 0;
         for (String command : commands) {
@@ -67,12 +99,27 @@ public class RunnerService {
             processBuilder.command(command.split("\\s+"));
             processBuilder.directory(new File(PROJECT_DIR));
             processBuilder.redirectErrorStream(true);
+            processBuilder.redirectOutput(new File(outputStreams.get(streamId)));
 
             processBuilderWrappers.add(new ProcessBuilderWrapper(processNames.get(streamId), processBuilder));
             streamId++;
         }
 
         return processBuilderWrappers;
+    }
+
+    protected void runCommandsParallel(List<String> commands, List<String> outputStreams, List<String> processNames)
+            throws Exception {
+        List<ProcessBuilderWrapper> totalProcessBuilders = createProcessBuilders(commands, outputStreams, processNames);
+
+        totalCount = totalProcessBuilders.size();
+
+        PrintService.formatPrint("\nTotal number of processes: " + totalCount + "\n");
+
+        runProcessBuilders(totalProcessBuilders);
+
+        executionComplete = true;
+
     }
 
     protected void runProcessBuilders(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
@@ -114,29 +161,82 @@ public class RunnerService {
         }
     }
 
-    public static void waitForProcesses(List<ProcessBuilderWrapper> processBuilderWrappers)
-            throws InterruptedException {
-        ExecutorService executor = Executors.newFixedThreadPool(processBuilderWrappers.size());
-        List<Future<Void>> futures = new ArrayList<>();
+    protected void createOutputDirectory(String directoryPath, boolean cleanDirectory) {
+        File directory = new File(directoryPath);
 
-        for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
-            futures.add(executor.submit(() -> {
-                processBuilderWrapper.waitForCompletion();
-                processBuilderWrapper.printResult();
-                return null;
-            }));
+        // Create the directory if it does not exist
+        if (!directory.exists()) {
+            boolean success = directory.mkdirs();
+            if (success) {
+                PrintService.println("Output directory created successfully.", Color.GREEN);
+            } else {
+                PrintService.println("Failed to create output directory.", Color.RED);
+            }
+        } else if (cleanDirectory) {
+            PrintService.println("Output directory already exists, cleaning up the directory...", Color.GREEN);
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+            PrintService.println("Output directory cleaned successfully.", Color.GREEN);
         }
+    }
 
-        for (Future<Void> future : futures) {
-            try {
-                future.get();
-            } catch (ExecutionException e) {
-                // Handle exception
-                e.printStackTrace();
+    protected void createAndPopulateOutputFile(List<String> outputStreams, boolean deleteChildFiles) throws Exception {
+        // Merge the output files into a single file
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter(OUTPUT_DIR + OUTPUT_FILE_NAME))) {
+            for (String outputFile : outputStreams) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(outputFile))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                }
             }
         }
 
-        executor.shutdown();
+        if (deleteChildFiles) {
+            // Delete the individual output files
+            for (String outputFile : outputStreams) {
+                new File(outputFile).delete();
+            }
+        }
+    }
+
+    public boolean isBuildSuccessful() {
+        if (!executionComplete) {
+            throw new RuntimeException(
+                    "Cannot get the unsuccessful process count as the processes have not started/completed yet.");
+        }
+        return unsuccessfulCount == 0;
+    }
+
+    public int getSuccessfulCount() {
+        if (!executionComplete) {
+            throw new RuntimeException(
+                    "Cannot get the successful process count as the processes have not started/completed yet.");
+        }
+        return successfulCount;
+    }
+
+    public int getUnsuccessfulCount() {
+        if (!executionComplete) {
+            throw new RuntimeException(
+                    "Cannot get the unsuccessful processes count as the processes have not started/completed.");
+        }
+        return unsuccessfulCount;
+    }
+
+    public int getTotalCount() {
+        if (!executionComplete) {
+            throw new RuntimeException(
+                    "Cannot get the unsuccessful processes count as the processes have not started/completed.");
+        }
+        return totalCount;
     }
 
     protected List<String> generateProcessNames(List<Command> commands) {
@@ -149,5 +249,22 @@ public class RunnerService {
         }
 
         return command.getProjectName() + " -> " + command.getTaskName();
+    }
+
+    protected List<String> createOutputStreams(List<Command> commands) {
+        // Create a new ProcessBuilder instance for each command
+        int numProcesses = commands.size();
+        List<String> outputStreams = new ArrayList<>();
+
+        for (int streamId = 0; streamId < numProcesses; streamId++) {
+            outputStreams.add(createOutputStreamFileName(commands.get(streamId), streamId));
+        }
+
+        return outputStreams;
+    }
+
+    protected String createOutputStreamFileName(Command command, int streamId) {
+        return OUTPUT_DIR + command.getProjectName() + "-" + command.getTaskName() + "-output" + streamId
+                + ".txt";
     }
 }
