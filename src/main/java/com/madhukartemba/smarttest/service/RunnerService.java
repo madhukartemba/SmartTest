@@ -20,6 +20,7 @@ import com.madhukartemba.smarttest.entity.Command;
 import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.entity.ProcessBuilderWrapper;
 import com.madhukartemba.smarttest.util.CommandBuilder;
+import com.madhukartemba.smarttest.util.StreamIDGenerator;
 
 public class RunnerService {
 
@@ -256,8 +257,8 @@ public class RunnerService {
         int numProcesses = commands.size();
         List<String> outputStreams = new ArrayList<>();
 
-        for (int streamId = 0; streamId < numProcesses; streamId++) {
-            outputStreams.add(createOutputStreamFileName(commands.get(streamId), streamId));
+        for (int i = 0; i < numProcesses; i++) {
+            outputStreams.add(createOutputStreamFileName(commands.get(i), StreamIDGenerator.generateId()));
         }
 
         return outputStreams;
