@@ -60,7 +60,11 @@ public class FileService {
             return false;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(PROJECT_DIR + filePath))) {
+        if(EnvironmentService.ON_SYSTEM_DIR == false) {
+            filePath = PROJECT_DIR + filePath;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.contains("@Test")) {
@@ -141,7 +145,10 @@ public class FileService {
     }
 
     public String extractPackageName(String filePath) {
-        try (BufferedReader br = new BufferedReader(new FileReader(PROJECT_DIR + filePath))) {
+        if(EnvironmentService.ON_SYSTEM_DIR == false) {
+            filePath = PROJECT_DIR + filePath;
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
