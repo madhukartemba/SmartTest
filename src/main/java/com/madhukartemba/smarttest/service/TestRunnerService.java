@@ -19,11 +19,13 @@ public class TestRunnerService extends RunnerService {
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
+    @Override
     public void execute(List<Command> commands, boolean cleanDirectory) throws Exception {
         PrintService.boldPrintln("\n\nStarting to run test process...\n");
         super.execute(commands, cleanDirectory);
     }
 
+    @Override
     public void parallelExecute(List<Command> commands, boolean cleanDirectory) throws Exception {
 
         PrintService.boldPrintln("\n\nStarting to run test processes...\n");
