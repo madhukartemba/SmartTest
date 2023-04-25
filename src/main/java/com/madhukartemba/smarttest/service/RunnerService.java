@@ -300,7 +300,7 @@ public class RunnerService {
             if (success) {
                 Printer.println("Output directory created successfully.", Color.GREEN);
             } else {
-                Printer.println("Failed to create output directory.", Color.RED);
+                Printer.boldPrintln("Failed to create output directory.", Color.RED);
             }
         } else if (cleanDirectory) {
             Printer.println("Output directory already exists, cleaning up the directory...", Color.GREEN);
