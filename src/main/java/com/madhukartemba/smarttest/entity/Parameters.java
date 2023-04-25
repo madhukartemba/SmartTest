@@ -14,6 +14,8 @@ public class Parameters {
             "defaultColor2",
             "gradleCommand",
             "maxParallelThreads",
+            "compileJava",
+            "refreshDependencies",
             "gitCommand",
             "officialMergeRequestPattern",
             "parallelExecute",
@@ -29,9 +31,11 @@ public class Parameters {
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
     public static String GIT_COMMAND = "git log --merges";
     public static int MAX_PARALLEL_THREADS = ThreadUtil.getOptimalThreadCount();
+    public static boolean COMPILE_JAVA = true;
+    public static boolean PARALLEL_EXECUTE = true;
+    public static boolean REFRESH_DEPENDENCIES = false;
     public static boolean USER_PROVIDED_THREAD_COUNT = false;
     public static boolean EXPLORE_VIA_PACKAGE = false;
-    public static boolean PARALLEL_EXECUTE = true;
     public static boolean DELETE_CHILD_FILES = false;
     public static boolean FULL_TEST = false;
     public static boolean PRINT_OUTPUT = false;
@@ -42,6 +46,8 @@ public class Parameters {
         Printer.formatPrint("defaultColor2: " + DEFAULT_COLOR_2);
         Printer.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
         Printer.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
+        Printer.formatPrint("compileJava: " + COMPILE_JAVA);
+        Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES);
         Printer.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS
                 + (USER_PROVIDED_THREAD_COUNT ? " (user provided)" : " (determined automatically)"));
         Printer.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
@@ -60,6 +66,7 @@ public class Parameters {
                 Printer.println("Options:");
                 Printer.println("  --argName=value  Description of argument");
                 Printer.println("  -h, --help       Print this help message and exit");
+                Printer.println("  -v, --version    Print the version and exit");
                 Printer.println("Program Options: (argName: value default-value)");
 
                 // Print out the default values of the program options
@@ -71,6 +78,12 @@ public class Parameters {
                             break;
                         case "defaultColor2":
                             paramValue = "HEXCODE " + DEFAULT_COLOR_2.toString();
+                            break;
+                        case "compileJava":
+                            paramValue = "(true or false) " + COMPILE_JAVA;
+                            break;
+                        case "refreshDependencies":
+                            paramValue = "(true or false) " + REFRESH_DEPENDENCIES;
                             break;
                         case "parallelExecute":
                             paramValue = "(true or false) " + PARALLEL_EXECUTE;
