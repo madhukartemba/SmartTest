@@ -48,8 +48,8 @@ public class EnvironmentService {
     public static void init(String PROJECT_DIR) {
         PrintService.boldPrintln("\nEnvironment\n");
         EnvironmentService.PROJECT_DIR = PROJECT_DIR;
-        if (!PROJECT_DIR.endsWith("/")) {
-            PROJECT_DIR += "/";
+        if (!EnvironmentService.PROJECT_DIR.endsWith("/")) {
+            EnvironmentService.PROJECT_DIR += "/";
         }
         PrintService.formatPrint("Input project directory: " + PROJECT_DIR);
         findOperatingSystem();
