@@ -8,15 +8,13 @@ import java.awt.Color;
 import java.util.List;
 
 public class TestRunnerService extends RunnerService {
-    private FileService fileService;
 
     public TestRunnerService() {
-        this.fileService = new FileService();
+
     }
 
     public TestRunnerService(String PROJECT_DIR) {
         super(PROJECT_DIR);
-        this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
     @Override
@@ -36,9 +34,7 @@ public class TestRunnerService extends RunnerService {
     public void printResults(Timer timer) {
 
         if (Parameters.PRINT_OUTPUT) {
-            PrintService.boldPrintln("\n\n Output \n\n");
-            fileService.printFromFile(OUTPUT_DIR + OUTPUT_FILE_NAME);
-            PrintService.boldPrintln("\n\n Output Ended");
+            super.printOutput();
         }
 
         PrintService.formatPrint(

@@ -34,12 +34,16 @@ public class RunnerService {
     protected String PROJECT_DIR;
     protected String OUTPUT_DIR;
 
+    private FileService fileService;
+
     public RunnerService() {
+        this.fileService = new FileService();
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
     public RunnerService(String PROJECT_DIR) {
+        this.fileService = new FileService();
         this.PROJECT_DIR = PROJECT_DIR;
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
@@ -151,8 +155,6 @@ public class RunnerService {
 
         totalCount = totalProcessBuilders.size();
 
-        PrintService.formatPrint("\nTotal number of processes: " + totalCount + "\n");
-
         runProcessBuilders(totalProcessBuilders);
 
         executionComplete = true;
@@ -248,6 +250,36 @@ public class RunnerService {
         }
     }
 
+    protected List<String> generateProcessNames(List<Command> commands) {
+        return commands.stream().map(command -> generateProcessName(command)).collect(Collectors.toList());
+    }
+
+    protected String generateProcessName(Command command) {
+        if (command.getProjectName() == null) {
+            return command.getTaskName();
+        }
+
+        return command.getProjectName() + " -> " + command.getTaskName();
+    }
+
+    protected List<String> createOutputStreams(List<Command> commands) {
+        // Create a new ProcessBuilder instance for each command
+        int numProcesses = commands.size();
+        List<String> outputStreams = new ArrayList<>();
+
+        for (int i = 0; i < numProcesses; i++) {
+            outputStreams.add(createOutputStreamFileName(commands.get(i), StreamIDGenerator.generateId()));
+        }
+
+        return outputStreams;
+    }
+
+    protected String createOutputStreamFileName(Command command, int streamId) {
+        return OUTPUT_DIR + (command.getProjectName() == null ? "" : command.getProjectName() + "-")
+                + command.getTaskName() + "-output" + streamId
+                + ".txt";
+    }
+
     public boolean isBuildSuccessful() {
         if (!executionComplete) {
             throw new RuntimeException(
@@ -280,33 +312,9 @@ public class RunnerService {
         return totalCount;
     }
 
-    protected List<String> generateProcessNames(List<Command> commands) {
-        return commands.stream().map(command -> generateProcessName(command)).collect(Collectors.toList());
-    }
-
-    protected String generateProcessName(Command command) {
-        if (command.getProjectName() == null) {
-            return command.getTaskName();
-        }
-
-        return command.getProjectName() + " -> " + command.getTaskName();
-    }
-
-    protected List<String> createOutputStreams(List<Command> commands) {
-        // Create a new ProcessBuilder instance for each command
-        int numProcesses = commands.size();
-        List<String> outputStreams = new ArrayList<>();
-
-        for (int i = 0; i < numProcesses; i++) {
-            outputStreams.add(createOutputStreamFileName(commands.get(i), StreamIDGenerator.generateId()));
-        }
-
-        return outputStreams;
-    }
-
-    protected String createOutputStreamFileName(Command command, int streamId) {
-        return OUTPUT_DIR + (command.getProjectName() == null ? "" : command.getProjectName() + "-")
-                + command.getTaskName() + "-output" + streamId
-                + ".txt";
+    public void printOutput() {
+        PrintService.boldPrintln("\n\n Output \n\n");
+        fileService.printFromFile(OUTPUT_DIR + OUTPUT_FILE_NAME);
+        PrintService.boldPrintln("\n\n Output Ended");
     }
 }

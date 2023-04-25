@@ -8,6 +8,8 @@ import com.madhukartemba.smarttest.util.TestSieve;
 import com.madhukartemba.smarttest.util.Timer;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +76,10 @@ public class SmartTest {
             exitWithCode("There are no generated commands for the given test files!", Color.RED, 1);
         }
 
-        // Execute the processes using ProcessService.
+        // Compile the code.
+        SmartTest.compileCode();
+
+        // Execute the test processes using TestRunnerService.
         TestRunnerService testRunnerService = new TestRunnerService();
         if (Parameters.PARALLEL_EXECUTE) {
             testRunnerService.parallelExecute(commands, false);
@@ -92,6 +97,20 @@ public class SmartTest {
         // Return the exit code.
         System.exit(testRunnerService.isBuildSuccessful() ? 0 : 1);
 
+    }
+
+    private static void compileCode() throws Exception {
+        PrintService.println("\n\nCompiling code...\n");
+        RunnerService runnerService = new RunnerService();
+        Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME, null, "compileJava", null,
+                new ArrayList<>());
+        runnerService.execute(Arrays.asList(compileCommand), true, true, false);
+        if (runnerService.isBuildSuccessful()) {
+            PrintService.println("\nCompilation successful!", Color.GREEN);
+        } else {
+            runnerService.printOutput();
+            exitWithCode("Compilation failed!", Color.RED, 1);
+        }
     }
 
     // Print the end message
