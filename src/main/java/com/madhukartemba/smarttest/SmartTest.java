@@ -77,6 +77,15 @@ public class SmartTest {
             exitWithCode("There are no generated commands for the given test files!", Color.RED, 1);
         }
 
+        // Create the output directory.
+        Printer.boldPrintln("\n\nCreating output directory...\n");
+        RunnerService.createOutputDirectory(true);
+
+        // Refresh the dependencies.
+        if (Parameters.REFRESH_DEPENDENCIES) {
+            SmartTest.refreshDependencies();
+        }
+
         // Compile the code.
         if (Parameters.COMPILE_JAVA) {
             SmartTest.compileCode();
@@ -102,13 +111,26 @@ public class SmartTest {
 
     }
 
+    private static void refreshDependencies() throws Exception {
+        Printer.boldPrintln("\n\nRefreshing dependencies...\n");
+        RunnerService runnerService = new RunnerService();
+        Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME,
+                null, "--refresh-dependencies", null, new ArrayList<>());
+        runnerService.execute(Arrays.asList(compileCommand), "refreshDependencies", false, true, false);
+        if (runnerService.isBuildSuccessful()) {
+            Printer.println("\nSuccessfully refreshed dependencies!", Color.GREEN);
+        } else {
+            runnerService.printOutput();
+            exitWithCode("Failed to refresh dependencies!", Color.RED, 1);
+        }
+    }
+
     private static void compileCode() throws Exception {
         Printer.boldPrintln("\n\nCompiling code...\n");
         RunnerService runnerService = new RunnerService();
-        Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME, null,
-                "compileJava" + (Parameters.REFRESH_DEPENDENCIES ? " --refresh-dependencies" : ""), null,
-                new ArrayList<>());
-        runnerService.execute(Arrays.asList(compileCommand), "compileJava", true, true, false);
+        Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME,
+                null, "compileJava", null, new ArrayList<>());
+        runnerService.execute(Arrays.asList(compileCommand), "compileJava", false, true, false);
         if (runnerService.isBuildSuccessful()) {
             Printer.println("\nCompilation successful!", Color.GREEN);
         } else {

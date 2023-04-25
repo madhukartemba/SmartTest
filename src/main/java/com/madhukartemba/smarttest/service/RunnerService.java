@@ -27,26 +27,26 @@ public class RunnerService {
 
     protected static final String OUTPUT_DIR_NAME = "SmartTestOutput/";
     protected static final String OUTPUT_FILE_NAME = "smartTestOutput.txt";
+    protected static String PROJECT_DIR;
+    protected static String OUTPUT_DIR;
 
     protected boolean executionComplete = false;
     protected int totalCount = 0;
     protected int successfulCount = 0;
     protected int unsuccessfulCount = 0;
-    protected String PROJECT_DIR;
-    protected String OUTPUT_DIR;
 
     private FileService fileService;
 
     public RunnerService() {
         this.fileService = new FileService();
-        this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
-        this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
+        RunnerService.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
+        RunnerService.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
     public RunnerService(String PROJECT_DIR) {
         this.fileService = new FileService();
-        this.PROJECT_DIR = PROJECT_DIR;
-        this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
+        RunnerService.PROJECT_DIR = PROJECT_DIR;
+        RunnerService.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
     public void execute(List<Command> commands, String outputFileName) throws Exception {
@@ -125,7 +125,7 @@ public class RunnerService {
     protected void baseExecute(List<String> finalCommands, List<String> outputStreams, boolean cleanDirectory,
             boolean addToFinalOutput,
             boolean deleteChildFiles) throws Exception {
-        createOutputDirectory(OUTPUT_DIR, cleanDirectory);
+        createOutputDirectory(cleanDirectory);
 
         runCommandsParallel(finalCommands, outputStreams, outputStreams);
 
@@ -142,7 +142,7 @@ public class RunnerService {
         for (String command : commands) {
             ProcessBuilder processBuilder = new ProcessBuilder();
             processBuilder.command(command.split("\\s+"));
-            processBuilder.directory(new File(PROJECT_DIR));
+            processBuilder.directory(new File(RunnerService.PROJECT_DIR));
             processBuilder.redirectErrorStream(true);
             processBuilder.redirectOutput(new File(outputStreams.get(streamId)));
 
@@ -201,29 +201,6 @@ public class RunnerService {
             executorService.awaitTermination(3L, TimeUnit.HOURS);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-    }
-
-    protected void createOutputDirectory(String directoryPath, boolean cleanDirectory) {
-        File directory = new File(directoryPath);
-
-        // Create the directory if it does not exist
-        if (!directory.exists()) {
-            boolean success = directory.mkdirs();
-            if (success) {
-                Printer.println("Output directory created successfully.", Color.GREEN);
-            } else {
-                Printer.println("Failed to create output directory.", Color.RED);
-            }
-        } else if (cleanDirectory) {
-            Printer.println("Output directory already exists, cleaning up the directory...", Color.GREEN);
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    file.delete();
-                }
-            }
-            Printer.println("Output directory cleaned successfully.\n", Color.GREEN);
         }
     }
 
@@ -320,5 +297,33 @@ public class RunnerService {
         Printer.boldPrintln("\n\n Output \n\n");
         fileService.printFromFile(OUTPUT_DIR + OUTPUT_FILE_NAME);
         Printer.boldPrintln("\n\n Output Ended");
+    }
+
+    public static void createOutputDirectory(boolean cleanDirectory) {
+        File directory = new File(OUTPUT_DIR);
+
+        // Create the directory if it does not exist
+        if (!directory.exists()) {
+            boolean success = directory.mkdirs();
+            if (success) {
+                Printer.println("Output directory created successfully.", Color.GREEN);
+            } else {
+                Printer.println("Failed to create output directory.", Color.RED);
+            }
+        } else if (cleanDirectory) {
+            Printer.println("Output directory already exists, cleaning up the directory...", Color.GREEN);
+            cleanOutputDirectory();
+        }
+    }
+
+    public static void cleanOutputDirectory() {
+        File directory = new File(OUTPUT_DIR);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                file.delete();
+            }
+        }
+        Printer.println("Output directory cleaned successfully.\n", Color.GREEN);
     }
 }
