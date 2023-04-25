@@ -20,6 +20,7 @@ import com.madhukartemba.smarttest.entity.Command;
 import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.entity.ProcessBuilderWrapper;
 import com.madhukartemba.smarttest.util.CommandBuilder;
+import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.StreamIDGenerator;
 
 public class RunnerService {

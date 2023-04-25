@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 import com.madhukartemba.smarttest.util.CodeParser;
 import com.madhukartemba.smarttest.util.FileCleaner;
+import com.madhukartemba.smarttest.util.Printer;
 
 public class FileService {
     private String PROJECT_DIR;

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-import com.madhukartemba.smarttest.service.Printer;
+import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.ThreadUtil;
 
 public class Parameters {

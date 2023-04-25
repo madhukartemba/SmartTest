@@ -2,8 +2,6 @@ package com.madhukartemba.smarttest.util;
 
 import java.awt.Color;
 
-import com.madhukartemba.smarttest.service.Printer;
-
 public class Timer {
     long startTime;
     long endTime;

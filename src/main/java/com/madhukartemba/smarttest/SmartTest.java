@@ -4,6 +4,7 @@ import com.madhukartemba.smarttest.entity.Command;
 import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.service.*;
 import com.madhukartemba.smarttest.util.ArgsParser;
+import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.TestSieve;
 import com.madhukartemba.smarttest.util.Timer;
 

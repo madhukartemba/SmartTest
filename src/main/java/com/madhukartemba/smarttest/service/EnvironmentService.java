@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.madhukartemba.smarttest.SmartTest;
+import com.madhukartemba.smarttest.util.Printer;
 
 public class EnvironmentService {
 

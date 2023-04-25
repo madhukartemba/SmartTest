@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.util.Printer;
 
 public class ParametersService {
 

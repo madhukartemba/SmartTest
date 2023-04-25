@@ -2,7 +2,7 @@ package com.madhukartemba.smarttest.entity;
 
 import java.awt.Color;
 
-import com.madhukartemba.smarttest.service.Printer;
+import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.Timer;
 
 public class ProcessBuilderWrapper {

@@ -1,4 +1,4 @@
-package com.madhukartemba.smarttest.service;
+package com.madhukartemba.smarttest.util;
 
 import java.awt.Color;
 

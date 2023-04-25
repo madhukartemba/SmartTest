@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.util.Printer;
 
 public class GitService {
     private final int GIT_OUTPUT_LINE_COUNT = 100;

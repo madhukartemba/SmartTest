@@ -1,7 +1,6 @@
 package com.madhukartemba.smarttest.util;
 
 import com.madhukartemba.smarttest.entity.Command;
-import com.madhukartemba.smarttest.service.Printer;
 
 import java.awt.Color;
 import java.util.ArrayList;
