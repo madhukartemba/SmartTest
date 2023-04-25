@@ -233,7 +233,7 @@ public class RunnerService {
             for (String outputFile : outputStreams) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(outputFile))) {
 
-                    writer.append("\nOUTPUT FROM: " + outputFile + "\n");
+                    writer.append("\n\n\n  ########  OUTPUT FROM: " + outputFile + "\n");
                     writer.newLine();
 
                     String line;
