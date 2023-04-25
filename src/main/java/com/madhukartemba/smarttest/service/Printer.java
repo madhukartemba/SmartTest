@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.madhukartemba.smarttest.entity.Parameters;
 
-public class PrintService {
+public class Printer {
 
     private static final String RESET = "\033[0m";
     private static final String BOLD = "\033[1m";

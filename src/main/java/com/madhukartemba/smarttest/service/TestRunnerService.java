@@ -19,14 +19,14 @@ public class TestRunnerService extends RunnerService {
 
     @Override
     public void execute(List<Command> commands, String outputFileName, boolean cleanDirectory) throws Exception {
-        PrintService.boldPrintln("\n\nStarting to run test process...\n");
+        Printer.boldPrintln("\n\nStarting to run test process...\n");
         super.execute(commands, outputFileName, cleanDirectory);
     }
 
     @Override
     public void parallelExecute(List<Command> commands, boolean cleanDirectory) throws Exception {
 
-        PrintService.boldPrintln("\n\nStarting to run test processes...\n");
+        Printer.boldPrintln("\n\nStarting to run test processes...\n");
         super.parallelExecute(commands, cleanDirectory);
     }
 
@@ -37,21 +37,21 @@ public class TestRunnerService extends RunnerService {
             super.printOutput();
         }
 
-        PrintService.formatPrint(
+        Printer.formatPrint(
                 "\nNumber of successful test processes: " + getSuccessfulCount() + " out of " + getTotalCount(),
                 Color.GREEN);
 
         if (isBuildSuccessful()) {
-            PrintService.formatPrint(
+            Printer.formatPrint(
                     "Number of unsuccessful test processes: " + getUnsuccessfulCount() + " out of " + getTotalCount(),
                     Color.GREEN);
-            PrintService.boldPrintln("\n\nBUILD SUCCESSFUL in " + timer.getElapsedTime() + "\n\n",
+            Printer.boldPrintln("\n\nBUILD SUCCESSFUL in " + timer.getElapsedTime() + "\n\n",
                     Color.decode("#23D18B"));
         } else {
-            PrintService.formatPrint(
+            Printer.formatPrint(
                     "Number of unsuccessful test processes: " + getUnsuccessfulCount() + " out of " + getTotalCount(),
                     Color.RED);
-            PrintService.boldPrintln("\n\nBUILD FAILED in " + timer.getElapsedTime() + "\n\n", Color.RED);
+            Printer.boldPrintln("\n\nBUILD FAILED in " + timer.getElapsedTime() + "\n\n", Color.RED);
         }
     }
 

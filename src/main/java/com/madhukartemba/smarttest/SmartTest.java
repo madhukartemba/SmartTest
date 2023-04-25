@@ -100,13 +100,13 @@ public class SmartTest {
     }
 
     private static void compileCode() throws Exception {
-        PrintService.boldPrintln("\n\nCompiling code...\n");
+        Printer.boldPrintln("\n\nCompiling code...\n");
         RunnerService runnerService = new RunnerService();
         Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME, null, "compileJava", null,
                 new ArrayList<>());
         runnerService.execute(Arrays.asList(compileCommand), "compileJava", true, true, false);
         if (runnerService.isBuildSuccessful()) {
-            PrintService.println("\nCompilation successful!", Color.GREEN);
+            Printer.println("\nCompilation successful!", Color.GREEN);
         } else {
             runnerService.printOutput();
             exitWithCode("Compilation failed!", Color.RED, 1);
@@ -116,11 +116,11 @@ public class SmartTest {
     // Print the end message
     // Print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
     public static void printEndMessage() {
-        PrintService.boldPrintln("Thanks for using this program :)\n\n", Color.decode("#23D18B"));
+        Printer.boldPrintln("Thanks for using this program :)\n\n", Color.decode("#23D18B"));
     }
 
     public static void exitWithCode(String message, Color color, int exitCode) {
-        PrintService.boldPrintln("\n\n" + message + "\n\n", color);
+        Printer.boldPrintln("\n\n" + message + "\n\n", color);
         if (exitCode == 0) {
             printEndMessage();
         }
@@ -139,10 +139,10 @@ public class SmartTest {
     }
 
     private static void printLogoAndVersion() {
-        PrintService.boldPrintln(
+        Printer.boldPrintln(
                 "\r\n   _____                      __ ______          __ \r\n  / ___/____ ___  ____ ______/ //_  __/__  _____/ /_\r\n  \\__ \\/ __ `__ \\/ __ `/ ___/ __// / / _ \\/ ___/ __/\r\n ___/ / / / / / / /_/ / /  / /_ / / /  __(__  ) /_  \r\n/____/_/ /_/ /_/\\__,_/_/   \\__//_/  \\___/____/\\__/  \r\n                                                    \r\n",
                 Color.GREEN);
-        PrintService.boldFormatPrint("Version: " + VERSION + "\n\n");
+        Printer.boldFormatPrint("Version: " + VERSION + "\n\n");
     }
 
 }

@@ -23,14 +23,14 @@ public class ExplorerService {
 
         if (Parameters.FULL_TEST) {
             completeRunRequired = true;
-            PrintService.boldPrintln("\n\nFull test command is given, will run all the tests...");
+            Printer.boldPrintln("\n\nFull test command is given, will run all the tests...");
             return exploreAll();
         }
 
-        PrintService.boldPrintln("\n\nStarting to explore affected files via class name...\n");
+        Printer.boldPrintln("\n\nStarting to explore affected files via class name...\n");
         completeRunRequired = false;
 
-        PrintService.formatPrint("Number of changed files: " + inputFiles.size());
+        Printer.formatPrint("Number of changed files: " + inputFiles.size());
         Queue<String> javaFileQueue = new ArrayDeque<>();
         Set<String> visitedFiles = new HashSet<>();
         Set<String> blackListFiles = new HashSet<>();
@@ -49,8 +49,8 @@ public class ExplorerService {
             }
         }
 
-        PrintService.println("\nStarted to explore...\n", Color.GREEN);
-        PrintService.boldPrint("ROOT", Color.GREEN);
+        Printer.println("\nStarted to explore...\n", Color.GREEN);
+        Printer.boldPrint("ROOT", Color.GREEN);
 
         int prevVisitedSize = 0;
 
@@ -77,20 +77,20 @@ public class ExplorerService {
             int currentVisitedSize = visitedFiles.size();
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
-                PrintService.print(" -->");
-                PrintService.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
+                Printer.print(" -->");
+                Printer.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
             }
         }
 
         if (prevVisitedSize != visitedFiles.size()) {
-            PrintService.print(" -->");
-            PrintService.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
+            Printer.print(" -->");
+            Printer.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
         }
 
-        PrintService.print(" -->");
-        PrintService.boldPrint(" END", Color.GREEN);
+        Printer.print(" -->");
+        Printer.boldPrint(" END", Color.GREEN);
 
-        PrintService.println("\n\nExploration complete!", Color.GREEN);
+        Printer.println("\n\nExploration complete!", Color.GREEN);
         fileService.analyseResult(visitedFiles);
 
         return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
@@ -101,14 +101,14 @@ public class ExplorerService {
 
         if (Parameters.FULL_TEST) {
             completeRunRequired = true;
-            PrintService.boldPrintln("\n\nFull test command is given, will run all the tests...");
+            Printer.boldPrintln("\n\nFull test command is given, will run all the tests...");
             return exploreAll();
         }
 
         completeRunRequired = false;
 
-        PrintService.boldPrintln("\n\nStarting to explore affected files via package name...\n");
-        PrintService.formatPrint("Number of changed files: " + inputFiles.size());
+        Printer.boldPrintln("\n\nStarting to explore affected files via package name...\n");
+        Printer.formatPrint("Number of changed files: " + inputFiles.size());
         Queue<String> javaFileQueue = new ArrayDeque<>();
         Set<String> visitedFiles = new HashSet<>();
         Set<String> blackListFiles = new HashSet<>();
@@ -127,8 +127,8 @@ public class ExplorerService {
             }
         }
 
-        PrintService.println("\nStarted to explore...\n", Color.GREEN);
-        PrintService.boldPrint("ROOT", Color.GREEN);
+        Printer.println("\nStarted to explore...\n", Color.GREEN);
+        Printer.boldPrint("ROOT", Color.GREEN);
 
         int prevVisitedSize = 0;
 
@@ -156,39 +156,39 @@ public class ExplorerService {
             int currentVisitedSize = visitedFiles.size();
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
-                PrintService.print(" -->");
-                PrintService.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
+                Printer.print(" -->");
+                Printer.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
             }
         }
 
         if (prevVisitedSize != visitedFiles.size()) {
-            PrintService.print(" -->");
-            PrintService.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
+            Printer.print(" -->");
+            Printer.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
         }
 
-        PrintService.print(" -->");
-        PrintService.boldPrint(" END", Color.GREEN);
+        Printer.print(" -->");
+        Printer.boldPrint(" END", Color.GREEN);
 
-        PrintService.println("\n\nExploration complete!", Color.GREEN);
+        Printer.println("\n\nExploration complete!", Color.GREEN);
         fileService.analyseResult(visitedFiles);
 
         return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
     }
 
     public List<String> exploreAll() throws Exception {
-        PrintService.println("\nExploring all files...\n", Color.GREEN);
+        Printer.println("\nExploring all files...\n", Color.GREEN);
 
-        PrintService.boldPrint("ROOT", Color.GREEN);
+        Printer.boldPrint("ROOT", Color.GREEN);
 
         List<String> output = fileService.findAllTestFiles();
 
-        PrintService.print(" -->");
-        PrintService.print(" " + output.size(), Parameters.DEFAULT_COLOR_2);
+        Printer.print(" -->");
+        Printer.print(" " + output.size(), Parameters.DEFAULT_COLOR_2);
 
-        PrintService.print(" -->");
-        PrintService.boldPrint(" END", Color.GREEN);
+        Printer.print(" -->");
+        Printer.boldPrint(" END", Color.GREEN);
 
-        PrintService.println("\n\nExploration complete!", Color.GREEN);
+        Printer.println("\n\nExploration complete!", Color.GREEN);
 
         fileService.analyseResult(output.stream().collect(Collectors.toSet()));
 

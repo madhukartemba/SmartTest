@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-import com.madhukartemba.smarttest.service.PrintService;
+import com.madhukartemba.smarttest.service.Printer;
 import com.madhukartemba.smarttest.util.ThreadUtil;
 
 public class Parameters {
@@ -37,30 +37,30 @@ public class Parameters {
     public static boolean PRINT_OUTPUT = false;
 
     public static void printValues() {
-        PrintService.boldPrintln("Parameters\n");
-        PrintService.formatPrint("defaultColor1: " + DEFAULT_COLOR_1);
-        PrintService.formatPrint("defaultColor2: " + DEFAULT_COLOR_2);
-        PrintService.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
-        PrintService.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
-        PrintService.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS
+        Printer.boldPrintln("Parameters\n");
+        Printer.formatPrint("defaultColor1: " + DEFAULT_COLOR_1);
+        Printer.formatPrint("defaultColor2: " + DEFAULT_COLOR_2);
+        Printer.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
+        Printer.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
+        Printer.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS
                 + (USER_PROVIDED_THREAD_COUNT ? " (user provided)" : " (determined automatically)"));
-        PrintService.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
-        PrintService.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES);
-        PrintService.formatPrint("gitCommand: " + GIT_COMMAND);
-        PrintService.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
-        PrintService.formatPrint("fullTest: " + FULL_TEST);
-        PrintService.formatPrint("printOutput: " + PRINT_OUTPUT);
+        Printer.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
+        Printer.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES);
+        Printer.formatPrint("gitCommand: " + GIT_COMMAND);
+        Printer.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
+        Printer.formatPrint("fullTest: " + FULL_TEST);
+        Printer.formatPrint("printOutput: " + PRINT_OUTPUT);
     }
 
     public static void printHelp(String args[]) {
         for (String arg : args) {
             if (arg.equals("-h") || arg.equals("--help")) {
                 // Print out the help information and options
-                PrintService.println("Usage: SmartTest [options]");
-                PrintService.println("Options:");
-                PrintService.println("  --argName=value  Description of argument");
-                PrintService.println("  -h, --help       Print this help message and exit");
-                PrintService.println("Program Options: (argName: value default-value)");
+                Printer.println("Usage: SmartTest [options]");
+                Printer.println("Options:");
+                Printer.println("  --argName=value  Description of argument");
+                Printer.println("  -h, --help       Print this help message and exit");
+                Printer.println("Program Options: (argName: value default-value)");
 
                 // Print out the default values of the program options
                 for (String paramName : parameterNames) {
@@ -102,7 +102,7 @@ public class Parameters {
                         default:
                             break;
                     }
-                    PrintService.formatPrint("  " + paramName + ": " + paramValue);
+                    Printer.formatPrint("  " + paramName + ": " + paramValue);
                 }
 
                 System.exit(0);

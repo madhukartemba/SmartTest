@@ -210,19 +210,19 @@ public class RunnerService {
         if (!directory.exists()) {
             boolean success = directory.mkdirs();
             if (success) {
-                PrintService.println("Output directory created successfully.", Color.GREEN);
+                Printer.println("Output directory created successfully.", Color.GREEN);
             } else {
-                PrintService.println("Failed to create output directory.", Color.RED);
+                Printer.println("Failed to create output directory.", Color.RED);
             }
         } else if (cleanDirectory) {
-            PrintService.println("Output directory already exists, cleaning up the directory...", Color.GREEN);
+            Printer.println("Output directory already exists, cleaning up the directory...", Color.GREEN);
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
                     file.delete();
                 }
             }
-            PrintService.println("Output directory cleaned successfully.\n", Color.GREEN);
+            Printer.println("Output directory cleaned successfully.\n", Color.GREEN);
         }
     }
 
@@ -316,8 +316,8 @@ public class RunnerService {
     }
 
     public void printOutput() {
-        PrintService.boldPrintln("\n\n Output \n\n");
+        Printer.boldPrintln("\n\n Output \n\n");
         fileService.printFromFile(OUTPUT_DIR + OUTPUT_FILE_NAME);
-        PrintService.boldPrintln("\n\n Output Ended");
+        Printer.boldPrintln("\n\n Output Ended");
     }
 }

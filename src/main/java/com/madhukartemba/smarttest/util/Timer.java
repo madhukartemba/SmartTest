@@ -2,7 +2,7 @@ package com.madhukartemba.smarttest.util;
 
 import java.awt.Color;
 
-import com.madhukartemba.smarttest.service.PrintService;
+import com.madhukartemba.smarttest.service.Printer;
 
 public class Timer {
     long startTime;
@@ -25,7 +25,7 @@ public class Timer {
 
         // If not it was started then print a warning.
         if (startTime == -1) {
-            PrintService.println("The timer was never started! Will calculate the elapsed time from the start.",
+            Printer.println("The timer was never started! Will calculate the elapsed time from the start.",
                     Color.RED);
         }
 

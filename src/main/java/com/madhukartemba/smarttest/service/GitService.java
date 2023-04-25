@@ -31,7 +31,7 @@ public class GitService {
 
     public List<String> getChangedFiles() throws Exception {
 
-        PrintService.boldPrintln("\n\nGetting the changed files from Git...\n");
+        Printer.boldPrintln("\n\nGetting the changed files from Git...\n");
 
         List<String> changedFiles = new ArrayList<>();
 
@@ -44,7 +44,7 @@ public class GitService {
         int skipCount = 0;
 
         if (currentBranchName.equals("main") || currentBranchName.equals("master")) {
-            PrintService.println(
+            Printer.println(
                     "Currently on " + currentBranchName
                             + " branch, will compare the files against the previous official merge.\n",
                     Color.YELLOW);
@@ -55,9 +55,9 @@ public class GitService {
         String mergeSHA = extractMergeSHA(mergeLine);
         String mergeNumber = extractMergePRNumber(mergeLine);
 
-        PrintService.formatPrint(
+        Printer.formatPrint(
                 "Comparing the staged and committed changes wrt. official merge: " + mergeNumber);
-        PrintService.println(mergeLine, Color.GREEN);
+        Printer.println(mergeLine, Color.GREEN);
 
         String command = "git diff --name-only --staged " + mergeSHA;
 
@@ -101,7 +101,7 @@ public class GitService {
 
         }
 
-        PrintService.formatPrint("Using Git command: " + command + "\n");
+        Printer.formatPrint("Using Git command: " + command + "\n");
 
         processBuilder.command(command.split("\\s"));
         Process gitProcess = processBuilder.start();

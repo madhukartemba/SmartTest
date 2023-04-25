@@ -1,7 +1,7 @@
 package com.madhukartemba.smarttest.util;
 
 import com.madhukartemba.smarttest.entity.Command;
-import com.madhukartemba.smarttest.service.PrintService;
+import com.madhukartemba.smarttest.service.Printer;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class CommandBuilder {
     public static String build(List<Command> commands) {
 
         if (commands == null || commands.isEmpty()) {
-            PrintService.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
+            Printer.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
             return null;
         }
 
@@ -50,7 +50,7 @@ public class CommandBuilder {
     public static String build(List<Command> inputCommandList, List<String> taskPriority) {
 
         if (inputCommandList == null || inputCommandList.isEmpty()) {
-            PrintService.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
+            Printer.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
             return null;
         }
 
@@ -78,7 +78,7 @@ public class CommandBuilder {
     public static List<String> parallelBuild(List<Command> inputCommandList) {
 
         if (inputCommandList == null || inputCommandList.isEmpty()) {
-            PrintService.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
+            Printer.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
             return null;
         }
 
@@ -94,7 +94,7 @@ public class CommandBuilder {
     public static List<String> extremeParallelBuild(List<Command> inputCommandList, int chunkSize) {
 
         if (inputCommandList == null || inputCommandList.isEmpty()) {
-            PrintService.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
+            Printer.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
             return null;
         }
 
@@ -111,7 +111,7 @@ public class CommandBuilder {
     public static List<Command> splitCommands(List<Command> inputCommandList, int chunkSize) {
 
         if (inputCommandList == null || inputCommandList.isEmpty()) {
-            PrintService.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
+            Printer.println("\nGiven commands list to CommandBuilder is empty!", Color.RED);
             return null;
         }
 

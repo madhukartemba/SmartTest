@@ -2,7 +2,7 @@ package com.madhukartemba.smarttest.entity;
 
 import java.awt.Color;
 
-import com.madhukartemba.smarttest.service.PrintService;
+import com.madhukartemba.smarttest.service.Printer;
 import com.madhukartemba.smarttest.util.Timer;
 
 public class ProcessBuilderWrapper {
@@ -37,15 +37,15 @@ public class ProcessBuilderWrapper {
 
     // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
     public void printResult() {
-        PrintService.print("Process ");
+        Printer.print("Process ");
         if (isSuccessful()) {
-            PrintService.boldFormatPrint(
+            Printer.boldFormatPrint(
                     this.getName() +
                             " : BUILD SUCCESSFUL in " + timer.getElapsedTime(),
                     Color.WHITE,
                     Color.decode("#23D18B"));
         } else {
-            PrintService.boldFormatPrint(this.getName() +
+            Printer.boldFormatPrint(this.getName() +
                     ": BUILD FAILED WITH EXIT CODE " + this.getExitCode() + " in " + timer.getElapsedTime(),
                     Color.WHITE,
                     Color.RED);

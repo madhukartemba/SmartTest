@@ -103,11 +103,11 @@ public class FileService {
 
         if (affectedNonJavaFiles > 0) {
             if (affectedFiles == 0) {
-                PrintService.println("\nOnly the non-java files have been changed, will run all the tests.",
+                Printer.println("\nOnly the non-java files have been changed, will run all the tests.",
                         Color.YELLOW);
                 completeRunRequired = true;
             } else {
-                PrintService.println(
+                Printer.println(
                         "\nFound " + affectedNonJavaFiles + " changed non-java file"
                                 + (affectedNonJavaFiles == 1 ? "" : "s")
                                 + ". It is recommended to perform a full test run.",
@@ -127,9 +127,9 @@ public class FileService {
             }
         }
 
-        PrintService.formatPrint(
+        Printer.formatPrint(
                 "\nTotal potentially affected files: " + visitedFiles.size());
-        PrintService.formatPrint(
+        Printer.formatPrint(
                 "Total potentially affected test files: " + affectedTestFiles);
     }
 
@@ -159,7 +159,7 @@ public class FileService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        PrintService.formatPrint("\nCannot extract the package name for file: " + filePath, Color.RED, Color.WHITE);
+        Printer.formatPrint("\nCannot extract the package name for file: " + filePath, Color.RED, Color.WHITE);
 
         return null;
     }
@@ -199,7 +199,7 @@ public class FileService {
         List<String> res = new ArrayList<>();
 
         if (packageName == null || packageName.isEmpty()) {
-            PrintService.println("Empty class name was given as input to: findFilesUsingPackageName", Color.RED);
+            Printer.println("Empty class name was given as input to: findFilesUsingPackageName", Color.RED);
             return res;
         }
 
@@ -336,26 +336,26 @@ public class FileService {
                     String prefix = line.substring(0, successIndex);
                     String suffix = line.substring(successIndex + successString.length());
 
-                    PrintService.print(prefix);
+                    Printer.print(prefix);
                     // Print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
-                    PrintService.boldPrint(successString, Color.decode("#23D18B"));
-                    PrintService.println(suffix);
+                    Printer.boldPrint(successString, Color.decode("#23D18B"));
+                    Printer.println(suffix);
                 } else if (failedIndex >= 0) {
                     String prefix = line.substring(0, failedIndex);
                     String suffix = line.substring(failedIndex + failedString.length());
 
-                    PrintService.print(prefix);
-                    PrintService.boldPrint(failedString, Color.RED);
-                    PrintService.println(suffix);
+                    Printer.print(prefix);
+                    Printer.boldPrint(failedString, Color.RED);
+                    Printer.println(suffix);
                 } else {
-                    PrintService.formatPrint(line);
+                    Printer.formatPrint(line);
                 }
 
                 line = reader.readLine();
             }
             reader.close();
         } catch (IOException e) {
-            PrintService.println("Error reading file, " + e.getMessage(), Color.RED);
+            Printer.println("Error reading file, " + e.getMessage(), Color.RED);
         }
         return output;
     }
@@ -371,7 +371,7 @@ public class FileService {
             }
             reader.close();
         } catch (IOException e) {
-            PrintService.println("Error reading file, " + e.getMessage(), Color.RED);
+            Printer.println("Error reading file, " + e.getMessage(), Color.RED);
         }
         return output;
     }

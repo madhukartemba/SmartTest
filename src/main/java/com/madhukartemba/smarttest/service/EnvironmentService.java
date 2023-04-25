@@ -36,33 +36,33 @@ public class EnvironmentService {
             "contractTest");
 
     public static void init() {
-        PrintService.boldPrintln("\nEnvironment\n");
+        Printer.boldPrintln("\nEnvironment\n");
         findOperatingSystem();
         findSystemDirectory();
         findProjectDirectory();
         findProjectNames();
         checkDir();
-        PrintService.formatPrint("\nTask Priority (decreasing): " + TASK_PRIORITY.toString());
+        Printer.formatPrint("\nTask Priority (decreasing): " + TASK_PRIORITY.toString());
     }
 
     public static void init(String PROJECT_DIR) {
-        PrintService.boldPrintln("\nEnvironment\n");
+        Printer.boldPrintln("\nEnvironment\n");
         EnvironmentService.PROJECT_DIR = PROJECT_DIR;
         if (!EnvironmentService.PROJECT_DIR.endsWith("/")) {
             EnvironmentService.PROJECT_DIR += "/";
         }
-        PrintService.formatPrint("Input project directory: " + PROJECT_DIR);
+        Printer.formatPrint("Input project directory: " + PROJECT_DIR);
         findOperatingSystem();
         findSystemDirectory();
         findProjectNames();
         checkDir();
-        PrintService.formatPrint("\nTask Priority (decreasing): " + TASK_PRIORITY.toString());
+        Printer.formatPrint("\nTask Priority (decreasing): " + TASK_PRIORITY.toString());
     }
 
     public static String findOperatingSystem() {
         if (OS_NAME == null) {
             OS_NAME = System.getProperty("os.name");
-            PrintService.formatPrint("Running on: " + OS_NAME);
+            Printer.formatPrint("Running on: " + OS_NAME);
         }
 
         return OS_NAME;
@@ -72,7 +72,7 @@ public class EnvironmentService {
 
         if (SYSTEM_DIR == null) {
             SYSTEM_DIR = System.getProperty("user.dir");
-            PrintService.formatPrint("System directory: " + SYSTEM_DIR);
+            Printer.formatPrint("System directory: " + SYSTEM_DIR);
         }
 
         return SYSTEM_DIR;
@@ -84,7 +84,7 @@ public class EnvironmentService {
             if (!PROJECT_DIR.endsWith("/")) {
                 PROJECT_DIR += "/";
             }
-            PrintService.formatPrint("Project directory: " + PROJECT_DIR);
+            Printer.formatPrint("Project directory: " + PROJECT_DIR);
         }
 
         return PROJECT_DIR;
@@ -93,7 +93,7 @@ public class EnvironmentService {
     public static List<String> findProjectNames() {
         if (PROJECT_NAMES == null) {
             List<String> subFolders = listTopLevelSubfolders(PROJECT_DIR);
-            PrintService.formatPrint("\nFound folders: " + subFolders.toString());
+            Printer.formatPrint("\nFound folders: " + subFolders.toString());
 
             PROJECT_NAMES = new ArrayList<>();
             for (String subFolder : subFolders) {
@@ -108,7 +108,7 @@ public class EnvironmentService {
 
             }
 
-            PrintService.formatPrint("\nFound projects: " + PROJECT_NAMES.toString());
+            Printer.formatPrint("\nFound projects: " + PROJECT_NAMES.toString());
         }
 
         if (PROJECT_NAMES == null || PROJECT_NAMES.isEmpty()) {
