@@ -40,6 +40,10 @@ public class PrintService {
     }
 
     public static void formatPrint(String str, Color color1, Color color2) {
+        if (str == null || str.isEmpty()) {
+            System.out.println();
+            return;
+        }
         String strs[] = str.split(SEPERATOR);
         print(strs[0] + SEPERATOR, color1);
         for (int i = 1; i < strs.length; i++) {
@@ -75,6 +79,10 @@ public class PrintService {
     }
 
     public static void boldFormatPrint(String str, Color color1, Color color2) {
+        if (str == null || str.isEmpty()) {
+            System.out.println();
+            return;
+        }
         String strs[] = str.split(SEPERATOR);
         boldPrint(strs[0] + SEPERATOR, color1);
         for (int i = 1; i < strs.length; i++) {
