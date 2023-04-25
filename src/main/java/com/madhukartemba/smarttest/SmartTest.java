@@ -104,7 +104,7 @@ public class SmartTest {
         RunnerService runnerService = new RunnerService();
         Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME, null, "compileJava", null,
                 new ArrayList<>());
-        runnerService.execute(Arrays.asList(compileCommand), true, true, false);
+        runnerService.execute(Arrays.asList(compileCommand), true, false, false);
         if (runnerService.isBuildSuccessful()) {
             PrintService.println("\nCompilation successful!", Color.GREEN);
         } else {
