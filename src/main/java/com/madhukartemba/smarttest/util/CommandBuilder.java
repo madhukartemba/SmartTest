@@ -38,7 +38,7 @@ public class CommandBuilder {
 
         String commandName = commands.get(0).getCommandName();
 
-        outputCommand.append(commandName);
+        outputCommand.append(commandName + " ");
 
         for (Command command : commands) {
             outputCommand.append(buildWithoutCommandName(command));
