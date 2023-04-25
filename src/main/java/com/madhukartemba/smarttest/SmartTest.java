@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class SmartTest {
 
-    public static String VERSION = "1.0.0";
+    public static String VERSION = "1.1.0";
 
     public static void main(String[] args) throws Exception {
 
