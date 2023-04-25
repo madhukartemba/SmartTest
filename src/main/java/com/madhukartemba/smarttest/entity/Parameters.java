@@ -47,7 +47,8 @@ public class Parameters {
         Printer.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
         Printer.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
         Printer.formatPrint("compileJava: " + COMPILE_JAVA);
-        Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES);
+        Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES
+                + (COMPILE_JAVA ? "" : " (will not run as compileJava is disabled)"));
         Printer.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS
                 + (USER_PROVIDED_THREAD_COUNT ? " (user provided)" : " (determined automatically)"));
         Printer.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
