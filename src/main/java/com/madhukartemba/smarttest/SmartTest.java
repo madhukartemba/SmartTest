@@ -78,7 +78,9 @@ public class SmartTest {
         }
 
         // Compile the code.
-        SmartTest.compileCode();
+        if (Parameters.COMPILE_JAVA) {
+            SmartTest.compileCode();
+        }
 
         // Execute the test processes using TestRunnerService.
         TestRunnerService testRunnerService = new TestRunnerService();
@@ -103,7 +105,8 @@ public class SmartTest {
     private static void compileCode() throws Exception {
         Printer.boldPrintln("\n\nCompiling code...\n");
         RunnerService runnerService = new RunnerService();
-        Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME, null, "compileJava", null,
+        Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME, null,
+                "compileJava" + (Parameters.REFRESH_DEPENDENCIES ? " --refresh-dependencies" : ""), null,
                 new ArrayList<>());
         runnerService.execute(Arrays.asList(compileCommand), "compileJava", true, true, false);
         if (runnerService.isBuildSuccessful()) {
