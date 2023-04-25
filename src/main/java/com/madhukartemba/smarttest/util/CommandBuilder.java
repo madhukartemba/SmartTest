@@ -61,7 +61,7 @@ public class CommandBuilder {
         StringBuilder outputCommand = new StringBuilder();
 
         String commandName = inputCommandList.get(0).getCommandName();
-        outputCommand.append(commandName);
+        outputCommand.append(commandName + " ");
 
         TreeMap<String, List<Command>> sortedCommands = seperateWrtTaskName(inputCommandList, taskPriority);
 
