@@ -27,8 +27,8 @@ public class RunnerService {
 
     protected static final String OUTPUT_DIR_NAME = "SmartTestOutput/";
     protected static final String OUTPUT_FILE_NAME = "smartTestOutput.txt";
-    protected static String PROJECT_DIR;
-    protected static String OUTPUT_DIR;
+    protected static String PROJECT_DIR = EnvironmentService.PROJECT_DIR;
+    protected static String OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
 
     protected boolean executionComplete = false;
     protected int totalCount = 0;
@@ -39,14 +39,6 @@ public class RunnerService {
 
     public RunnerService() {
         this.fileService = new FileService();
-        RunnerService.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
-        RunnerService.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
-    }
-
-    public RunnerService(String PROJECT_DIR) {
-        this.fileService = new FileService();
-        RunnerService.PROJECT_DIR = PROJECT_DIR;
-        RunnerService.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
     public void execute(List<Command> commands, String outputFileName) throws Exception {
@@ -324,6 +316,6 @@ public class RunnerService {
                 file.delete();
             }
         }
-        Printer.println("Output directory cleaned successfully.\n", Color.GREEN);
+        Printer.println("Output directory cleaned successfully.", Color.GREEN);
     }
 }

@@ -10,14 +10,6 @@ import java.util.List;
 
 public class TestRunnerService extends RunnerService {
 
-    public TestRunnerService() {
-
-    }
-
-    public TestRunnerService(String PROJECT_DIR) {
-        super(PROJECT_DIR);
-    }
-
     @Override
     public void execute(List<Command> commands, String outputFileName, boolean cleanDirectory) throws Exception {
         Printer.boldPrintln("\n\nStarting to run test process...\n");
