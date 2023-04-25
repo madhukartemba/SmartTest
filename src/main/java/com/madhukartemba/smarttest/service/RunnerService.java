@@ -48,23 +48,26 @@ public class RunnerService {
         this.OUTPUT_DIR = PROJECT_DIR + OUTPUT_DIR_NAME;
     }
 
-    public void execute(List<Command> commands) throws Exception {
-        execute(commands, false);
+    public void execute(List<Command> commands, String outputFileName) throws Exception {
+        execute(commands, outputFileName, false);
     }
 
-    public void execute(List<Command> commands, boolean cleanDirectory) throws Exception {
-        execute(commands, cleanDirectory, true);
+    public void execute(List<Command> commands, String outputFileName, boolean cleanDirectory) throws Exception {
+        execute(commands, outputFileName, cleanDirectory, true);
     }
 
-    public void execute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput) throws Exception {
-        execute(commands, cleanDirectory, addToFinalOutput, Parameters.DELETE_CHILD_FILES);
+    public void execute(List<Command> commands, String outputFileName, boolean cleanDirectory, boolean addToFinalOutput)
+            throws Exception {
+        execute(commands, outputFileName, cleanDirectory, addToFinalOutput, Parameters.DELETE_CHILD_FILES);
     }
 
-    public void execute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput,
+    public void execute(List<Command> commands, String outputFileName, boolean cleanDirectory, boolean addToFinalOutput,
             boolean deleteChildFiles) throws Exception {
 
+        outputFileName += ("-output" + StreamIDGenerator.generateId() + ".txt");
+
         List<String> finalCommands = Arrays.asList(CommandBuilder.build(commands, EnvironmentService.TASK_PRIORITY));
-        List<String> outputStreams = Arrays.asList(OUTPUT_DIR + OUTPUT_FILE_NAME);
+        List<String> outputStreams = Arrays.asList(OUTPUT_DIR + outputFileName);
 
         baseExecute(finalCommands, outputStreams, cleanDirectory, addToFinalOutput, deleteChildFiles);
     }

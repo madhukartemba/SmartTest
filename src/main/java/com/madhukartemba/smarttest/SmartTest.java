@@ -84,7 +84,7 @@ public class SmartTest {
         if (Parameters.PARALLEL_EXECUTE) {
             testRunnerService.parallelExecute(commands, false);
         } else {
-            testRunnerService.execute(commands, false);
+            testRunnerService.execute(commands, "combined", false);
         }
 
         // Process is complete, stop the timer.
@@ -104,7 +104,7 @@ public class SmartTest {
         RunnerService runnerService = new RunnerService();
         Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME, null, "compileJava", null,
                 new ArrayList<>());
-        runnerService.execute(Arrays.asList(compileCommand), true, false, false);
+        runnerService.execute(Arrays.asList(compileCommand), "compileJava", true, true, false);
         if (runnerService.isBuildSuccessful()) {
             PrintService.println("\nCompilation successful!", Color.GREEN);
         } else {

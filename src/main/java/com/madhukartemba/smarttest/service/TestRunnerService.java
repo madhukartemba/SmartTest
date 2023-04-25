@@ -18,9 +18,9 @@ public class TestRunnerService extends RunnerService {
     }
 
     @Override
-    public void execute(List<Command> commands, boolean cleanDirectory) throws Exception {
+    public void execute(List<Command> commands, String outputFileName, boolean cleanDirectory) throws Exception {
         PrintService.boldPrintln("\n\nStarting to run test process...\n");
-        super.execute(commands, cleanDirectory);
+        super.execute(commands, outputFileName, cleanDirectory);
     }
 
     @Override
