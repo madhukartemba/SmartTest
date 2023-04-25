@@ -100,7 +100,7 @@ public class SmartTest {
     }
 
     private static void compileCode() throws Exception {
-        PrintService.println("\n\nCompiling code...\n");
+        PrintService.boldPrintln("\n\nCompiling code...\n");
         RunnerService runnerService = new RunnerService();
         Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME, null, "compileJava", null,
                 new ArrayList<>());

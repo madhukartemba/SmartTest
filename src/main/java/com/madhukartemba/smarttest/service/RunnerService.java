@@ -219,7 +219,7 @@ public class RunnerService {
                     file.delete();
                 }
             }
-            PrintService.println("Output directory cleaned successfully.", Color.GREEN);
+            PrintService.println("Output directory cleaned successfully.\n", Color.GREEN);
         }
     }
 
