@@ -32,6 +32,16 @@ public class ParametersService {
             Parameters.PRINT_OUTPUT = printOutput;
         }
 
+        if (argsMap.containsKey("compileJava")) {
+            boolean compileJava = argsMap.get("compileJava").equals("true");
+            Parameters.COMPILE_JAVA = compileJava;
+        }
+
+        if (argsMap.containsKey("refreshDependencies")) {
+            boolean refreshDependencies = argsMap.get("refreshDependencies").equals("true");
+            Parameters.REFRESH_DEPENDENCIES = refreshDependencies;
+        }
+
         if (argsMap.containsKey("parallelExecute")) {
             boolean parallelExecute = argsMap.get("parallelExecute").equals("true");
             Parameters.PARALLEL_EXECUTE = parallelExecute;
