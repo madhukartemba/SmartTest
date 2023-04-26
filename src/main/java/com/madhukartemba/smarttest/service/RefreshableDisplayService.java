@@ -12,15 +12,9 @@ public class RefreshableDisplayService {
 
     public static void main(String[] args) throws Exception {
         RefreshableDisplayService refreshableDisplayService = new RefreshableDisplayService();
-        List<String> content1 = Arrays.asList("Hello", "this", "is", "a test for the display");
-        List<String> content2 = Arrays.asList("Hi", "this is a new test", "for the display", "does it work?");
-        // for(String x : content1) {
-        // System.out.println(x);
-        // }
-        // Printer.carriageReturn(0);
-        // Printer.carriageReturn(4);
-        // Printer.clearLine();
-        // System.out.println("Hi");
+        List<String> content1 = Arrays.asList("Hello", "this is some example text", "a test for the display");
+        List<String> content2 = Arrays.asList("Hi", "I have updated the text", "for the display", "does it work?");
+
         for (int i = 0; i < 10; i++) {
             List<String> content = i % 2 == 0 ? content1 : content2;
             refreshableDisplayService.update(content);
