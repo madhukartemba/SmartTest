@@ -10,7 +10,7 @@ import com.madhukartemba.smarttest.util.Printer;
 public class ProcessMonitorService extends RefreshableDisplayService implements Runnable {
 
     private List<ProcessBuilderWrapper> wrapperList;
-    private long refreshTime = 500l;
+    private long refreshTime = 1000l;
     private Thread thread;
     private volatile boolean isRunning = false;
 
