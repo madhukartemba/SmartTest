@@ -18,7 +18,9 @@ public class ProcessMonitorService extends RefreshableDisplayService implements 
         ProcessBuilderWrapper processBuilderWrapper1 = new ProcessBuilderWrapper("TestProcess1", null);
         ProcessBuilderWrapper processBuilderWrapper2 = new ProcessBuilderWrapper("TestProcess2", null);
         ProcessBuilderWrapper processBuilderWrapper3 = new ProcessBuilderWrapper("TestProcess3", null);
+        
         // System.out.println(processBuilderWrapper.toString());
+        
         ProcessMonitorService processMonitorService = new ProcessMonitorService(
                 Arrays.asList(processBuilderWrapper1, processBuilderWrapper2, processBuilderWrapper3));
         processMonitorService.start();

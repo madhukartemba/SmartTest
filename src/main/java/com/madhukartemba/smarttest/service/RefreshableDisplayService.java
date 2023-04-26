@@ -29,7 +29,7 @@ public class RefreshableDisplayService {
     }
 
     public synchronized void update(List<String> lines) {
-        reset();
+        returnToStart();
         setPrintLines(lines);
         print();
     }
