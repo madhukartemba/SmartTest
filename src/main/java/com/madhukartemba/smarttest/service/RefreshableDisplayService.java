@@ -28,7 +28,7 @@ public class RefreshableDisplayService {
         this.lineCount = 0;
     }
 
-    public void update(List<String> lines) {
+    public synchronized void update(List<String> lines) {
         reset();
         setPrintLines(lines);
         print();
