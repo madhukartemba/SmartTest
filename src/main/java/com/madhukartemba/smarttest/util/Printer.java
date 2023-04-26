@@ -91,6 +91,10 @@ public class Printer {
         System.out.println();
     }
 
+    public static void carriageReturn(int lines) {
+        System.out.print("\033[" + lines + "A\r");
+    }
+
     private static String getColorCode(Color color) {
         int r = color.getRed();
         int g = color.getGreen();
