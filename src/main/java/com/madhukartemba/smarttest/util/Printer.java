@@ -40,8 +40,8 @@ public class Printer {
     }
 
     public static void formatPrint(String str, Color color1, Color color2) {
-        if (str == null || str.isEmpty()) {
-            System.out.println();
+        if (str == null || str.isEmpty() || !str.contains(":")) {
+            println(str);
             return;
         }
         String strs[] = str.split(SEPERATOR);
@@ -79,8 +79,8 @@ public class Printer {
     }
 
     public static void boldFormatPrint(String str, Color color1, Color color2) {
-        if (str == null || str.isEmpty()) {
-            System.out.println();
+        if (str == null || str.isEmpty() || !str.contains(":")) {
+            boldPrintln(str);
             return;
         }
         String strs[] = str.split(SEPERATOR);
