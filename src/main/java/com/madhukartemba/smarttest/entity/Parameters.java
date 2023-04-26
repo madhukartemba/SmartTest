@@ -22,7 +22,8 @@ public class Parameters {
             "exploreViaPackage",
             "deleteChildFiles",
             "fullTest",
-            "printOutput");
+            "printOutput",
+            "useLegacyPrinter");
 
     public static Color DEFAULT_COLOR_1 = Color.decode("#03A9F4");
     public static Color DEFAULT_COLOR_2 = Color.decode("#FFD300");
@@ -39,6 +40,7 @@ public class Parameters {
     public static boolean DELETE_CHILD_FILES = false;
     public static boolean FULL_TEST = false;
     public static boolean PRINT_OUTPUT = false;
+    public static boolean USE_LEGACY_PRINTER = false;
 
     public static void printValues() {
         Printer.boldPrintln("Parameters\n");
@@ -56,6 +58,7 @@ public class Parameters {
         Printer.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
         Printer.formatPrint("fullTest: " + FULL_TEST);
         Printer.formatPrint("printOutput: " + PRINT_OUTPUT);
+        Printer.formatPrint("useLegacyPrinter: " + USE_LEGACY_PRINTER);
     }
 
     public static void printHelp(String args[]) {
@@ -108,6 +111,9 @@ public class Parameters {
                             break;
                         case "printOutput":
                             paramValue = "(true or false) " + PRINT_OUTPUT;
+                            break;
+                        case "useLegacyPrinter":
+                            paramValue = "(true or false) " + USE_LEGACY_PRINTER;
                             break;
                         case "gitCommand":
                             paramValue = "string " + GIT_COMMAND;
