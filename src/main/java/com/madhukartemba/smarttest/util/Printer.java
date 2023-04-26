@@ -41,7 +41,7 @@ public class Printer {
     }
 
     public static void formatPrint(String str, Color color1, Color color2) {
-        if (str == null || str.isEmpty() || !str.contains(":")) {
+        if (str == null || str.isEmpty() || !str.contains(SEPERATOR)) {
             println(str);
             return;
         }
@@ -80,7 +80,7 @@ public class Printer {
     }
 
     public static void boldFormatPrint(String str, Color color1, Color color2) {
-        if (str == null || str.isEmpty() || !str.contains(":")) {
+        if (str == null || str.isEmpty() || !str.contains(SEPERATOR)) {
             boldPrintln(str);
             return;
         }
