@@ -194,14 +194,15 @@ public class RunnerService {
 
         executorService.shutdown();
 
-        processMonitorService.stop();
-
         try {
             // This will terminate after 3 hours
             executorService.awaitTermination(3L, TimeUnit.HOURS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        processMonitorService.stop();
+
     }
 
     protected void createAndPopulateOutputFile(List<String> outputStreams, boolean deleteChildFiles) throws Exception {
