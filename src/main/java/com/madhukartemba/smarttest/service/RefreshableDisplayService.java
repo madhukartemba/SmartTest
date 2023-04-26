@@ -51,17 +51,18 @@ public class RefreshableDisplayService {
     }
 
     protected void returnToStart() {
-        if (lineCount == 0) {
-            return;
-        }
         Printer.carriageReturn(lineCount);
     }
 
     protected void print() {
+        StringBuilder output = new StringBuilder();
+
         for (String printLine : printLines) {
-            Printer.clearLine();
-            Printer.formatPrint(printLine);
+            output.append(Printer.CLEAR_LINE + printLine + "\n");
         }
+
+        Printer.print(output.toString());
+
     }
 
 }

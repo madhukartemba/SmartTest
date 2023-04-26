@@ -13,6 +13,7 @@ public class Printer {
     public static final Color DEFAULT_COLOR_2 = Parameters.DEFAULT_COLOR_2;
     public static final String DEFAULT_COLOR_2_CODE = getColorCode(DEFAULT_COLOR_2);
     public static final String SEPERATOR = ":";
+    public static final String CLEAR_LINE = "\033[2K\r";
 
     public static void print(String str, Color color) {
         String colorCode = getColorCode(color);
@@ -93,12 +94,14 @@ public class Printer {
     }
 
     public static void carriageReturn(int lines) {
+        if (lines == 0) {
+            return;
+        }
         System.out.print("\033[" + lines + "A\r");
     }
 
     public static void clearLine() {
-        System.out.print("\033[2K"); // clear line
-        System.out.print("\r"); // move cursor to beginning of line
+        System.out.print(CLEAR_LINE); // clear line and move cursor to the start
         System.out.flush(); // flush output buffer to console
     }
 
