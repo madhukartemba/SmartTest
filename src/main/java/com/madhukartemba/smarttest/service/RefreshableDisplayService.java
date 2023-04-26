@@ -27,6 +27,7 @@ public class RefreshableDisplayService {
 
     public void print() {
         for (String printLine : printLines) {
+            Printer.clearLine();
             Printer.formatPrint(printLine);
         }
     }
