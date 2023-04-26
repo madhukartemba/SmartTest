@@ -40,12 +40,6 @@ public class RefreshableDisplayService {
         print();
     }
 
-    protected void setPrintLines(List<String> lines) {
-        this.printLines.clear();
-        this.printLines.addAll(lines);
-        this.lineCount = printLines.size();
-    }
-
     public void reset() {
         returnToStart();
         for (int i = 0; i < lineCount; i++) {
@@ -54,6 +48,12 @@ public class RefreshableDisplayService {
         }
         returnToStart();
         this.printLines.clear();
+    }
+
+    protected void setPrintLines(List<String> lines) {
+        this.printLines.clear();
+        this.printLines.addAll(lines);
+        this.lineCount = printLines.size();
     }
 
     protected void returnToStart() {
