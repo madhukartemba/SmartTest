@@ -11,15 +11,18 @@ public class ProcessBuilderWrapper {
     private Process process;
     private String name;
     private int exitCode = -1;
+    private ProcessStatus processStatus;
 
     public ProcessBuilderWrapper(String name, ProcessBuilder processBuilder) {
         this.timer = new Timer();
         this.name = name;
         this.processBuilder = processBuilder;
+        this.processStatus = ProcessStatus.QUEUED;
     }
 
     public void start() throws Exception {
         timer.start();
+        this.processStatus = ProcessStatus.RUNNING;
         this.process = processBuilder.start();
     }
 
@@ -32,6 +35,7 @@ public class ProcessBuilderWrapper {
 
     public void waitForCompletion() throws Exception {
         this.exitCode = process.waitFor();
+        this.processStatus = (this.exitCode == 0 ? ProcessStatus.SUCCESSFUL : ProcessStatus.FAILED);
         this.timer.stop();
     }
 
@@ -80,4 +84,7 @@ public class ProcessBuilderWrapper {
         return timer;
     }
 
+    public ProcessStatus getProcessStatus() {
+        return processStatus;
+    }
 }
