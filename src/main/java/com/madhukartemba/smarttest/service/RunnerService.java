@@ -172,14 +172,18 @@ public class RunnerService {
     }
 
     protected void parallelRun(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
+
         ExecutorService executorService = Executors.newFixedThreadPool(Parameters.MAX_PARALLEL_THREADS);
+
+        ProcessMonitorService processMonitorService = new ProcessMonitorService(processBuilderWrappers);
+
+        processMonitorService.start();
 
         for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
             Runnable task = () -> {
                 try {
                     processBuilderWrapper.start();
                     processBuilderWrapper.waitForCompletion();
-                    processBuilderWrapper.printResult();
                 } catch (Exception e) {
                     // Handle exception
                     e.printStackTrace();
@@ -187,7 +191,11 @@ public class RunnerService {
             };
             executorService.execute(task);
         }
+
         executorService.shutdown();
+
+        processMonitorService.stop();
+
         try {
             // This will terminate after 3 hours
             executorService.awaitTermination(3L, TimeUnit.HOURS);
