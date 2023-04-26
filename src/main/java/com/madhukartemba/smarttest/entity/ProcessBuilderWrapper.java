@@ -73,11 +73,11 @@ public class ProcessBuilderWrapper {
         } else if (processStatus == ProcessStatus.QUEUED) {
             output += Printer.getColorCode(Color.GRAY) + "QUEUED";
         } else {
-            output += Printer.getColorCode(Color.ORANGE) + "ENUM NOT FOUND";
+            output += Printer.getColorCode(Color.ORANGE) + processStatus.toString();
         }
 
         output += Printer.RESET;
-        
+
         return output;
     }
 
