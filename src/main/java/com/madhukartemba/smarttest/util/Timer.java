@@ -27,7 +27,8 @@ public class Timer {
                     Color.RED);
         }
 
-        long elapsedTime = endTime - startTime;
+        long elapsedTime = (endTime < 0 ? System.currentTimeMillis() : endTime) - startTime;
+
         int hours = (int) (elapsedTime / (60 * 60 * 1000));
         int minutes = (int) ((elapsedTime / (60 * 1000)) % 60);
         int seconds = (int) ((elapsedTime / 1000) % 60);
