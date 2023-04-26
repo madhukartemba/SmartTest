@@ -56,6 +56,31 @@ public class ProcessBuilderWrapper {
         }
     }
 
+    // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
+    public String toString() {
+
+        String output = Printer.DEFAULT_COLOR_1_CODE + "Process " + Printer.RESET + Printer.BOLD
+                + Printer.getColorCode(Color.WHITE) + this.getName() + Printer.RESET + Printer.DEFAULT_COLOR_1_CODE
+                + ": " + Printer.RESET + Printer.BOLD;
+
+        if (processStatus == ProcessStatus.SUCCESSFUL) {
+            output += Printer.getColorCode(Color.decode("#23D18B")) + "BUILD SUCCESSFUL in " + timer.getElapsedTime();
+        } else if (processStatus == ProcessStatus.FAILED) {
+            output += Printer.getColorCode(Color.RED) + "BUILD FAILED WITH EXIT CODE " + this.getExitCode() + " in "
+                    + timer.getElapsedTime();
+        } else if (processStatus == ProcessStatus.RUNNING) {
+            output += Printer.getColorCode(Printer.DEFAULT_COLOR_2) + "RUNNING " + timer.getElapsedTime();
+        } else if (processStatus == ProcessStatus.QUEUED) {
+            output += Printer.getColorCode(Color.GRAY) + "QUEUED";
+        } else {
+            output += Printer.getColorCode(Color.ORANGE) + "ENUM NOT FOUND";
+        }
+
+        output += Printer.RESET;
+        
+        return output;
+    }
+
     public ProcessBuilder getProcessBuilder() {
         return processBuilder;
     }

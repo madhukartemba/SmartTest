@@ -6,12 +6,13 @@ import com.madhukartemba.smarttest.entity.Parameters;
 
 public class Printer {
 
-    private static final String RESET = "\033[0m";
-    private static final String BOLD = "\033[1m";
-    private static final Color DEFAULT_COLOR_1 = Parameters.DEFAULT_COLOR_1;
-    private static final String DEFAULT_COLOR_1_CODE = getColorCode(DEFAULT_COLOR_1);
-    private static final Color DEFAULT_COLOR_2 = Parameters.DEFAULT_COLOR_2;
-    private static final String SEPERATOR = ":";
+    public static final String RESET = "\033[0m";
+    public static final String BOLD = "\033[1m";
+    public static final Color DEFAULT_COLOR_1 = Parameters.DEFAULT_COLOR_1;
+    public static final String DEFAULT_COLOR_1_CODE = getColorCode(DEFAULT_COLOR_1);
+    public static final Color DEFAULT_COLOR_2 = Parameters.DEFAULT_COLOR_2;
+    public static final String DEFAULT_COLOR_2_CODE = getColorCode(DEFAULT_COLOR_2);
+    public static final String SEPERATOR = ":";
 
     public static void print(String str, Color color) {
         String colorCode = getColorCode(color);
@@ -101,7 +102,7 @@ public class Printer {
         System.out.flush(); // flush output buffer to console
     }
 
-    private static String getColorCode(Color color) {
+    public static String getColorCode(Color color) {
         int r = color.getRed();
         int g = color.getGreen();
         int b = color.getBlue();
