@@ -1,5 +1,16 @@
 package com.madhukartemba.smarttest.service;
 
-public class ProcessMonitorService {
-    
+import java.util.ArrayList;
+import java.util.List;
+
+import com.madhukartemba.smarttest.entity.ProcessBuilderWrapper;
+
+public class ProcessMonitorService extends RefreshableDisplayService {
+
+    List<ProcessBuilderWrapper> wrapperList;
+
+    public ProcessMonitorService(List<ProcessBuilderWrapper> list) {
+        this.wrapperList = list;
+    }
+
 }

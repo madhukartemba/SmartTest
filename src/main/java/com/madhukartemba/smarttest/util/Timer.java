@@ -27,11 +27,6 @@ public class Timer {
                     Color.RED);
         }
 
-        // Stop if not stopped.
-        if (endTime == -1) {
-            this.stop();
-        }
-
         long elapsedTime = endTime - startTime;
         int hours = (int) (elapsedTime / (60 * 60 * 1000));
         int minutes = (int) ((elapsedTime / (60 * 1000)) % 60);
