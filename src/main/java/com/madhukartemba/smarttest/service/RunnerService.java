@@ -175,15 +175,21 @@ public class RunnerService {
 
         ExecutorService executorService = Executors.newFixedThreadPool(Parameters.MAX_PARALLEL_THREADS);
 
-        ProcessMonitorService processMonitorService = new ProcessMonitorService(processBuilderWrappers);
+        ProcessMonitorService processMonitorService = null;
 
-        processMonitorService.start();
+        if (!Parameters.USE_LEGACY_PRINTER) {
+            processMonitorService = new ProcessMonitorService(processBuilderWrappers);
+            processMonitorService.start();
+        }
 
         for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
             Runnable task = () -> {
                 try {
                     processBuilderWrapper.start();
                     processBuilderWrapper.waitForCompletion();
+                    if (Parameters.USE_LEGACY_PRINTER) {
+                        processBuilderWrapper.printResult();
+                    }
                 } catch (Exception e) {
                     // Handle exception
                     e.printStackTrace();
@@ -201,7 +207,9 @@ public class RunnerService {
             e.printStackTrace();
         }
 
-        processMonitorService.stop();
+        if (!Parameters.USE_LEGACY_PRINTER) {
+            processMonitorService.stop();
+        }
 
     }
 
