@@ -95,6 +95,12 @@ public class Printer {
         System.out.print("\033[" + lines + "A\r");
     }
 
+    public static void clearLine() {
+        System.out.print("\033[2K"); // clear line
+        System.out.print("\r"); // move cursor to beginning of line
+        System.out.flush(); // flush output buffer to console
+    }
+
     private static String getColorCode(Color color) {
         int r = color.getRed();
         int g = color.getGreen();
