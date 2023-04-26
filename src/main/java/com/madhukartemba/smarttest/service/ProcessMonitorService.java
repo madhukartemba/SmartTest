@@ -18,9 +18,9 @@ public class ProcessMonitorService extends RefreshableDisplayService implements 
         ProcessBuilderWrapper processBuilderWrapper1 = new ProcessBuilderWrapper("TestProcess1", null);
         ProcessBuilderWrapper processBuilderWrapper2 = new ProcessBuilderWrapper("TestProcess2", null);
         ProcessBuilderWrapper processBuilderWrapper3 = new ProcessBuilderWrapper("TestProcess3", null);
-        
+
         // System.out.println(processBuilderWrapper.toString());
-        
+
         ProcessMonitorService processMonitorService = new ProcessMonitorService(
                 Arrays.asList(processBuilderWrapper1, processBuilderWrapper2, processBuilderWrapper3));
         processMonitorService.start();
@@ -46,7 +46,51 @@ public class ProcessMonitorService extends RefreshableDisplayService implements 
             statuses.add(processBuilderWrapper.toString());
         }
 
-        return statuses;
+        return formatProcessStatuses(statuses);
+    }
+
+    public List<String> formatProcessStatuses(List<String> statuses) {
+        int maxLen = 0;
+
+        // Find the maximum length of the first part of the string (before the
+        // separator)
+        for (String status : statuses) {
+            maxLen = Math.max(maxLen, status.indexOf(Printer.SEPERATOR) + 1);
+        }
+
+        List<String> formattedStatuses = new ArrayList<>();
+
+        // Add each formatted string to the result list
+        for (String status : statuses) {
+            int separatorIndex = status.indexOf(Printer.SEPERATOR);
+            if (separatorIndex >= 0) {
+                // Split the string into two parts at the separator position
+                String firstPart = status.substring(0, separatorIndex + 1);
+                String secondPart = status.substring(separatorIndex + 1);
+
+                // Append spaces to the first part to make it as long as the longest first part
+                int padding = maxLen - firstPart.length();
+                String paddedFirstPart = firstPart + repeat(" ", padding);
+
+                // Concatenate the two parts and add the formatted string to the result list
+                formattedStatuses.add(paddedFirstPart + secondPart);
+            } else {
+                // If there is no separator, add the original string to the result list
+                // unchanged
+                formattedStatuses.add(status);
+            }
+        }
+
+        return formattedStatuses;
+    }
+
+    // A utility method to repeat a string n times
+    private static String repeat(String s, int n) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            sb.append(s);
+        }
+        return sb.toString();
     }
 
     public void start() {
