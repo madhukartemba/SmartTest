@@ -32,6 +32,11 @@ public class ParametersService {
             Parameters.PRINT_OUTPUT = printOutput;
         }
 
+        if (argsMap.containsKey("useLegacyPrinter")) {
+            boolean useLegacyPrinter = argsMap.get("useLegacyPrinter").equals("true");
+            Parameters.PRINT_OUTPUT = useLegacyPrinter;
+        }
+
         if (argsMap.containsKey("compileJava")) {
             boolean compileJava = argsMap.get("compileJava").equals("true");
             Parameters.COMPILE_JAVA = compileJava;
