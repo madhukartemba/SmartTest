@@ -42,7 +42,6 @@ public class ProcessMonitorService extends RefreshableDisplayService implements 
 
     @Override
     public void run() {
-        // your code for the thread's task goes here
         while (!Thread.currentThread().isInterrupted()) {
             List<String> processStatuses = getProcessStatuses();
             update(processStatuses);
