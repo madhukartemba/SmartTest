@@ -41,7 +41,7 @@ public class ProcessMonitorService extends RefreshableDisplayService implements 
         List<String> statuses = new ArrayList<>();
 
         for (ProcessBuilderWrapper processBuilderWrapper : wrapperList) {
-            statuses.add(processBuilderWrapper.toString() + Math.random());
+            statuses.add(processBuilderWrapper.toString());
         }
 
         return statuses;
@@ -68,7 +68,7 @@ public class ProcessMonitorService extends RefreshableDisplayService implements 
     @Override
     public void run() {
         isRunning = true;
-        
+
         while (isRunning) {
             update();
             try {
