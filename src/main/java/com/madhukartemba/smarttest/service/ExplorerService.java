@@ -66,13 +66,6 @@ public class ExplorerService {
             String packageName = fileService.extractPackageName(javaFile);
 
             if (className == null) {
-                System.out.println("Invalid classname " + javaFile);
-                blackListFiles.add(javaFile);
-                continue;
-            }
-
-            if (packageName == null) {
-                System.out.println("Invalid packagename " + javaFile);
                 blackListFiles.add(javaFile);
                 continue;
             }
@@ -81,8 +74,14 @@ public class ExplorerService {
                 continue;
             }
 
-            List<String> foundFiles = fileService.findFilesUsingClassNameAndPackageName(className, packageName,
-                    visitedFiles);
+            List<String> foundFiles = null;
+
+            if (packageName != null) {
+                foundFiles = fileService.findFilesUsingClassNameAndPackageName(className, packageName,
+                        visitedFiles);
+            } else {
+                foundFiles = fileService.findFilesUsingClassName(className, visitedFiles);
+            }
 
             javaFileQueue.addAll(foundFiles);
 
