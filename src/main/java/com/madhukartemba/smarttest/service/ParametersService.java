@@ -62,6 +62,11 @@ public class ParametersService {
             // SmartTest.checkForShellInjection(gradleCommand);
         }
 
+        if (argsMap.containsKey("projectDir")) {
+            String projectDir = argsMap.get("projectDir");
+            Parameters.PROJECT_DIR = projectDir;
+        }
+
         if (argsMap.containsKey("gitCommand")) {
             String gitCommand = argsMap.get("gitCommand");
             Parameters.GIT_COMMAND = gitCommand;

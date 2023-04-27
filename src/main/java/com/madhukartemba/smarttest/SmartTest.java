@@ -37,7 +37,11 @@ public class SmartTest {
         Parameters.printValues();
 
         // Init the environment variables.
-        EnvironmentService.init("/opt/odin");
+        if (Parameters.PROJECT_DIR == null) {
+            EnvironmentService.init();
+        } else {
+            EnvironmentService.init(Parameters.PROJECT_DIR);
+        }
 
         // Get the list of changed files from Git.
         GitService gitService = new GitService();
