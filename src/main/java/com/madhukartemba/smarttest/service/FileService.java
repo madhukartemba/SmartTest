@@ -232,7 +232,7 @@ public class FileService {
             throw new IllegalArgumentException("Empty class name was given as input to: findFilesUsingClassName");
         }
 
-        String[] extensions = { "java" };
+        String[] extensions = { ".java" };
         int maxDepth = Integer.MAX_VALUE;
 
         CodeParser codeParser = new CodeParser(className);
@@ -245,7 +245,7 @@ public class FileService {
                             return false;
                         }
 
-                        if (!Arrays.stream(extensions).anyMatch(ext -> path.toString().endsWith("." + ext))) {
+                        if (!Arrays.stream(extensions).anyMatch(ext -> path.toString().endsWith(ext))) {
                             return false;
                         }
 
