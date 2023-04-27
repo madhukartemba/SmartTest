@@ -185,8 +185,7 @@ public class RunnerService {
         for (ProcessBuilderWrapper processBuilderWrapper : processBuilderWrappers) {
             Runnable task = () -> {
                 try {
-                    processBuilderWrapper.start();
-                    processBuilderWrapper.waitForCompletion();
+                    processBuilderWrapper.startAndWaitForCompletion();
                     if (Parameters.USE_LEGACY_PRINTER) {
                         processBuilderWrapper.printResult();
                     }

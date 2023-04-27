@@ -26,6 +26,11 @@ public class ProcessBuilderWrapper {
         this.process = processBuilder.start();
     }
 
+    public void startAndWaitForCompletion() throws Exception {
+        start();
+        waitForCompletion();
+    }
+
     public boolean isSuccessful() {
         if (exitCode < 0) {
             throw new RuntimeException("Process is not finished yet.");
