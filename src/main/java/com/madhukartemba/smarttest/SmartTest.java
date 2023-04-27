@@ -37,7 +37,7 @@ public class SmartTest {
         Parameters.printValues();
 
         // Init the environment variables.
-        EnvironmentService.init();
+        EnvironmentService.init("/opt/odin");
 
         // Get the list of changed files from Git.
         GitService gitService = new GitService();
@@ -95,7 +95,7 @@ public class SmartTest {
 
         // Execute the test processes using TestRunnerService.
         TestRunnerService testRunnerService = new TestRunnerService();
-        if (Parameters.PARALLEL_EXECUTE) {
+        if (!Parameters.PARALLEL_EXECUTE) {
             testRunnerService.parallelExecute(commands, false);
         } else {
             testRunnerService.execute(commands, "combined", false);
