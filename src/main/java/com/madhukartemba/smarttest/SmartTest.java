@@ -29,7 +29,7 @@ public class SmartTest {
         ParametersService.setParameters(argsMap);
 
         // Print the logo.
-        printLogoAndVersion();
+        SmartTest.printLogoAndVersion();
 
         // Value of all the paramters.
         Parameters.printValues();
@@ -106,7 +106,7 @@ public class SmartTest {
 
         printEndMessage();
 
-        // Return the exit code.
+        // Return with exit code.
         System.exit(testRunnerService.isBuildSuccessful() ? 0 : 1);
 
     }
