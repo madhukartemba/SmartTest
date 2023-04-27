@@ -56,7 +56,7 @@ public class ProcessBuilderWrapper {
         }
     }
 
-    // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
+    @Override
     public String toString() {
 
         String output = Printer.DEFAULT_COLOR_1_CODE + "Process " + Printer.RESET + Printer.BOLD
@@ -71,7 +71,7 @@ public class ProcessBuilderWrapper {
         } else if (processStatus == ProcessStatus.RUNNING) {
             output += Printer.getColorCode(Printer.DEFAULT_COLOR_2) + "RUNNING " + timer.getElapsedTime();
         } else if (processStatus == ProcessStatus.QUEUED) {
-            output += Printer.getColorCode(Color.GRAY) + "QUEUED";
+            output += Printer.getColorCode(Color.LIGHT_GRAY) + "QUEUED";
         } else {
             output += Printer.getColorCode(Color.ORANGE) + processStatus.toString();
         }
