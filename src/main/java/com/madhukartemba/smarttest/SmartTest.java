@@ -99,7 +99,7 @@ public class SmartTest {
 
         // Execute the test processes using TestRunnerService.
         TestRunnerService testRunnerService = new TestRunnerService();
-        if (!Parameters.PARALLEL_EXECUTE) {
+        if (Parameters.PARALLEL_EXECUTE) {
             testRunnerService.parallelExecute(commands, false);
         } else {
             testRunnerService.execute(commands, "combined", false);
