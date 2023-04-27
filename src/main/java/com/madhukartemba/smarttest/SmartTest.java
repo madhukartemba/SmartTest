@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SmartTest {
 
@@ -153,14 +155,38 @@ public class SmartTest {
         System.exit(exitCode);
     }
 
-    public static void checkForShellInjection(String command, String expectedCommand) {
+    public static void checkForShellInjection(String command) {
         command.trim();
-        if (!command.startsWith(expectedCommand + " ") || command.contains("&&")) {
+        if (containsMultipleCommands(command) && hasSudoPermission()) {
             SmartTest.exitWithCode(
-                    "POTENTIAL SHELL INJECTION ATTACK: The given command should not contain any unexpected command. Expected command: "
-                            + expectedCommand,
+                    "POTENTIAL SHELL INJECTION ATTACK: The given command can potentially execute mutliple commands with sudo permission.",
                     Color.RED,
                     1);
+        }
+    }
+
+    public static boolean containsMultipleCommands(String commandString) {
+        String commandRegex = "^(.*?)(?<!\\\\)([;&|]{2}|;|\\|\\||&)(.*)$";
+        Pattern pattern = Pattern.compile(commandRegex);
+        Matcher matcher = pattern.matcher(commandString);
+
+        return matcher.matches();
+    }
+
+    public static boolean hasSudoPermission() {
+        try {
+            // Attempt to run a command that requires sudo permission
+            Process process = Runtime.getRuntime().exec("sudo -n true");
+
+            // Wait for the process to finish
+            process.waitFor();
+
+            // Check if the command succeeded or failed
+            int exitCode = process.exitValue();
+            return exitCode == 0;
+
+        } catch (Exception e) {
+            return false;
         }
     }
 
