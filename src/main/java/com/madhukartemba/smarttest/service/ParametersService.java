@@ -3,6 +3,7 @@ package com.madhukartemba.smarttest.service;
 import java.awt.Color;
 import java.util.Map;
 
+import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.util.Printer;
 
@@ -65,6 +66,10 @@ public class ParametersService {
         if (argsMap.containsKey("projectDir")) {
             String projectDir = argsMap.get("projectDir");
             Parameters.PROJECT_DIR = projectDir;
+            if (!FileService.directoryExists(projectDir)) {
+                SmartTest.exitWithCode("The given project directory '" + projectDir + "' does not exist!", Color.RED,
+                        1);
+            }
         }
 
         if (argsMap.containsKey("gitCommand")) {

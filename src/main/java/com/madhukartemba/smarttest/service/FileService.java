@@ -390,4 +390,10 @@ public class FileService {
     public boolean isCompleteRunRequired() {
         return completeRunRequired;
     }
+
+    public static boolean directoryExists(String path) {
+        File directory = new File(path);
+
+        return (directory.exists() && directory.isDirectory());
+    }
 }
