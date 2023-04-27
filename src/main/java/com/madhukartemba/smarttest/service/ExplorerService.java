@@ -20,6 +20,95 @@ public class ExplorerService {
         fileService = new FileService();
     }
 
+    public List<String> explore(List<String> inputFiles) throws Exception {
+
+        if (Parameters.FULL_TEST) {
+            completeRunRequired = true;
+            Printer.boldPrintln("\n\nFull test command is given, will run all the tests...");
+            return exploreAll();
+        }
+
+        Printer.boldPrintln("\n\nStarting to explore affected files...\n");
+        completeRunRequired = false;
+
+        Printer.formatPrint("Number of changed files: " + inputFiles.size());
+        Queue<String> javaFileQueue = new ArrayDeque<>();
+        Set<String> visitedFiles = new HashSet<>();
+        Set<String> blackListFiles = new HashSet<>();
+        Set<String> visitedClassNameAndPackageName = new HashSet<>();
+
+        completeRunRequired = fileService.analyseGitFiles(inputFiles);
+
+        if (completeRunRequired) {
+            return exploreAll();
+        }
+
+        for (String inputFile : inputFiles) {
+            if (fileService.isJavaFile(inputFile)) {
+                javaFileQueue.add(inputFile);
+                visitedFiles.add(inputFile);
+            }
+        }
+
+        Printer.println("\nStarted to explore...\n", Color.GREEN);
+        Printer.boldPrint("ROOT", Color.GREEN);
+
+        int prevVisitedSize = 0;
+
+        while (!javaFileQueue.isEmpty()) {
+            String javaFile = javaFileQueue.poll();
+
+            if (blackListFiles.contains(javaFile)) {
+                continue;
+            }
+
+            String className = fileService.extractClassName(javaFile);
+            String packageName = fileService.extractPackageName(javaFile);
+
+            if (className == null) {
+                System.out.println("Invalid classname " + javaFile);
+                blackListFiles.add(javaFile);
+                continue;
+            }
+
+            if (packageName == null) {
+                System.out.println("Invalid packagename " + javaFile);
+                blackListFiles.add(javaFile);
+                continue;
+            }
+
+            if (!visitedClassNameAndPackageName.add(className + " " + packageName)) {
+                continue;
+            }
+
+            List<String> foundFiles = fileService.findFilesUsingClassNameAndPackageName(className, packageName,
+                    visitedFiles);
+
+            javaFileQueue.addAll(foundFiles);
+
+            int currentVisitedSize = visitedFiles.size();
+            if (prevVisitedSize + 50 < currentVisitedSize) {
+                prevVisitedSize = currentVisitedSize;
+                Printer.print(" -->");
+                Printer.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
+            }
+        }
+
+        if (prevVisitedSize != visitedFiles.size()) {
+            Printer.print(" -->");
+            Printer.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
+        }
+
+        Printer.print(" -->");
+        Printer.boldPrint(" END", Color.GREEN);
+
+        Printer.println("\n\nExploration complete!", Color.GREEN);
+        fileService.analyseResult(visitedFiles);
+
+        return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
+
+    }
+
     public List<String> exploreViaClassname(List<String> inputFiles) throws Exception {
 
         if (Parameters.FULL_TEST) {
@@ -65,7 +154,7 @@ public class ExplorerService {
             String className = fileService.extractClassName(javaFile);
 
             if (className == null) {
-                blackListFiles.add(className);
+                blackListFiles.add(javaFile);
                 continue;
             }
 
