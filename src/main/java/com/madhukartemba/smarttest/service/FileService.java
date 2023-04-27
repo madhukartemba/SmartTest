@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -262,6 +263,69 @@ public class FileService {
                         String cleanFileOutput = FileCleaner.clean(path);
 
                         return codeParser.containsKeyword(cleanFileOutput);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return false;
+                }).parallel()) {
+            stream.forEach(path -> {
+                String referencedFile = path.toString();
+                if (referencedFile.startsWith("./")) {
+                    referencedFile = referencedFile.substring(2);
+                }
+                if (!visitedFiles.contains(referencedFile)) {
+                    visitedFiles.add(referencedFile);
+                    res.add(referencedFile);
+                }
+            });
+        }
+
+        return res;
+    }
+
+    public List<String> findFilesUsingClassNameAndPackageName(String className, String packageName,
+            Set<String> visitedFiles)
+            throws IOException {
+        List<String> res = new ArrayList<>();
+
+        if (className == null || className.isEmpty()) {
+            throw new IllegalArgumentException("Empty class name was given as input to: findFilesUsingClassName");
+        }
+
+        String[] extensions = { ".java" };
+        int maxDepth = Integer.MAX_VALUE;
+
+        CodeParser classCodeParser = new CodeParser(className);
+        CodeParser packageCodeParser = new CodeParser(Pattern.compile(".*" + Pattern.quote(packageName) + ".*"));
+
+        try (Stream<Path> stream = Files.find(startPath, maxDepth,
+                (path, attr) -> {
+                    try {
+
+                        if (!attr.isRegularFile()) {
+                            return false;
+                        }
+
+                        if (!Arrays.stream(extensions).anyMatch(ext -> path.toString().endsWith(ext))) {
+                            return false;
+                        }
+
+                        String filePath = path.toString();
+
+                        if (filePath.startsWith("./")) {
+                            filePath = filePath.substring(2);
+                        }
+
+                        if (visitedFiles.contains(filePath)) {
+                            return false;
+                        }
+
+                        String cleanFileOutput = FileCleaner.clean(path);
+
+                        return classCodeParser.containsKeyword(cleanFileOutput)
+                                && packageCodeParser.containsKeyword(cleanFileOutput);
 
                     } catch (Exception e) {
                         e.printStackTrace();
