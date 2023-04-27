@@ -159,7 +159,7 @@ public class SmartTest {
         command.trim();
         if (containsMultipleCommands(command) && hasSudoPermission()) {
             SmartTest.exitWithCode(
-                    "POTENTIAL SHELL INJECTION ATTACK: The given command can potentially execute mutliple commands with sudo permission.",
+                    "ERROR (POTENTIAL SHELL INJECTION ATTCK): The provided command contains multiple commands that may execute with sudo permission, which may be susceptible to shell injection attacks. Please ensure that the command is validated and only executes trusted commands. The program will now exit to prevent any potential security risks.",
                     Color.RED,
                     1);
         }
