@@ -56,8 +56,8 @@ public class SmartTest {
 
         List<String> changedFiles = null;
 
-        if (Parameters.EXPLORE_VIA_PACKAGE) {
-            changedFiles = explorerService.exploreViaPackageName(gitChangedFiles);
+        if (Parameters.EXPLORE_WITH_PACKAGE) {
+            changedFiles = explorerService.explore(gitChangedFiles);
         } else {
             changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
         }

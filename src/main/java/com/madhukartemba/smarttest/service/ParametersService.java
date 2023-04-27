@@ -17,9 +17,9 @@ public class ParametersService {
             Parameters.USER_PROVIDED_THREAD_COUNT = true;
         }
 
-        if (argsMap.containsKey("exploreViaPackage")) {
-            boolean exploreViaPackage = argsMap.get("exploreViaPackage").equals("true");
-            Parameters.EXPLORE_VIA_PACKAGE = exploreViaPackage;
+        if (argsMap.containsKey("exploreWithPackage")) {
+            boolean exploreWithPackage = argsMap.get("exploreWithPackage").equals("true");
+            Parameters.EXPLORE_WITH_PACKAGE = exploreWithPackage;
         }
 
         if (argsMap.containsKey("fullTest")) {

@@ -20,7 +20,7 @@ public class Parameters {
             "gitCommand",
             "officialMergeRequestPattern",
             "parallelExecute",
-            "exploreViaPackage",
+            "exploreWithPackage",
             "deleteChildFiles",
             "fullTest",
             "printOutput",
@@ -38,7 +38,7 @@ public class Parameters {
     public static boolean PARALLEL_EXECUTE = true;
     public static boolean REFRESH_DEPENDENCIES = false;
     public static boolean USER_PROVIDED_THREAD_COUNT = false;
-    public static boolean EXPLORE_VIA_PACKAGE = false;
+    public static boolean EXPLORE_WITH_PACKAGE = false;
     public static boolean DELETE_CHILD_FILES = false;
     public static boolean FULL_TEST = false;
     public static boolean PRINT_OUTPUT = false;
@@ -55,7 +55,7 @@ public class Parameters {
         Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES);
         Printer.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS
                 + (USER_PROVIDED_THREAD_COUNT ? " (user provided)" : " (determined automatically)"));
-        Printer.formatPrint("exporeViaPackage: " + EXPLORE_VIA_PACKAGE);
+        Printer.formatPrint("exploreWithPackage: " + EXPLORE_WITH_PACKAGE);
         Printer.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES);
         Printer.formatPrint("gitCommand: " + GIT_COMMAND);
         Printer.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
@@ -103,8 +103,8 @@ public class Parameters {
                         case "maxParallelThreads":
                             paramValue = "number " + MAX_PARALLEL_THREADS + " (determined automatically)";
                             break;
-                        case "exploreViaPackage":
-                            paramValue = "(true or false) " + EXPLORE_VIA_PACKAGE;
+                        case "exploreWithPackage":
+                            paramValue = "(true or false) " + EXPLORE_WITH_PACKAGE;
                             break;
                         case "deleteChildFiles":
                             paramValue = "(true or false) " + DELETE_CHILD_FILES;
