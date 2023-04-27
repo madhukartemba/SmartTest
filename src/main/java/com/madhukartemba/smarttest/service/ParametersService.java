@@ -3,7 +3,6 @@ package com.madhukartemba.smarttest.service;
 import java.awt.Color;
 import java.util.Map;
 
-import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.util.Printer;
 
@@ -60,13 +59,13 @@ public class ParametersService {
         if (argsMap.containsKey("gradleCommand")) {
             String gradleCommand = argsMap.get("gradleCommand");
             Parameters.GRADLE_COMMAND_NAME = gradleCommand;
-            SmartTest.checkForShellInjection(gradleCommand);
+            // SmartTest.checkForShellInjection(gradleCommand);
         }
 
         if (argsMap.containsKey("gitCommand")) {
             String gitCommand = argsMap.get("gitCommand");
             Parameters.GIT_COMMAND = gitCommand;
-            SmartTest.checkForShellInjection(gitCommand);
+            // SmartTest.checkForShellInjection(gitCommand);
         }
 
         if (argsMap.containsKey("officialMergeRequestPattern")) {

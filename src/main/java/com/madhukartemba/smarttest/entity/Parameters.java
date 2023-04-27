@@ -10,6 +10,7 @@ import com.madhukartemba.smarttest.util.ThreadUtil;
 public class Parameters {
 
     public static List<String> parameterNames = Arrays.asList(
+            "projectDir",
             "defaultColor1",
             "defaultColor2",
             "gradleCommand",
@@ -27,6 +28,7 @@ public class Parameters {
 
     public static Color DEFAULT_COLOR_1 = Color.decode("#03A9F4");
     public static Color DEFAULT_COLOR_2 = Color.decode("#FFD300");
+    public static String PROJECT_DIR = null;
     public static String GRADLE_COMMAND_NAME = "./gradlew";
     public static final String GRADLE_OPTION_NAME = "--tests";
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
@@ -44,6 +46,7 @@ public class Parameters {
 
     public static void printValues() {
         Printer.boldPrintln("Parameters\n");
+        Printer.formatPrint("projectDir: " + (PROJECT_DIR == null ? "current directory" : PROJECT_DIR));
         Printer.formatPrint("defaultColor1: " + DEFAULT_COLOR_1);
         Printer.formatPrint("defaultColor2: " + DEFAULT_COLOR_2);
         Printer.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
@@ -76,6 +79,9 @@ public class Parameters {
                 for (String paramName : parameterNames) {
                     Object paramValue = null;
                     switch (paramName) {
+                        case "projectDir":
+                            paramValue = "string (current directory)";
+                            break;
                         case "defaultColor1":
                             paramValue = "HEXCODE " + DEFAULT_COLOR_1.toString();
                             break;
