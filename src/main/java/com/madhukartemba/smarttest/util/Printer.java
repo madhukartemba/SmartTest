@@ -2,15 +2,15 @@ package com.madhukartemba.smarttest.util;
 
 import java.awt.Color;
 
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 
 public class Printer {
 
     public static final String RESET = "\033[0m";
     public static final String BOLD = "\033[1m";
-    public static final Color DEFAULT_COLOR_1 = Parameters.DEFAULT_COLOR_1;
+    public static final Color DEFAULT_COLOR_1 = ParametersNew.DEFAULT_COLOR_1.getValue();
     public static final String DEFAULT_COLOR_1_CODE = getColorCode(DEFAULT_COLOR_1);
-    public static final Color DEFAULT_COLOR_2 = Parameters.DEFAULT_COLOR_2;
+    public static final Color DEFAULT_COLOR_2 = ParametersNew.DEFAULT_COLOR_2.getValue();
     public static final String DEFAULT_COLOR_2_CODE = getColorCode(DEFAULT_COLOR_2);
     public static final String SEPERATOR = ":";
     public static final String CLEAR_LINE = "\033[2K\r";
