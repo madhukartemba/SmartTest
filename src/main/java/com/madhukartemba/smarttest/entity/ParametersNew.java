@@ -83,6 +83,12 @@ public class ParametersNew {
         printHelpAndExit();
     }
 
+    public static boolean isParameter(String str) {
+        return COLOR_PARAMETER_MAP.containsKey(str) || STRING_PARAMETER_MAP.containsKey(str)
+                || INTEGER_PARAMETER_MAP.containsKey(str) || BOOLEAN_PARAMETER_MAP.containsKey(str);
+
+    }
+
     public static void printValues() {
         Printer.boldPrintln("Parameters\n");
 

@@ -17,9 +17,6 @@ public class ArgsParser {
                 System.exit(0);
             } else if (arg.equals("-h") || arg.equals("--help")) {
                 ParametersNew.printHelpAndExit();
-            } else if ((arg.startsWith("'") && arg.endsWith("'"))
-                    || (arg.startsWith("\"") && arg.endsWith("\""))) {
-                arg = arg.substring(1, arg.length() - 1);
             } else if (arg.startsWith("--")) {
                 arg = arg.substring(2);
             } else if (arg.startsWith("-")) {
