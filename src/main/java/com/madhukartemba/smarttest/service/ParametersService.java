@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameter;
-import com.madhukartemba.smarttest.entity.ParametersNew;
+import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.util.Printer;
 
 public class ParametersService {
@@ -21,13 +21,13 @@ public class ParametersService {
         for (int i = 0; i < args.size(); i++) {
             String arg = args.get(i);
 
-            if (!ParametersNew.isParameter(arg)) {
+            if (!Parameters.isParameter(arg)) {
                 SmartTest.exitWithCode(
                         "'" + arg + "' is not a valid parameter! Type 'SmartTest --help' to get more information.",
                         Color.RED, 1);
             }
 
-            Parameter<Color> colorParameter = ParametersNew.COLOR_PARAMETER_MAP.getOrDefault(arg, null);
+            Parameter<Color> colorParameter = Parameters.COLOR_PARAMETER_MAP.getOrDefault(arg, null);
             if (colorParameter != null) {
                 String nextArg = args.get(i + 1);
                 checkIsNextArgAParameter(arg, nextArg);
@@ -38,7 +38,7 @@ public class ParametersService {
                 continue;
             }
 
-            Parameter<String> stringParameter = ParametersNew.STRING_PARAMETER_MAP.getOrDefault(arg, null);
+            Parameter<String> stringParameter = Parameters.STRING_PARAMETER_MAP.getOrDefault(arg, null);
             if (stringParameter != null) {
                 String nextArg = args.get(i + 1);
                 checkIsNextArgAParameter(arg, nextArg);
@@ -48,7 +48,7 @@ public class ParametersService {
                 continue;
             }
 
-            Parameter<Integer> integerParameter = ParametersNew.INTEGER_PARAMETER_MAP.getOrDefault(arg, null);
+            Parameter<Integer> integerParameter = Parameters.INTEGER_PARAMETER_MAP.getOrDefault(arg, null);
             if (integerParameter != null) {
                 String nextArg = args.get(i + 1);
                 checkIsNextArgAParameter(arg, nextArg);
@@ -58,7 +58,7 @@ public class ParametersService {
                 continue;
             }
 
-            Parameter<Boolean> booleanParameter = ParametersNew.BOOLEAN_PARAMETER_MAP.getOrDefault(arg, null);
+            Parameter<Boolean> booleanParameter = Parameters.BOOLEAN_PARAMETER_MAP.getOrDefault(arg, null);
             if (booleanParameter != null) {
                 booleanParameter.setValue(true);
                 continue;
@@ -68,7 +68,7 @@ public class ParametersService {
     }
 
     public static void checkIsNextArgAParameter(String arg, String nextArg) {
-        if (ParametersNew.isParameter(nextArg)) {
+        if (Parameters.isParameter(nextArg)) {
             SmartTest.exitWithCode(
                     "'" + arg + "' expects a value after it! Type 'SmartTest --help' to get more information.",
                     Color.RED, 1);

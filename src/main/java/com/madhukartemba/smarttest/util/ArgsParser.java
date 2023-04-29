@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.madhukartemba.smarttest.SmartTest;
-import com.madhukartemba.smarttest.entity.ParametersNew;
+import com.madhukartemba.smarttest.entity.Parameters;
 
 public class ArgsParser {
     public static List<String> parseArgs(String[] args) {
@@ -16,7 +16,7 @@ public class ArgsParser {
                 System.out.println(SmartTest.VERSION);
                 System.exit(0);
             } else if (arg.equals("-h") || arg.equals("--help")) {
-                ParametersNew.printHelpAndExit();
+                Parameters.printHelpAndExit();
             } else if (arg.startsWith("--")) {
                 arg = arg.substring(2);
             } else if (arg.startsWith("-")) {

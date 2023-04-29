@@ -7,7 +7,7 @@ import java.util.Map;
 import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.ThreadUtil;
 
-public class ParametersNew {
+public class Parameters {
 
     public static final String GRADLE_OPTION_NAME = "--tests";
 
@@ -40,42 +40,42 @@ public class ParametersNew {
     public static final Map<String, Parameter<Boolean>> BOOLEAN_PARAMETER_MAP = new HashMap<>();
 
     static {
-        COLOR_PARAMETER_MAP.put(ParametersNew.DEFAULT_COLOR_1.getName(), ParametersNew.DEFAULT_COLOR_1);
-        COLOR_PARAMETER_MAP.put(ParametersNew.DEFAULT_COLOR_1.getAliasName(), ParametersNew.DEFAULT_COLOR_1);
-        COLOR_PARAMETER_MAP.put(ParametersNew.DEFAULT_COLOR_2.getName(), ParametersNew.DEFAULT_COLOR_2);
-        COLOR_PARAMETER_MAP.put(ParametersNew.DEFAULT_COLOR_2.getAliasName(), ParametersNew.DEFAULT_COLOR_2);
+        COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_1.getName(), Parameters.DEFAULT_COLOR_1);
+        COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_1.getAliasName(), Parameters.DEFAULT_COLOR_1);
+        COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_2.getName(), Parameters.DEFAULT_COLOR_2);
+        COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_2.getAliasName(), Parameters.DEFAULT_COLOR_2);
 
-        STRING_PARAMETER_MAP.put(ParametersNew.PROJECT_DIR.getName(), ParametersNew.PROJECT_DIR);
-        STRING_PARAMETER_MAP.put(ParametersNew.PROJECT_DIR.getAliasName(), ParametersNew.PROJECT_DIR);
-        STRING_PARAMETER_MAP.put(ParametersNew.GRADLE_COMMAND.getName(), ParametersNew.GRADLE_COMMAND);
-        STRING_PARAMETER_MAP.put(ParametersNew.GRADLE_COMMAND.getAliasName(), ParametersNew.GRADLE_COMMAND);
-        STRING_PARAMETER_MAP.put(ParametersNew.GIT_COMMAND.getName(), ParametersNew.GIT_COMMAND);
-        STRING_PARAMETER_MAP.put(ParametersNew.GIT_COMMAND.getAliasName(), ParametersNew.GIT_COMMAND);
-        STRING_PARAMETER_MAP.put(ParametersNew.OFFICIAL_MERGE_REQUEST_PATTERN.getName(),
-                ParametersNew.OFFICIAL_MERGE_REQUEST_PATTERN);
-        STRING_PARAMETER_MAP.put(ParametersNew.OFFICIAL_MERGE_REQUEST_PATTERN.getAliasName(),
-                ParametersNew.OFFICIAL_MERGE_REQUEST_PATTERN);
+        STRING_PARAMETER_MAP.put(Parameters.PROJECT_DIR.getName(), Parameters.PROJECT_DIR);
+        STRING_PARAMETER_MAP.put(Parameters.PROJECT_DIR.getAliasName(), Parameters.PROJECT_DIR);
+        STRING_PARAMETER_MAP.put(Parameters.GRADLE_COMMAND.getName(), Parameters.GRADLE_COMMAND);
+        STRING_PARAMETER_MAP.put(Parameters.GRADLE_COMMAND.getAliasName(), Parameters.GRADLE_COMMAND);
+        STRING_PARAMETER_MAP.put(Parameters.GIT_COMMAND.getName(), Parameters.GIT_COMMAND);
+        STRING_PARAMETER_MAP.put(Parameters.GIT_COMMAND.getAliasName(), Parameters.GIT_COMMAND);
+        STRING_PARAMETER_MAP.put(Parameters.OFFICIAL_MERGE_REQUEST_PATTERN.getName(),
+                Parameters.OFFICIAL_MERGE_REQUEST_PATTERN);
+        STRING_PARAMETER_MAP.put(Parameters.OFFICIAL_MERGE_REQUEST_PATTERN.getAliasName(),
+                Parameters.OFFICIAL_MERGE_REQUEST_PATTERN);
 
-        INTEGER_PARAMETER_MAP.put(ParametersNew.MAX_THREADS.getName(), ParametersNew.MAX_THREADS);
-        INTEGER_PARAMETER_MAP.put(ParametersNew.MAX_THREADS.getAliasName(), ParametersNew.MAX_THREADS);
+        INTEGER_PARAMETER_MAP.put(Parameters.MAX_THREADS.getName(), Parameters.MAX_THREADS);
+        INTEGER_PARAMETER_MAP.put(Parameters.MAX_THREADS.getAliasName(), Parameters.MAX_THREADS);
 
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.SKIP_COMPILE_JAVA.getName(), ParametersNew.SKIP_COMPILE_JAVA);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.SKIP_COMPILE_JAVA.getAliasName(), ParametersNew.SKIP_COMPILE_JAVA);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.SERIAL_EXECUTE.getName(), ParametersNew.SERIAL_EXECUTE);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.SERIAL_EXECUTE.getAliasName(), ParametersNew.SERIAL_EXECUTE);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.REFRESH_DEPENDENCIES.getName(), ParametersNew.REFRESH_DEPENDENCIES);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.REFRESH_DEPENDENCIES.getAliasName(),
-                ParametersNew.REFRESH_DEPENDENCIES);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.VERIFY_PACKAGE.getName(), ParametersNew.VERIFY_PACKAGE);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.VERIFY_PACKAGE.getAliasName(), ParametersNew.VERIFY_PACKAGE);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.DELETE_CHILD_FILES.getName(), ParametersNew.DELETE_CHILD_FILES);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.DELETE_CHILD_FILES.getAliasName(), ParametersNew.DELETE_CHILD_FILES);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.FULL_TEST.getName(), ParametersNew.FULL_TEST);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.FULL_TEST.getAliasName(), ParametersNew.FULL_TEST);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.PRINT_OUTPUT.getName(), ParametersNew.PRINT_OUTPUT);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.PRINT_OUTPUT.getAliasName(), ParametersNew.PRINT_OUTPUT);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.USE_LEGACY_PRINTER.getName(), ParametersNew.USE_LEGACY_PRINTER);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.USE_LEGACY_PRINTER.getAliasName(), ParametersNew.USE_LEGACY_PRINTER);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.SKIP_COMPILE_JAVA.getName(), Parameters.SKIP_COMPILE_JAVA);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.SKIP_COMPILE_JAVA.getAliasName(), Parameters.SKIP_COMPILE_JAVA);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.SERIAL_EXECUTE.getName(), Parameters.SERIAL_EXECUTE);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.SERIAL_EXECUTE.getAliasName(), Parameters.SERIAL_EXECUTE);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.REFRESH_DEPENDENCIES.getName(), Parameters.REFRESH_DEPENDENCIES);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.REFRESH_DEPENDENCIES.getAliasName(),
+                Parameters.REFRESH_DEPENDENCIES);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.VERIFY_PACKAGE.getName(), Parameters.VERIFY_PACKAGE);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.VERIFY_PACKAGE.getAliasName(), Parameters.VERIFY_PACKAGE);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.DELETE_CHILD_FILES.getName(), Parameters.DELETE_CHILD_FILES);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.DELETE_CHILD_FILES.getAliasName(), Parameters.DELETE_CHILD_FILES);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.FULL_TEST.getName(), Parameters.FULL_TEST);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.FULL_TEST.getAliasName(), Parameters.FULL_TEST);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.PRINT_OUTPUT.getName(), Parameters.PRINT_OUTPUT);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.PRINT_OUTPUT.getAliasName(), Parameters.PRINT_OUTPUT);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.USE_LEGACY_PRINTER.getName(), Parameters.USE_LEGACY_PRINTER);
+        BOOLEAN_PARAMETER_MAP.put(Parameters.USE_LEGACY_PRINTER.getAliasName(), Parameters.USE_LEGACY_PRINTER);
     }
 
     public static void main(String[] args) {
