@@ -71,54 +71,82 @@ public class ParametersNew {
         PARAMETER_MAP.put(ParametersNew.USE_LEGACY_PRINTER.getAliasName(), ParametersNew.USE_LEGACY_PRINTER);
     }
 
+    public static void main(String[] args) {
+        printHelpAndExit();
+    }
+
     public static void printHelpAndExit() {
 
-        Printer.println("Usage: SmartTest [options]");
-        Printer.println("Options:");
-        Printer.println("  --argName=value  Description of argument");
-        Printer.println("  -h, --help       Print this help message and exit");
-        Printer.println("  -v, --version    Print the version and exit");
+        Printer.formatPrint("Usage: SmartTest [options]");
+        Printer.formatPrint("Options:");
+        Printer.formatPrint("  --help, -h      : Print this help message and exit");
+        Printer.formatPrint("  --version, -v   : Print the version and exit");
 
         Printer.println(
-                "--defaultColor1, -color1 <value> \nSets the default value of the first color to be used in the program. This value should be a hexadecimal color code in the format like this: #03A9F4.");
+                "\n  --defaultColor1, -color1 <value>");
+        Printer.println(
+                "    Sets the default value of the first color to be used in the program. This value should be a hexadecimal color code in the format like this: #03A9F4.",
+                Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--defaultColor2, -color2 <value> \nSets the default value of the second color to be used in the program. This value should be a hexadecimal color code in the format like this: #FFD300.");
+                "\n  --defaultColor2, -color2 <value>");
+        Printer.println(
+                "    Sets the default value of the second color to be used in the program. This value should be a hexadecimal color code in the format like this: #FFD300.",
+                Printer.DEFAULT_COLOR_2);
 
-        Printer.println("--projectDir, -dir <value> \nSets the project directory to be used by the program.");
+        Printer.println("\n  --projectDir, -dir <value>");
+        Printer.println("    Sets the project directory to be used by the program.", Printer.DEFAULT_COLOR_2);
 
-        Printer.println("--gradleCommand, -gradlecmd <value> \nSets the Gradle command to be used by the program.");
+        Printer.println("\n  --gradleCommand, -gradlecmd <value>");
+        Printer.println("    Sets the Gradle command to be used by the program.", Printer.DEFAULT_COLOR_2);
 
-        Printer.println("--gitCommand, -gitcmd <value> \nSets the Git command to be used by the program.");
+        Printer.println("\n  --gitCommand, -gitcmd <value>");
+        Printer.println("    Sets the Git command to be used by the program.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--officialMergeRequestPattern, -mergereqpattern <value> \nSets the official merge request pattern to be used by the program. This pattern should be a regular expression that matches the merge request format used in the project.");
+                "\n  --officialMergeRequestPattern, -mergereqpattern <value>");
+        Printer.println(
+                "    Sets the official merge request pattern to be used by the program. This pattern should be a regular expression that matches the merge request format used in the project.",
+                Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--maxThreads, -maxth <value> \nSets the maximum number of threads to be used by the program.");
+                "\n  --maxThreads, -maxth <value>");
+        Printer.println("    Sets the maximum number of threads to be used by the program.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--skipCompileJava, -skipcompile \nFlag to skip the compilation of the project before testing.");
+                "\n  --skipCompileJava, -skipcompile");
+        Printer.println("    Flag to skip the compilation of the project before testing.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--serialExecute, -serexe \nFlag to execute tasks serially.");
+                "\n  --serialExecute, -serexe");
+        Printer.println("    Flag to execute tasks serially.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--refreshDependencies, -refdeps \nFlag to refresh dependencies.");
+                "\n  --refreshDependencies, -refdeps");
+        Printer.println("    Flag to refresh dependencies.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--verifyPackage, -verpkg \nFlag to verify the package also along with the classname while exploring files.");
+                "\n  --verifyPackage, -verpkg");
+        Printer.println("    Flag to verify the package also along with the classname while exploring files.",
+                Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--deleteChildFiles, -delchd \nFlag to delete child files after the program ends.");
+                "\n  --deleteChildFiles, -delchd");
+        Printer.println("    Flag to delete child files after the program ends.", Printer.DEFAULT_COLOR_2);
 
-        Printer.println("--fullTest, -ftest \nFlag to perform a full test.");
+        Printer.println("\n  --fullTest, -ftest");
+        Printer.println("    Flag to perform a full test.", Printer.DEFAULT_COLOR_2);
 
-        Printer.println("--printOutput, -pout \nFlag to print output after the tests are complete.");
+        Printer.println("\n  --printOutput, -pout");
+        Printer.println("    Flag to print output after the tests are complete.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "--useLegacyPrinter, -ulp \nFlag to use the legacy printer.");
+                "\n  --useLegacyPrinter, -ulp");
+        Printer.println(
+                "    Flag to print using the old printer (it does not refresh the text). It maybe useful if you are trying to log the output to a file.",
+                Printer.DEFAULT_COLOR_2);
 
+        Printer.println("\n");
         System.exit(0);
 
     }
