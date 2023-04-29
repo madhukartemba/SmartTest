@@ -88,7 +88,7 @@ public class ParametersService {
         } catch (NumberFormatException e) {
             // Handle invalid color string
             Printer.println("\nInvalid color string given in args: " + colorString, Color.RED);
-            return Color.decode("#03A9F4");
+            return Printer.DEFAULT_COLOR_1;
         }
     }
 
