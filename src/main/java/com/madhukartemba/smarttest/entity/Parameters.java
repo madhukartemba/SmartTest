@@ -104,7 +104,7 @@ public class Parameters {
         Printer.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN.getValue());
         Printer.formatPrint("maxThreads: " + MAX_THREADS.getValue()
                 + (MAX_THREADS.isModified() ? " (user provided)" : " (determined automatically)"));
-        Printer.formatPrint("parallelExecute: " + SERIAL_EXECUTE.getValue());
+        Printer.formatPrint("serialExecute: " + SERIAL_EXECUTE.getValue());
         Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES.getValue());
         Printer.formatPrint("skipCompileJava: " + SKIP_COMPILE_JAVA.getValue());
         Printer.formatPrint("verifyPackage: " + VERIFY_PACKAGE.getValue());
