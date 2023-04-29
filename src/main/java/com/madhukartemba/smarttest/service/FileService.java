@@ -351,21 +351,47 @@ public class FileService {
     public List<String> findAllTestFiles() throws Exception {
         List<String> res = new ArrayList<>();
 
-        processBuilder.command("grep", "-r", "-l", "-w", "--exclude-from=.gitignore", "@Test", ".");
-        Process grepProcess = processBuilder.start();
-        BufferedReader grepOutput = new BufferedReader(new InputStreamReader(grepProcess.getInputStream()));
-        grepProcess.waitFor();
-        String referencedFile = grepOutput.readLine();
+        String[] extensions = { ".java" };
+        int maxDepth = Integer.MAX_VALUE;
 
-        // Add test files that reference changed file to list
-        while (referencedFile != null) {
-            if (isTestFile(referencedFile)) {
+        CodeParser testCodeParser = new CodeParser("@Test");
+
+        try (Stream<Path> stream = Files.find(startPath, maxDepth,
+                (path, attr) -> {
+                    try {
+
+                        if (!attr.isRegularFile()) {
+                            return false;
+                        }
+
+                        if (!Arrays.stream(extensions).anyMatch(ext -> path.toString().endsWith(ext))) {
+                            return false;
+                        }
+
+                        String filePath = path.toString();
+
+                        if (filePath.startsWith("./")) {
+                            filePath = filePath.substring(2);
+                        }
+
+                        String cleanFileOutput = FileCleaner.clean(path);
+
+                        return testCodeParser.containsKeyword(cleanFileOutput);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return false;
+                }).parallel()) {
+            stream.forEach(path -> {
+                String referencedFile = path.toString();
                 if (referencedFile.startsWith("./")) {
                     referencedFile = referencedFile.substring(2);
                 }
+
                 res.add(referencedFile);
-            }
-            referencedFile = grepOutput.readLine();
+            });
         }
 
         return res;
