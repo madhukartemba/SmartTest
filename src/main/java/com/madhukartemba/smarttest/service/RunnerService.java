@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.madhukartemba.smarttest.entity.Command;
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 import com.madhukartemba.smarttest.entity.ProcessBuilderWrapper;
 import com.madhukartemba.smarttest.util.CommandBuilder;
 import com.madhukartemba.smarttest.util.Printer;
@@ -51,7 +51,8 @@ public class RunnerService {
 
     public void execute(List<Command> commands, String outputFileName, boolean cleanDirectory, boolean addToFinalOutput)
             throws Exception {
-        execute(commands, outputFileName, cleanDirectory, addToFinalOutput, Parameters.DELETE_CHILD_FILES);
+        execute(commands, outputFileName, cleanDirectory, addToFinalOutput,
+                ParametersNew.DELETE_CHILD_FILES.getValue());
     }
 
     public void execute(List<Command> commands, String outputFileName, boolean cleanDirectory, boolean addToFinalOutput,
@@ -76,7 +77,7 @@ public class RunnerService {
 
     public void parallelExecute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput)
             throws Exception {
-        parallelExecute(commands, cleanDirectory, addToFinalOutput, Parameters.DELETE_CHILD_FILES);
+        parallelExecute(commands, cleanDirectory, addToFinalOutput, ParametersNew.DELETE_CHILD_FILES.getValue());
     }
 
     public void parallelExecute(List<Command> commands, boolean cleanDirectory, boolean addToFinalOutput,
@@ -173,11 +174,11 @@ public class RunnerService {
 
     protected void parallelRun(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(Parameters.MAX_THREADS);
+        ExecutorService executorService = Executors.newFixedThreadPool(ParametersNew.MAX_THREADS.getValue());
 
         ProcessMonitorService processMonitorService = null;
 
-        if (!Parameters.USE_LEGACY_PRINTER) {
+        if (!ParametersNew.USE_LEGACY_PRINTER.getValue()) {
             processMonitorService = new ProcessMonitorService(processBuilderWrappers);
             processMonitorService.start();
         }
@@ -186,7 +187,7 @@ public class RunnerService {
             Runnable task = () -> {
                 try {
                     processBuilderWrapper.startAndWaitForCompletion();
-                    if (Parameters.USE_LEGACY_PRINTER) {
+                    if (ParametersNew.USE_LEGACY_PRINTER.getValue()) {
                         processBuilderWrapper.printResult();
                     }
                 } catch (Exception e) {
@@ -206,7 +207,7 @@ public class RunnerService {
             e.printStackTrace();
         }
 
-        if (!Parameters.USE_LEGACY_PRINTER) {
+        if (!ParametersNew.USE_LEGACY_PRINTER.getValue()) {
             processMonitorService.stop();
         }
 
