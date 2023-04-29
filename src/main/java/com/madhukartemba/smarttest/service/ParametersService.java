@@ -29,8 +29,7 @@ public class ParametersService {
 
             Parameter<Color> colorParameter = Parameters.COLOR_PARAMETER_MAP.getOrDefault(arg, null);
             if (colorParameter != null) {
-                String nextArg = args.get(i + 1);
-                checkIsNextArgAParameter(arg, nextArg);
+                String nextArg = getNextParameterWithCheck(i, args);
                 nextArg = removeQuotesIfPresent(nextArg);
                 Color color = getColorFromString(args.get(i + 1));
                 colorParameter.setValue(color);
@@ -40,8 +39,7 @@ public class ParametersService {
 
             Parameter<String> stringParameter = Parameters.STRING_PARAMETER_MAP.getOrDefault(arg, null);
             if (stringParameter != null) {
-                String nextArg = args.get(i + 1);
-                checkIsNextArgAParameter(arg, nextArg);
+                String nextArg = getNextParameterWithCheck(i, args);
                 nextArg = removeQuotesIfPresent(nextArg);
                 stringParameter.setValue(nextArg);
                 i++;
@@ -50,8 +48,7 @@ public class ParametersService {
 
             Parameter<Integer> integerParameter = Parameters.INTEGER_PARAMETER_MAP.getOrDefault(arg, null);
             if (integerParameter != null) {
-                String nextArg = args.get(i + 1);
-                checkIsNextArgAParameter(arg, nextArg);
+                String nextArg = getNextParameterWithCheck(i, args);
                 nextArg = removeQuotesIfPresent(nextArg);
                 integerParameter.setValue(Integer.parseInt(nextArg));
                 i++;
@@ -67,12 +64,13 @@ public class ParametersService {
         }
     }
 
-    public static void checkIsNextArgAParameter(String arg, String nextArg) {
-        if (Parameters.isParameter(nextArg)) {
+    public static String getNextParameterWithCheck(int i, List<String> args) {
+        if (i >= args.size() || Parameters.isParameter(args.get(i))) {
             SmartTest.exitWithCode(
-                    "'" + arg + "' expects a value after it! Type 'SmartTest --help' to get more information.",
+                    "'" + args.get(i) + "' expects a value after it! Type 'SmartTest --help' to get more information.",
                     Color.RED, 1);
         }
+        return args.get(i + 1);
     }
 
     public static String removeQuotesIfPresent(String str) {
