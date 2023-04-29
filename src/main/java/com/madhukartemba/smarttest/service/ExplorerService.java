@@ -116,7 +116,7 @@ public class ExplorerService {
             return exploreAll();
         }
 
-        Printer.boldPrintln("\n\nStarting to explore affected files via class name...\n");
+        Printer.boldPrintln("\n\nStarting to explore affected files via class name only...\n");
         completeRunRequired = false;
 
         Printer.formatPrint("Number of changed files: " + inputFiles.size());
@@ -196,7 +196,7 @@ public class ExplorerService {
 
         completeRunRequired = false;
 
-        Printer.boldPrintln("\n\nStarting to explore affected files via package name...\n");
+        Printer.boldPrintln("\n\nStarting to explore affected files via package name only...\n");
         Printer.formatPrint("Number of changed files: " + inputFiles.size());
         Queue<String> javaFileQueue = new ArrayDeque<>();
         Set<String> visitedFiles = new HashSet<>();

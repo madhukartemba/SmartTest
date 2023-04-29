@@ -55,10 +55,12 @@ public class SmartTest {
 
         List<String> changedFiles = null;
 
-        if (Parameters.VERIFY_PACKAGE.getValue()) {
-            changedFiles = explorerService.explore(gitChangedFiles);
-        } else {
+        if (Parameters.VIA_CLASSNAME.getValue()) {
             changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
+        } else if (Parameters.VIA_PACKAGE.getValue()) {
+            changedFiles = explorerService.exploreViaPackageName(gitChangedFiles);
+        } else {
+            changedFiles = explorerService.explore(gitChangedFiles);
         }
 
         if (changedFiles == null || changedFiles.isEmpty()) {
