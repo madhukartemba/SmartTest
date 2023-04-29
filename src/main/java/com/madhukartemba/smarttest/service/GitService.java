@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.madhukartemba.smarttest.SmartTest;
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 import com.madhukartemba.smarttest.util.Printer;
 
 public class GitService {
@@ -88,7 +88,7 @@ public class GitService {
 
     public String getMerge(int skipCount) throws Exception {
 
-        String command = Parameters.GIT_COMMAND.trim();
+        String command = ParametersNew.GIT_COMMAND.getValue().trim();
 
         if (!command.contains("-n")) {
 
@@ -141,7 +141,7 @@ public class GitService {
 
     public boolean isOfficialMerge(String line) {
 
-        Pattern pattern = Pattern.compile(Parameters.OFFICIAL_MERGE_REQUEST_PATTERN);
+        Pattern pattern = Pattern.compile(ParametersNew.OFFICIAL_MERGE_REQUEST_PATTERN.getValue());
         Matcher matcher = pattern.matcher(line);
 
         return matcher.find();
