@@ -29,16 +29,16 @@ public class Parameters {
     public static Color DEFAULT_COLOR_1 = Color.decode("#03A9F4");
     public static Color DEFAULT_COLOR_2 = Color.decode("#FFD300");
     public static String PROJECT_DIR = null;
-    public static String GRADLE_COMMAND_NAME = "./gradlew";
+    public static String GRADLE_COMMAND = "./gradlew";
     public static final String GRADLE_OPTION_NAME = "--tests";
     public static String OFFICIAL_MERGE_REQUEST_PATTERN = "Merge pull request #\\d+ from";
     public static String GIT_COMMAND = "git log --merges";
-    public static int MAX_PARALLEL_THREADS = ThreadUtil.getOptimalThreadCount();
-    public static boolean COMPILE_JAVA = true;
-    public static boolean PARALLEL_EXECUTE = true;
+    public static int MAX_THREADS = ThreadUtil.getOptimalThreadCount();
+    public static boolean SKIP_COMPILE_JAVA = true;
+    public static boolean SERIAL_EXECUTE = true;
     public static boolean REFRESH_DEPENDENCIES = false;
     public static boolean USER_PROVIDED_THREAD_COUNT = false;
-    public static boolean EXPLORE_WITH_PACKAGE = false;
+    public static boolean VERIFY_PACKAGE = false;
     public static boolean DELETE_CHILD_FILES = false;
     public static boolean FULL_TEST = false;
     public static boolean PRINT_OUTPUT = false;
@@ -49,13 +49,13 @@ public class Parameters {
         Printer.formatPrint("projectDir: " + (PROJECT_DIR == null ? "current directory" : PROJECT_DIR));
         Printer.formatPrint("defaultColor1: " + DEFAULT_COLOR_1);
         Printer.formatPrint("defaultColor2: " + DEFAULT_COLOR_2);
-        Printer.formatPrint("parallelExecute: " + PARALLEL_EXECUTE);
-        Printer.formatPrint("gradleCommand: " + GRADLE_COMMAND_NAME);
-        Printer.formatPrint("compileJava: " + COMPILE_JAVA);
+        Printer.formatPrint("parallelExecute: " + SERIAL_EXECUTE);
+        Printer.formatPrint("gradleCommand: " + GRADLE_COMMAND);
+        Printer.formatPrint("compileJava: " + SKIP_COMPILE_JAVA);
         Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES);
-        Printer.formatPrint("maxParallelThreads: " + MAX_PARALLEL_THREADS
+        Printer.formatPrint("maxParallelThreads: " + MAX_THREADS
                 + (USER_PROVIDED_THREAD_COUNT ? " (user provided)" : " (determined automatically)"));
-        Printer.formatPrint("exploreWithPackage: " + EXPLORE_WITH_PACKAGE);
+        Printer.formatPrint("exploreWithPackage: " + VERIFY_PACKAGE);
         Printer.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES);
         Printer.formatPrint("gitCommand: " + GIT_COMMAND);
         Printer.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN);
@@ -89,22 +89,22 @@ public class Parameters {
                             paramValue = "HEXCODE " + DEFAULT_COLOR_2.toString();
                             break;
                         case "compileJava":
-                            paramValue = "(true or false) " + COMPILE_JAVA;
+                            paramValue = "(true or false) " + SKIP_COMPILE_JAVA;
                             break;
                         case "refreshDependencies":
                             paramValue = "(true or false) " + REFRESH_DEPENDENCIES;
                             break;
                         case "parallelExecute":
-                            paramValue = "(true or false) " + PARALLEL_EXECUTE;
+                            paramValue = "(true or false) " + SERIAL_EXECUTE;
                             break;
                         case "gradleCommand":
-                            paramValue = "string " + GRADLE_COMMAND_NAME;
+                            paramValue = "string " + GRADLE_COMMAND;
                             break;
                         case "maxParallelThreads":
-                            paramValue = "number " + MAX_PARALLEL_THREADS + " (determined automatically)";
+                            paramValue = "number " + MAX_THREADS + " (determined automatically)";
                             break;
                         case "exploreWithPackage":
-                            paramValue = "(true or false) " + EXPLORE_WITH_PACKAGE;
+                            paramValue = "(true or false) " + VERIFY_PACKAGE;
                             break;
                         case "deleteChildFiles":
                             paramValue = "(true or false) " + DELETE_CHILD_FILES;

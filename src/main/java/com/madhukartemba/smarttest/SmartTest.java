@@ -1,7 +1,7 @@
 package com.madhukartemba.smarttest;
 
 import com.madhukartemba.smarttest.entity.Command;
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 import com.madhukartemba.smarttest.service.*;
 import com.madhukartemba.smarttest.util.ArgsParser;
 import com.madhukartemba.smarttest.util.Printer;
@@ -33,20 +33,20 @@ public class SmartTest {
         SmartTest.printLogoAndVersion();
 
         // Value of all the paramters.
-        Parameters.printValues();
+        ParametersNew.printValues();
 
         // Init the environment variables.
-        if (Parameters.PROJECT_DIR == null) {
+        if (ParametersNew.PROJECT_DIR.getValue() == null) {
             EnvironmentService.init();
         } else {
-            EnvironmentService.init(Parameters.PROJECT_DIR);
+            EnvironmentService.init(ParametersNew.PROJECT_DIR.getValue());
         }
 
         // Get the list of changed files from Git.
         GitService gitService = new GitService();
-        List<String> gitChangedFiles = Parameters.FULL_TEST ? null : gitService.getChangedFiles();
+        List<String> gitChangedFiles = ParametersNew.FULL_TEST.getValue() ? null : gitService.getChangedFiles();
 
-        if (!Parameters.FULL_TEST && (gitChangedFiles == null || gitChangedFiles.isEmpty())) {
+        if (!ParametersNew.FULL_TEST.getValue() && (gitChangedFiles == null || gitChangedFiles.isEmpty())) {
             exitWithCode("The list of changed files determined by Git is empty!", Color.YELLOW, 0);
         }
 
@@ -55,7 +55,7 @@ public class SmartTest {
 
         List<String> changedFiles = null;
 
-        if (Parameters.EXPLORE_WITH_PACKAGE) {
+        if (ParametersNew.VERIFY_PACKAGE.getValue()) {
             changedFiles = explorerService.explore(gitChangedFiles);
         } else {
             changedFiles = explorerService.exploreViaClassname(gitChangedFiles);
@@ -87,21 +87,21 @@ public class SmartTest {
         RunnerService.createOutputDirectory(true);
 
         // Refresh the dependencies.
-        if (Parameters.REFRESH_DEPENDENCIES) {
+        if (ParametersNew.REFRESH_DEPENDENCIES.getValue()) {
             SmartTest.refreshDependencies();
         }
 
         // Compile the code.
-        if (Parameters.COMPILE_JAVA) {
+        if (!ParametersNew.SKIP_COMPILE_JAVA.getValue()) {
             SmartTest.compileCode();
         }
 
         // Execute the test processes using TestRunnerService.
         TestRunnerService testRunnerService = new TestRunnerService();
-        if (Parameters.PARALLEL_EXECUTE) {
-            testRunnerService.parallelExecute(commands, false);
-        } else {
+        if (ParametersNew.SERIAL_EXECUTE.getValue()) {
             testRunnerService.execute(commands, "combined", false);
+        } else {
+            testRunnerService.parallelExecute(commands, false);
         }
 
         // Process is complete, stop the timer.
@@ -119,7 +119,7 @@ public class SmartTest {
     private static void refreshDependencies() throws Exception {
         Printer.boldPrintln("\n\nRefreshing dependencies...\n");
         RunnerService runnerService = new RunnerService();
-        Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME,
+        Command compileCommand = new Command(ParametersNew.GRADLE_COMMAND.getValue(),
                 null, "--refresh-dependencies", null, new ArrayList<>());
         runnerService.execute(Arrays.asList(compileCommand), "refreshDependencies", false, true, false);
         if (runnerService.isBuildSuccessful()) {
@@ -133,7 +133,7 @@ public class SmartTest {
     private static void compileCode() throws Exception {
         Printer.boldPrintln("\n\nCompiling code...\n");
         RunnerService runnerService = new RunnerService();
-        Command compileCommand = new Command(Parameters.GRADLE_COMMAND_NAME,
+        Command compileCommand = new Command(ParametersNew.GRADLE_COMMAND.getValue(),
                 null, "compileJava", null, new ArrayList<>());
         runnerService.execute(Arrays.asList(compileCommand), "compileJava", false, true, false);
         if (runnerService.isBuildSuccessful()) {

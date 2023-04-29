@@ -173,7 +173,7 @@ public class RunnerService {
 
     protected void parallelRun(List<ProcessBuilderWrapper> processBuilderWrappers) throws Exception {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(Parameters.MAX_PARALLEL_THREADS);
+        ExecutorService executorService = Executors.newFixedThreadPool(Parameters.MAX_THREADS);
 
         ProcessMonitorService processMonitorService = null;
 

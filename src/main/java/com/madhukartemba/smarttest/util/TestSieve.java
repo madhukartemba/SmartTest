@@ -25,7 +25,7 @@ public class TestSieve {
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
         this.projectNames = EnvironmentService.PROJECT_NAMES.stream().collect(Collectors.toSet());
         this.testDirToTaskMap = EnvironmentService.TEST_DIR_TO_TASK_MAP;
-        this.COMMAND_NAME = Parameters.GRADLE_COMMAND_NAME;
+        this.COMMAND_NAME = Parameters.GRADLE_COMMAND;
         this.OPTION_NAME = Parameters.GRADLE_OPTION_NAME;
         this.fileService = new FileService();
     }
