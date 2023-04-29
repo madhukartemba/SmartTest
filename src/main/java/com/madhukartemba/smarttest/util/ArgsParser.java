@@ -1,40 +1,34 @@
 package com.madhukartemba.smarttest.util;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.madhukartemba.smarttest.SmartTest;
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 
 public class ArgsParser {
-    public static Map<String, String> parseArgs(String[] args) {
+    public static List<String> parseArgs(String[] args) {
+
+        List<String> outputArgs = new ArrayList<>();
 
         for (String arg : args) {
             if (arg.equals("-v") || arg.equals("--version")) {
                 System.out.println(SmartTest.VERSION);
                 System.exit(0);
+            } else if (arg.equals("-h") || arg.equals("--help")) {
+                ParametersNew.printHelpAndExit();
+            } else if ((arg.startsWith("'") && arg.endsWith("'"))
+                    || (arg.startsWith("\"") && arg.endsWith("\""))) {
+                arg = arg.substring(1, arg.length() - 1);
+            } else if (arg.startsWith("--")) {
+                arg = arg.substring(2);
+            } else if (arg.startsWith("-")) {
+                arg = arg.substring(1);
             }
+
+            outputArgs.add(arg);
         }
 
-        Parameters.printHelp(args);
-
-        Map<String, String> argsMap = new HashMap<String, String>();
-
-        for (String arg : args) {
-            if (arg.startsWith("--")) {
-                String[] argParts = arg.split("=");
-                if (argParts.length == 2) {
-                    String argName = argParts[0].substring(2);
-                    String argValue = argParts[1];
-                    if ((argValue.startsWith("'") && argValue.endsWith("'"))
-                            || (argValue.startsWith("\"") && argValue.endsWith("\""))) {
-                        argValue = argValue.substring(1, argValue.length() - 1);
-                    }
-                    argsMap.put(argName, argValue);
-                }
-            }
-        }
-
-        return argsMap;
+        return outputArgs;
     }
 }

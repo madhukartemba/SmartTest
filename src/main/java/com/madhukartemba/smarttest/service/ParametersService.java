@@ -1,96 +1,52 @@
 package com.madhukartemba.smarttest.service;
 
 import java.awt.Color;
-import java.util.Map;
+import java.util.List;
 
 import com.madhukartemba.smarttest.SmartTest;
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.Parameter;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 import com.madhukartemba.smarttest.util.Printer;
 
 public class ParametersService {
 
-    public static void setParameters(Map<String, String> argsMap) {
+    public static void setParameters(List<String> args) {
 
-        if (argsMap.containsKey("maxParallelThreads")) {
-            int maxParallelThreads = Integer.parseInt(argsMap.get("maxParallelThreads"));
-            Parameters.MAX_PARALLEL_THREADS = Math.max(1, maxParallelThreads);
-            Parameters.USER_PROVIDED_THREAD_COUNT = true;
-        }
+        for (int i = 0; i < args.size(); i++) {
+            String arg = args.get(i);
 
-        if (argsMap.containsKey("exploreWithPackage")) {
-            boolean exploreWithPackage = argsMap.get("exploreWithPackage").equals("true");
-            Parameters.EXPLORE_WITH_PACKAGE = exploreWithPackage;
-        }
-
-        if (argsMap.containsKey("fullTest")) {
-            boolean fullTest = argsMap.get("fullTest").equals("true");
-            Parameters.FULL_TEST = fullTest;
-        }
-
-        if (argsMap.containsKey("printOutput")) {
-            boolean printOutput = argsMap.get("printOutput").equals("true");
-            Parameters.PRINT_OUTPUT = printOutput;
-        }
-
-        if (argsMap.containsKey("useLegacyPrinter")) {
-            boolean useLegacyPrinter = argsMap.get("useLegacyPrinter").equals("true");
-            Parameters.USE_LEGACY_PRINTER = useLegacyPrinter;
-        }
-
-        if (argsMap.containsKey("compileJava")) {
-            boolean compileJava = argsMap.get("compileJava").equals("true");
-            Parameters.COMPILE_JAVA = compileJava;
-        }
-
-        if (argsMap.containsKey("refreshDependencies")) {
-            boolean refreshDependencies = argsMap.get("refreshDependencies").equals("true");
-            Parameters.REFRESH_DEPENDENCIES = refreshDependencies;
-        }
-
-        if (argsMap.containsKey("parallelExecute")) {
-            boolean parallelExecute = argsMap.get("parallelExecute").equals("true");
-            Parameters.PARALLEL_EXECUTE = parallelExecute;
-        }
-
-        if (argsMap.containsKey("deleteChildFiles")) {
-            boolean deleteChildFiles = argsMap.get("deleteChildFiles").equals("true");
-            Parameters.DELETE_CHILD_FILES = deleteChildFiles;
-        }
-
-        if (argsMap.containsKey("gradleCommand")) {
-            String gradleCommand = argsMap.get("gradleCommand");
-            Parameters.GRADLE_COMMAND_NAME = gradleCommand;
-            // SmartTest.checkForShellInjection(gradleCommand);
-        }
-
-        if (argsMap.containsKey("projectDir")) {
-            String projectDir = argsMap.get("projectDir");
-            Parameters.PROJECT_DIR = projectDir;
-            if (!FileService.directoryExists(projectDir)) {
-                SmartTest.exitWithCode("The given project directory '" + projectDir + "' does not exist!", Color.RED,
-                        1);
+            Parameter<Color> colorParameter = ParametersNew.COLOR_PARAMETER_MAP.getOrDefault(arg, null);
+            if (colorParameter != null) {
+                Color color = getColorFromString(args.get(i + 1));
+                colorParameter.setValue(color);
+                i++;
+                continue;
             }
-        }
 
-        if (argsMap.containsKey("gitCommand")) {
-            String gitCommand = argsMap.get("gitCommand");
-            Parameters.GIT_COMMAND = gitCommand;
-            // SmartTest.checkForShellInjection(gitCommand);
-        }
+            Parameter<String> stringParameter = ParametersNew.STRING_PARAMETER_MAP.getOrDefault(arg, null);
+            if (stringParameter != null) {
+                stringParameter.setValue(args.get(i + 1));
+                i++;
+                continue;
+            }
 
-        if (argsMap.containsKey("officialMergeRequestPattern")) {
-            String officialMergeRequestPattern = argsMap.get("officialMergeRequestPattern");
-            Parameters.OFFICIAL_MERGE_REQUEST_PATTERN = officialMergeRequestPattern;
-        }
+            Parameter<Integer> integerParameter = ParametersNew.INTEGER_PARAMETER_MAP.getOrDefault(arg, null);
+            if (integerParameter != null) {
+                integerParameter.setValue(Integer.parseInt(args.get(i + 1)));
+                i++;
+                continue;
+            }
 
-        if (argsMap.containsKey("defaultColor1")) {
-            Parameters.DEFAULT_COLOR_1 = getColorFromString(argsMap.get("defaultColor1"));
-        }
+            Parameter<Boolean> booleanParameter = ParametersNew.BOOLEAN_PARAMETER_MAP.getOrDefault(arg, null);
+            if (booleanParameter != null) {
+                booleanParameter.setValue(true);
+                continue;
+            }
 
-        if (argsMap.containsKey("defaultColor2")) {
-            Parameters.DEFAULT_COLOR_2 = getColorFromString(argsMap.get("defaultColor2"));
-        }
+            SmartTest.exitWithCode(arg + " is not a valid parameter! Type 'SmartTest --help' to get more information.",
+                    Color.RED, 1);
 
+        }
     }
 
     public static Color getColorFromString(String colorString) {

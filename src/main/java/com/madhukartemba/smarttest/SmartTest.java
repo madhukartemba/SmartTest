@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,8 +26,8 @@ public class SmartTest {
         timer.start();
 
         // Set the user provided parameters.
-        Map<String, String> argsMap = ArgsParser.parseArgs(args);
-        ParametersService.setParameters(argsMap);
+        List<String> parsedArgs = ArgsParser.parseArgs(args);
+        ParametersService.setParameters(parsedArgs);
 
         // Print the logo.
         SmartTest.printLogoAndVersion();
