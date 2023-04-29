@@ -299,7 +299,7 @@ public class FileService {
         int maxDepth = Integer.MAX_VALUE;
 
         CodeParser classCodeParser = new CodeParser(className);
-        CodeParser packageCodeParser = new CodeParser(Pattern.compile(".*" + Pattern.quote(packageName) + ".*"));
+        CodeParser packageCodeParser = new CodeParser(Pattern.compile("\\s+" + Pattern.quote(packageName) + ".*"));
 
         try (Stream<Path> stream = Files.find(startPath, maxDepth,
                 (path, attr) -> {
