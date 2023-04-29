@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -202,26 +201,56 @@ public class FileService {
         List<String> res = new ArrayList<>();
 
         if (packageName == null || packageName.isEmpty()) {
-            Printer.println("Empty class name was given as input to: findFilesUsingPackageName", Color.RED);
-            return res;
+            throw new IllegalArgumentException("Empty class name was given as input to: findFilesUsingClassName");
         }
 
-        processBuilder.command("grep", "-r", "-l", "--exclude-from=.gitignore", packageName + ".*", ".");
-        Process grepProcess = processBuilder.start();
-        BufferedReader grepOutput = new BufferedReader(new InputStreamReader(grepProcess.getInputStream()));
-        grepProcess.waitFor();
-        String referencedFile = grepOutput.readLine();
+        int maxDepth = Integer.MAX_VALUE;
 
-        // Add test files that reference changed file to list
-        while (referencedFile != null) {
-            if (isJavaFile(referencedFile) && !visitedFiles.contains(referencedFile)) {
+        CodeParser packageCodeParser = new CodeParser(
+                Pattern.compile("\\s+" + Pattern.quote(packageName) + "[^a-zA-Z0-9_$]"));
+
+        try (Stream<Path> stream = Files.find(startPath, maxDepth,
+                (path, attr) -> {
+                    try {
+
+                        if (!attr.isRegularFile()) {
+                            return false;
+                        }
+
+                        if (!isJavaFile(path.toString())) {
+                            return false;
+                        }
+
+                        String filePath = path.toString();
+
+                        if (filePath.startsWith("./")) {
+                            filePath = filePath.substring(2);
+                        }
+
+                        if (visitedFiles.contains(filePath)) {
+                            return false;
+                        }
+
+                        String cleanFileOutput = FileCleaner.clean(path);
+
+                        return packageCodeParser.containsKeyword(cleanFileOutput);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return false;
+                }).parallel()) {
+            stream.forEach(path -> {
+                String referencedFile = path.toString();
                 if (referencedFile.startsWith("./")) {
                     referencedFile = referencedFile.substring(2);
                 }
-                visitedFiles.add(referencedFile);
-                res.add(referencedFile);
-            }
-            referencedFile = grepOutput.readLine();
+                if (!visitedFiles.contains(referencedFile)) {
+                    visitedFiles.add(referencedFile);
+                    res.add(referencedFile);
+                }
+            });
         }
 
         return res;
@@ -234,7 +263,6 @@ public class FileService {
             throw new IllegalArgumentException("Empty class name was given as input to: findFilesUsingClassName");
         }
 
-        String[] extensions = { ".java" };
         int maxDepth = Integer.MAX_VALUE;
 
         CodeParser codeParser = new CodeParser(className);
@@ -247,7 +275,7 @@ public class FileService {
                             return false;
                         }
 
-                        if (!Arrays.stream(extensions).anyMatch(ext -> path.toString().endsWith(ext))) {
+                        if (!isJavaFile(path.toString())) {
                             return false;
                         }
 
@@ -295,7 +323,6 @@ public class FileService {
             throw new IllegalArgumentException("Empty class name was given as input to: findFilesUsingClassName");
         }
 
-        String[] extensions = { ".java" };
         int maxDepth = Integer.MAX_VALUE;
 
         CodeParser classCodeParser = new CodeParser(className);
@@ -310,7 +337,7 @@ public class FileService {
                             return false;
                         }
 
-                        if (!Arrays.stream(extensions).anyMatch(ext -> path.toString().endsWith(ext))) {
+                        if (!isJavaFile(path.toString())) {
                             return false;
                         }
 
@@ -353,7 +380,6 @@ public class FileService {
     public List<String> findAllTestFiles() throws Exception {
         List<String> res = new ArrayList<>();
 
-        String[] extensions = { ".java" };
         int maxDepth = Integer.MAX_VALUE;
 
         CodeParser testCodeParser = new CodeParser("@Test");
@@ -366,7 +392,7 @@ public class FileService {
                             return false;
                         }
 
-                        if (!Arrays.stream(extensions).anyMatch(ext -> path.toString().endsWith(ext))) {
+                        if (!isJavaFile(path.toString())) {
                             return false;
                         }
 
