@@ -1,7 +1,7 @@
 package com.madhukartemba.smarttest.service;
 
 import com.madhukartemba.smarttest.entity.Command;
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.Timer;
 
@@ -26,7 +26,7 @@ public class TestRunnerService extends RunnerService {
     // Print the results, print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
     public void printResults(Timer timer) {
 
-        if (Parameters.PRINT_OUTPUT) {
+        if (ParametersNew.PRINT_OUTPUT.getValue()) {
             super.printOutput();
         }
 
