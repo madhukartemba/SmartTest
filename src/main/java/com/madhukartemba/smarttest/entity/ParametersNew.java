@@ -15,7 +15,7 @@ public class ParametersNew {
 
     public static Parameter<String> PROJECT_DIR = new Parameter<>("projectDir", "dir", null);
     public static Parameter<String> GRADLE_COMMAND = new Parameter<>("gradleCommand", "gradlecmd", "./gradlew");
-    public static Parameter<String> GIT_COMMAND = new Parameter<>("gitCommand", "gitcmd", "./gradlew");
+    public static Parameter<String> GIT_COMMAND = new Parameter<>("gitCommand", "gitcmd", "git log --merges");
     public static Parameter<String> OFFICIAL_MERGE_REQUEST_PATTERN = new Parameter<>("officialMergeRequestPattern",
             "mergereqpattern", "Merge pull request #\\d+ from");
 
@@ -66,5 +66,4 @@ public class ParametersNew {
         PARAMETER_MAP.put(ParametersNew.USE_LEGACY_PRINTER.getName(), ParametersNew.USE_LEGACY_PRINTER);
         PARAMETER_MAP.put(ParametersNew.USE_LEGACY_PRINTER.getAliasName(), ParametersNew.USE_LEGACY_PRINTER);
     }
-
 }
