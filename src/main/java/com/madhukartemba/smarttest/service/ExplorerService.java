@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 import com.madhukartemba.smarttest.util.Printer;
 
 public class ExplorerService {
@@ -22,7 +22,7 @@ public class ExplorerService {
 
     public List<String> explore(List<String> inputFiles) throws Exception {
 
-        if (Parameters.FULL_TEST) {
+        if (ParametersNew.FULL_TEST.getValue()) {
             completeRunRequired = true;
             Printer.boldPrintln("\n\nFull test command is given, will run all the tests...");
             return exploreAll();
@@ -89,13 +89,13 @@ public class ExplorerService {
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
                 Printer.print(" -->");
-                Printer.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
+                Printer.print(" " + currentVisitedSize, ParametersNew.DEFAULT_COLOR_2.getValue());
             }
         }
 
         if (prevVisitedSize != visitedFiles.size()) {
             Printer.print(" -->");
-            Printer.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
+            Printer.print(" " + visitedFiles.size(), ParametersNew.DEFAULT_COLOR_2.getValue());
         }
 
         Printer.print(" -->");
@@ -110,7 +110,7 @@ public class ExplorerService {
 
     public List<String> exploreViaClassname(List<String> inputFiles) throws Exception {
 
-        if (Parameters.FULL_TEST) {
+        if (ParametersNew.FULL_TEST.getValue()) {
             completeRunRequired = true;
             Printer.boldPrintln("\n\nFull test command is given, will run all the tests...");
             return exploreAll();
@@ -167,13 +167,13 @@ public class ExplorerService {
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
                 Printer.print(" -->");
-                Printer.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
+                Printer.print(" " + currentVisitedSize, ParametersNew.DEFAULT_COLOR_2.getValue());
             }
         }
 
         if (prevVisitedSize != visitedFiles.size()) {
             Printer.print(" -->");
-            Printer.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
+            Printer.print(" " + visitedFiles.size(), ParametersNew.DEFAULT_COLOR_2.getValue());
         }
 
         Printer.print(" -->");
@@ -188,7 +188,7 @@ public class ExplorerService {
 
     public List<String> exploreViaPackageName(List<String> inputFiles) throws Exception {
 
-        if (Parameters.FULL_TEST) {
+        if (ParametersNew.FULL_TEST.getValue()) {
             completeRunRequired = true;
             Printer.boldPrintln("\n\nFull test command is given, will run all the tests...");
             return exploreAll();
@@ -246,13 +246,13 @@ public class ExplorerService {
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
                 Printer.print(" -->");
-                Printer.print(" " + currentVisitedSize, Parameters.DEFAULT_COLOR_2);
+                Printer.print(" " + currentVisitedSize, ParametersNew.DEFAULT_COLOR_2.getValue());
             }
         }
 
         if (prevVisitedSize != visitedFiles.size()) {
             Printer.print(" -->");
-            Printer.print(" " + visitedFiles.size(), Parameters.DEFAULT_COLOR_2);
+            Printer.print(" " + visitedFiles.size(), ParametersNew.DEFAULT_COLOR_2.getValue());
         }
 
         Printer.print(" -->");
@@ -272,7 +272,7 @@ public class ExplorerService {
         List<String> output = fileService.findAllTestFiles();
 
         Printer.print(" -->");
-        Printer.print(" " + output.size(), Parameters.DEFAULT_COLOR_2);
+        Printer.print(" " + output.size(), ParametersNew.DEFAULT_COLOR_2.getValue());
 
         Printer.print(" -->");
         Printer.boldPrint(" END", Color.GREEN);
