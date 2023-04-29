@@ -103,7 +103,7 @@ public class Parameters {
                 Printer.formatPrint("defaultColor1: " + DEFAULT_COLOR_1.getValue());
                 Printer.formatPrint("defaultColor2: " + DEFAULT_COLOR_2.getValue());
                 Printer.formatPrint("projectDir: "
-                                + (PROJECT_DIR.isModified() ? PROJECT_DIR.getValue() : "current directory"));
+                                + (PROJECT_DIR.isModified() ? PROJECT_DIR.getValue() : "(current directory)"));
                 Printer.formatPrint("gradleCommand: " + GRADLE_COMMAND.getValue());
                 Printer.formatPrint("gitCommand: " + GIT_COMMAND.getValue());
                 Printer.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN.getValue());
