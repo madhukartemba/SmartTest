@@ -1,7 +1,7 @@
 package com.madhukartemba.smarttest.util;
 
 import com.madhukartemba.smarttest.entity.Command;
-import com.madhukartemba.smarttest.entity.Parameters;
+import com.madhukartemba.smarttest.entity.ParametersNew;
 import com.madhukartemba.smarttest.service.EnvironmentService;
 import com.madhukartemba.smarttest.service.FileService;
 
@@ -25,8 +25,8 @@ public class TestSieve {
         this.PROJECT_DIR = EnvironmentService.PROJECT_DIR;
         this.projectNames = EnvironmentService.PROJECT_NAMES.stream().collect(Collectors.toSet());
         this.testDirToTaskMap = EnvironmentService.TEST_DIR_TO_TASK_MAP;
-        this.COMMAND_NAME = Parameters.GRADLE_COMMAND;
-        this.OPTION_NAME = Parameters.GRADLE_OPTION_NAME;
+        this.COMMAND_NAME = ParametersNew.GRADLE_COMMAND.getValue();
+        this.OPTION_NAME = ParametersNew.GRADLE_OPTION_NAME;
         this.fileService = new FileService();
     }
 
