@@ -17,8 +17,6 @@ public class ParametersService {
     }
 
     public static void setParameters(List<String> args) {
-        System.out.println(
-                args);
 
         for (int i = 0; i < args.size(); i++) {
             String arg = args.get(i);
@@ -33,7 +31,7 @@ public class ParametersService {
             if (colorParameter != null) {
                 String nextArg = getNextParameterWithCheck(i, args);
                 nextArg = removeQuotesIfPresent(nextArg);
-                Color color = getColorFromString(args.get(i + 1));
+                Color color = getColorFromString(nextArg);
                 colorParameter.setValue(color);
                 i++;
                 continue;
@@ -67,7 +65,7 @@ public class ParametersService {
     }
 
     public static String getNextParameterWithCheck(int i, List<String> args) {
-        if (i >= args.size() || Parameters.isParameter(args.get(i+1))) {
+        if (i + 1 >= args.size() || Parameters.isParameter(args.get(i + 1))) {
             SmartTest.exitWithCode(
                     "'" + args.get(i) + "' expects a value after it! Type 'SmartTest --help' to get more information.",
                     Color.RED, 1);
