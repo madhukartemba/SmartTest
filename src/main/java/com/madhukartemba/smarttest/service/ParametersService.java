@@ -17,6 +17,8 @@ public class ParametersService {
     }
 
     public static void setParameters(List<String> args) {
+        System.out.println(
+                args);
 
         for (int i = 0; i < args.size(); i++) {
             String arg = args.get(i);
@@ -65,7 +67,7 @@ public class ParametersService {
     }
 
     public static String getNextParameterWithCheck(int i, List<String> args) {
-        if (i >= args.size() || Parameters.isParameter(args.get(i))) {
+        if (i >= args.size() || Parameters.isParameter(args.get(i+1))) {
             SmartTest.exitWithCode(
                     "'" + args.get(i) + "' expects a value after it! Type 'SmartTest --help' to get more information.",
                     Color.RED, 1);
