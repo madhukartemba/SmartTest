@@ -58,7 +58,7 @@ public class FileService {
     }
 
     public boolean isTestFile(String filePath) {
-        if (!filePath.endsWith("Test.java") && !filePath.endsWith("IT.java")) {
+        if (!isJavaFile(filePath)) {
             return false;
         }
 
@@ -66,13 +66,14 @@ public class FileService {
             filePath = PROJECT_DIR + filePath;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.contains("@Test")) {
-                    return true;
-                }
-            }
+        CodeParser testCodeParser = new CodeParser("@Test");
+
+        try {
+
+            String cleanFileOutput = FileCleaner.clean(Paths.get(filePath));
+
+            return testCodeParser.containsKeyword(cleanFileOutput);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
