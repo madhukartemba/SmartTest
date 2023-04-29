@@ -58,8 +58,8 @@ public class ParametersNew {
 
         INTEGER_PARAMETER_MAP.put(ParametersNew.MAX_THREADS.getName(), ParametersNew.MAX_THREADS);
         INTEGER_PARAMETER_MAP.put(ParametersNew.MAX_THREADS.getAliasName(), ParametersNew.MAX_THREADS);
-        BOOLEAN_PARAMETER_MAP.put(ParametersNew.SKIP_COMPILE_JAVA.getName(), ParametersNew.SKIP_COMPILE_JAVA);
 
+        BOOLEAN_PARAMETER_MAP.put(ParametersNew.SKIP_COMPILE_JAVA.getName(), ParametersNew.SKIP_COMPILE_JAVA);
         BOOLEAN_PARAMETER_MAP.put(ParametersNew.SKIP_COMPILE_JAVA.getAliasName(), ParametersNew.SKIP_COMPILE_JAVA);
         BOOLEAN_PARAMETER_MAP.put(ParametersNew.SERIAL_EXECUTE.getName(), ParametersNew.SERIAL_EXECUTE);
         BOOLEAN_PARAMETER_MAP.put(ParametersNew.SERIAL_EXECUTE.getAliasName(), ParametersNew.SERIAL_EXECUTE);
