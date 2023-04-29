@@ -6,11 +6,16 @@ public class Parameter<T> {
     private final String name;
     private final String aliasName;
     private T value;
+    private boolean modified = false;
 
     public Parameter(String name, String aliasName, T value) {
         this.name = name;
         this.aliasName = aliasName;
         this.value = value;
+    }
+
+    public boolean isModified() {
+        return modified;
     }
 
     public String getName() {
@@ -26,6 +31,7 @@ public class Parameter<T> {
     }
 
     public void setValue(T value) {
+        this.modified = true;
         this.value = value;
     }
 
@@ -38,7 +44,7 @@ public class Parameter<T> {
             return false;
         }
         Parameter<?> other = (Parameter<?>) obj;
-        return Objects.equals(name, other.name) || Objects.equals(aliasName, other.aliasName);
+        return Objects.equals(name, other.name) && Objects.equals(aliasName, other.aliasName);
     }
 
     @Override

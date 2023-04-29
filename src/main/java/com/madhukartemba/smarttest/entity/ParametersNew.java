@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.madhukartemba.smarttest.util.Printer;
+import com.madhukartemba.smarttest.util.ThreadUtil;
+
 public class ParametersNew {
 
     public static final String GRADLE_OPTION_NAME = "--tests";
@@ -19,9 +22,10 @@ public class ParametersNew {
     public static Parameter<String> OFFICIAL_MERGE_REQUEST_PATTERN = new Parameter<>("officialMergeRequestPattern",
             "mergereqpattern", "Merge pull request #\\d+ from");
 
-    public static Parameter<Integer> MAX_THREADS = new Parameter<>("maxThreads", "maxth", null);
+    public static Parameter<Integer> MAX_THREADS = new Parameter<>("maxThreads", "maxth",
+            ThreadUtil.getOptimalThreadCount());
 
-    public static Parameter<Boolean> COMPILE_JAVA = new Parameter<>("compileJava", "compilejv", false);
+    public static Parameter<Boolean> SKIP_COMPILE_JAVA = new Parameter<>("skipCompileJava", "skipcompile", false);
     public static Parameter<Boolean> SERIAL_EXECUTE = new Parameter<>("serialExecute", "serexe", false);
     public static Parameter<Boolean> REFRESH_DEPENDENCIES = new Parameter<>("refreshDependencies", "refdeps", false);
     public static Parameter<Boolean> VERIFY_PACKAGE = new Parameter<>("verifyPackage", "verpkg", false);
@@ -49,8 +53,8 @@ public class ParametersNew {
                 ParametersNew.OFFICIAL_MERGE_REQUEST_PATTERN);
         PARAMETER_MAP.put(ParametersNew.MAX_THREADS.getName(), ParametersNew.MAX_THREADS);
         PARAMETER_MAP.put(ParametersNew.MAX_THREADS.getAliasName(), ParametersNew.MAX_THREADS);
-        PARAMETER_MAP.put(ParametersNew.COMPILE_JAVA.getName(), ParametersNew.COMPILE_JAVA);
-        PARAMETER_MAP.put(ParametersNew.COMPILE_JAVA.getAliasName(), ParametersNew.COMPILE_JAVA);
+        PARAMETER_MAP.put(ParametersNew.SKIP_COMPILE_JAVA.getName(), ParametersNew.SKIP_COMPILE_JAVA);
+        PARAMETER_MAP.put(ParametersNew.SKIP_COMPILE_JAVA.getAliasName(), ParametersNew.SKIP_COMPILE_JAVA);
         PARAMETER_MAP.put(ParametersNew.SERIAL_EXECUTE.getName(), ParametersNew.SERIAL_EXECUTE);
         PARAMETER_MAP.put(ParametersNew.SERIAL_EXECUTE.getAliasName(), ParametersNew.SERIAL_EXECUTE);
         PARAMETER_MAP.put(ParametersNew.REFRESH_DEPENDENCIES.getName(), ParametersNew.REFRESH_DEPENDENCIES);
@@ -65,5 +69,57 @@ public class ParametersNew {
         PARAMETER_MAP.put(ParametersNew.PRINT_OUTPUT.getAliasName(), ParametersNew.PRINT_OUTPUT);
         PARAMETER_MAP.put(ParametersNew.USE_LEGACY_PRINTER.getName(), ParametersNew.USE_LEGACY_PRINTER);
         PARAMETER_MAP.put(ParametersNew.USE_LEGACY_PRINTER.getAliasName(), ParametersNew.USE_LEGACY_PRINTER);
+    }
+
+    public static void printHelpAndExit() {
+
+        Printer.println("Usage: SmartTest [options]");
+        Printer.println("Options:");
+        Printer.println("  --argName=value  Description of argument");
+        Printer.println("  -h, --help       Print this help message and exit");
+        Printer.println("  -v, --version    Print the version and exit");
+
+        Printer.println(
+                "--defaultColor1, -color1 <value> \nSets the default value of the first color to be used in the program. This value should be a hexadecimal color code in the format like this: #03A9F4.");
+
+        Printer.println(
+                "--defaultColor2, -color2 <value> \nSets the default value of the second color to be used in the program. This value should be a hexadecimal color code in the format like this: #FFD300.");
+
+        Printer.println("--projectDir, -dir <value> \nSets the project directory to be used by the program.");
+
+        Printer.println("--gradleCommand, -gradlecmd <value> \nSets the Gradle command to be used by the program.");
+
+        Printer.println("--gitCommand, -gitcmd <value> \nSets the Git command to be used by the program.");
+
+        Printer.println(
+                "--officialMergeRequestPattern, -mergereqpattern <value> \nSets the official merge request pattern to be used by the program. This pattern should be a regular expression that matches the merge request format used in the project.");
+
+        Printer.println(
+                "--maxThreads, -maxth <value> \nSets the maximum number of threads to be used by the program.");
+
+        Printer.println(
+                "--skipCompileJava, -skipcompile \nFlag to skip the compilation of the project before testing.");
+
+        Printer.println(
+                "--serialExecute, -serexe \nFlag to execute tasks serially.");
+
+        Printer.println(
+                "--refreshDependencies, -refdeps \nFlag to refresh dependencies.");
+
+        Printer.println(
+                "--verifyPackage, -verpkg \nFlag to verify the package also along with the classname while exploring files.");
+
+        Printer.println(
+                "--deleteChildFiles, -delchd \nFlag to delete child files after the program ends.");
+
+        Printer.println("--fullTest, -ftest \nFlag to perform a full test.");
+
+        Printer.println("--printOutput, -pout \nFlag to print output after the tests are complete.");
+
+        Printer.println(
+                "--useLegacyPrinter, -ulp \nFlag to use the legacy printer.");
+
+        System.exit(0);
+
     }
 }
