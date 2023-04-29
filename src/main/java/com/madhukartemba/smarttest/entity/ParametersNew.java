@@ -72,7 +72,33 @@ public class ParametersNew {
     }
 
     public static void main(String[] args) {
+        printValues();
         printHelpAndExit();
+    }
+
+    public static void printValues() {
+        Printer.boldPrintln("Parameters\n");
+
+        // for (Parameter<?> parameter : PARAMETER_MAP.values()) {
+        // Printer.formatPrint(parameter.getName() + ": " + parameter.getValue());
+        // }
+
+        Printer.formatPrint("defaultColor1: " + DEFAULT_COLOR_1.getValue());
+        Printer.formatPrint("defaultColor2: " + DEFAULT_COLOR_2.getValue());
+        Printer.formatPrint("projectDir: " + (PROJECT_DIR.isModified() ? PROJECT_DIR.getValue() : "current directory"));
+        Printer.formatPrint("gradleCommand: " + GRADLE_COMMAND.getValue());
+        Printer.formatPrint("gitCommand: " + GIT_COMMAND.getValue());
+        Printer.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN.getValue());
+        Printer.formatPrint("maxThreads: " + MAX_THREADS.getValue()
+                + (MAX_THREADS.isModified() ? " (user provided)" : " (determined automatically)"));
+        Printer.formatPrint("parallelExecute: " + SERIAL_EXECUTE.getValue());
+        Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES.getValue());
+        Printer.formatPrint("skipCompileJava: " + SKIP_COMPILE_JAVA.getValue());
+        Printer.formatPrint("verifyPackage: " + VERIFY_PACKAGE.getValue());
+        Printer.formatPrint("fullTest: " + FULL_TEST.getValue());
+        Printer.formatPrint("printOutput: " + PRINT_OUTPUT.getValue());
+        Printer.formatPrint("deleteChildFiles: " + DELETE_CHILD_FILES.getValue());
+        Printer.formatPrint("useLegacyPrinter: " + USE_LEGACY_PRINTER.getValue());
     }
 
     public static void printHelpAndExit() {
@@ -114,12 +140,12 @@ public class ParametersNew {
         Printer.println("    Sets the maximum number of threads to be used by the program.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
-                "\n  --skipCompileJava, -skipcompile");
-        Printer.println("    Flag to skip the compilation of the project before testing.", Printer.DEFAULT_COLOR_2);
-
-        Printer.println(
                 "\n  --serialExecute, -serexe");
         Printer.println("    Flag to execute tasks serially.", Printer.DEFAULT_COLOR_2);
+
+        Printer.println(
+                "\n  --skipCompileJava, -skipcompile");
+        Printer.println("    Flag to skip the compilation of the project before testing.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
                 "\n  --refreshDependencies, -refdeps");
@@ -130,15 +156,15 @@ public class ParametersNew {
         Printer.println("    Flag to verify the package also along with the classname while exploring files.",
                 Printer.DEFAULT_COLOR_2);
 
-        Printer.println(
-                "\n  --deleteChildFiles, -delchd");
-        Printer.println("    Flag to delete child files after the program ends.", Printer.DEFAULT_COLOR_2);
-
         Printer.println("\n  --fullTest, -ftest");
         Printer.println("    Flag to perform a full test.", Printer.DEFAULT_COLOR_2);
 
         Printer.println("\n  --printOutput, -pout");
         Printer.println("    Flag to print output after the tests are complete.", Printer.DEFAULT_COLOR_2);
+
+        Printer.println(
+                "\n  --deleteChildFiles, -delchd");
+        Printer.println("    Flag to delete child files after the program ends.", Printer.DEFAULT_COLOR_2);
 
         Printer.println(
                 "\n  --useLegacyPrinter, -ulp");
