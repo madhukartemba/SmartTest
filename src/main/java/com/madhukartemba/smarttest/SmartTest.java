@@ -88,6 +88,11 @@ public class SmartTest {
         Printer.boldPrintln("\n\nCreating output directory...\n");
         RunnerService.createOutputDirectory(true);
 
+        // Clean the project.
+        if (Parameters.CLEAN.getValue()) {
+            SmartTest.clean();
+        }
+
         // Refresh the dependencies.
         if (Parameters.REFRESH_DEPENDENCIES.getValue()) {
             SmartTest.refreshDependencies();
@@ -96,11 +101,6 @@ public class SmartTest {
         // Compile the code.
         if (!Parameters.SKIP_COMPILE_JAVA.getValue()) {
             SmartTest.compileCode();
-        }
-
-        // Clean the project.
-        if (Parameters.CLEAN.getValue()) {
-            SmartTest.clean();
         }
 
         // Assemble the project.
