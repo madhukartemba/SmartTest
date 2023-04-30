@@ -14,7 +14,7 @@ import com.madhukartemba.smarttest.util.Printer;
 public class ParametersService {
 
     public static void main(String[] args) {
-        List<String> inputArgs = Arrays.asList("-mergereqpattern", "refdeps", "-refdeps");
+        List<String> inputArgs = Arrays.asList("-mergereqpatterns", "refdeps", "-refdeps");
         setParameters(inputArgs);
 
         Map<String, String> map = new HashMap<>();
@@ -41,7 +41,7 @@ public class ParametersService {
                 SmartTest.exitWithCode(
                         "'" + arg + "' is not a valid parameter!\n\nDid you mean \'" + closestMatch
                                 + "\' ?\n\nType 'SmartTest --help' to get more information.",
-                        Color.ORANGE, 1);
+                        Color.RED, 1);
             }
 
             Parameter<Color> colorParameter = Parameters.COLOR_PARAMETER_MAP.getOrDefault(arg, null);
@@ -104,7 +104,7 @@ public class ParametersService {
             return Color.decode(colorString);
         } catch (NumberFormatException e) {
             // Handle invalid color string
-            Printer.println("\nInvalid color string given in args: " + colorString, Color.RED);
+            Printer.println("\nInvalid color string given in args: " + colorString, Color.ORANGE);
             return Printer.DEFAULT_COLOR_1;
         }
     }
