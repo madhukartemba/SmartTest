@@ -7,7 +7,7 @@ import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameters;
 
 public class ArgsParser {
-    public static List<String> parseArgs(String[] args) {
+    public static List<String> parseArgs(String[] args) throws Exception {
 
         List<String> outputArgs = new ArrayList<>();
 
@@ -17,6 +17,8 @@ public class ArgsParser {
                 System.exit(0);
             } else if (arg.equals("-h") || arg.equals("--help")) {
                 Parameters.printHelpAndExit();
+            } else if (arg.equals("--updateApp") || arg.equals("-update")) {
+                Updater.updateApplication();
             }
 
             outputArgs.add(arg);
