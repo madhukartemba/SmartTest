@@ -80,7 +80,8 @@ public class ParametersService {
                 if (Parameters.HELP.getValue()) {
                     Parameters.printHelpAndExit();
                 } else if (Parameters.VERSION.getValue()) {
-                    SmartTest.exitWithCode("VERSION: " + SmartTest.VERSION, 0);
+                    Printer.boldFormatPrint("VERSION: " + SmartTest.VERSION);
+                    System.exit(0);
                 } else if (Parameters.UPDATE_APP.getValue()) {
                     Updater.updateApplication();
                 }
