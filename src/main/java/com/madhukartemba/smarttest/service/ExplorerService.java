@@ -83,7 +83,9 @@ public class ExplorerService {
                 foundFiles = fileService.findFilesUsingClassName(className, visitedFiles);
             }
 
-            javaFileQueue.addAll(foundFiles);
+            if (foundFiles != null) {
+                javaFileQueue.addAll(foundFiles);
+            }
 
             int currentVisitedSize = visitedFiles.size();
             if (prevVisitedSize + 50 < currentVisitedSize) {
@@ -162,7 +164,11 @@ public class ExplorerService {
             }
 
             List<String> foundFiles = fileService.findFilesUsingClassName(className, visitedFiles);
-            javaFileQueue.addAll(foundFiles);
+
+            if (foundFiles != null) {
+                javaFileQueue.addAll(foundFiles);
+            }
+
             int currentVisitedSize = visitedFiles.size();
             if (prevVisitedSize + 50 < currentVisitedSize) {
                 prevVisitedSize = currentVisitedSize;
@@ -240,7 +246,10 @@ public class ExplorerService {
             }
 
             List<String> foundFiles = fileService.findFilesUsingPackageName(packageName, visitedFiles);
-            javaFileQueue.addAll(foundFiles);
+
+            if (foundFiles != null) {
+                javaFileQueue.addAll(foundFiles);
+            }
 
             int currentVisitedSize = visitedFiles.size();
             if (prevVisitedSize + 50 < currentVisitedSize) {
