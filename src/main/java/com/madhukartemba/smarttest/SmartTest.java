@@ -98,6 +98,11 @@ public class SmartTest {
             SmartTest.compileCode();
         }
 
+        // Assemble the project.
+        if (Parameters.ASSEMBLE.getValue()) {
+            assemble();
+        }
+
         // Execute the test processes using TestRunnerService.
         TestRunnerService testRunnerService = new TestRunnerService();
         if (Parameters.SERIAL_EXECUTE.getValue()) {
@@ -122,7 +127,7 @@ public class SmartTest {
         Printer.boldPrintln("\n\nAssembling project...\n");
         RunnerService runnerService = new RunnerService();
         Command compileCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
-                null, "assemble", null, new ArrayList<>());
+                null, (Parameters.CLEAN.getValue() ? "clean" : "") + "assemble", null, new ArrayList<>());
         runnerService.execute(Arrays.asList(compileCommand), "assemble", false, true, false);
         if (runnerService.isBuildSuccessful()) {
             Printer.println("\nSuccessfully assembled project!", Color.GREEN);
