@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class SmartTest {
 
-    public static String VERSION = "1.1.3";
+    public static String VERSION = "1.2.0";
 
     public static void main(String[] args) throws Exception {
 
