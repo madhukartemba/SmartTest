@@ -41,6 +41,8 @@ public class Parameters {
         public static final Map<String, Parameter<Integer>> INTEGER_PARAMETER_MAP = new HashMap<>();
         public static final Map<String, Parameter<Boolean>> BOOLEAN_PARAMETER_MAP = new HashMap<>();
 
+        public static final Map<String, Parameter<?>> PARAMETER_MAP = new HashMap<>();
+
         static {
                 COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_1.getName(), Parameters.DEFAULT_COLOR_1);
                 COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_1.getAliasName(), Parameters.DEFAULT_COLOR_1);
@@ -80,6 +82,12 @@ public class Parameters {
                 BOOLEAN_PARAMETER_MAP.put(Parameters.PRINT_OUTPUT.getAliasName(), Parameters.PRINT_OUTPUT);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.USE_LEGACY_PRINTER.getName(), Parameters.USE_LEGACY_PRINTER);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.USE_LEGACY_PRINTER.getAliasName(), Parameters.USE_LEGACY_PRINTER);
+
+                PARAMETER_MAP.putAll(COLOR_PARAMETER_MAP);
+                PARAMETER_MAP.putAll(STRING_PARAMETER_MAP);
+                PARAMETER_MAP.putAll(INTEGER_PARAMETER_MAP);
+                PARAMETER_MAP.putAll(BOOLEAN_PARAMETER_MAP);
+
         }
 
         public static void main(String[] args) {
@@ -88,9 +96,7 @@ public class Parameters {
         }
 
         public static boolean isParameter(String str) {
-                return COLOR_PARAMETER_MAP.containsKey(str) || STRING_PARAMETER_MAP.containsKey(str)
-                                || INTEGER_PARAMETER_MAP.containsKey(str) || BOOLEAN_PARAMETER_MAP.containsKey(str);
-
+                return PARAMETER_MAP.containsKey(str);
         }
 
         public static void printValues() {
