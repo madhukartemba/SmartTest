@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class SmartTest {
 
-    public static String VERSION = "1.1.2";
+    public static String VERSION = "1.1.3";
 
     public static void main(String[] args) throws Exception {
 
@@ -116,6 +116,20 @@ public class SmartTest {
         // Return with exit code.
         System.exit(testRunnerService.isBuildSuccessful() ? 0 : 1);
 
+    }
+
+    private static void assemble() throws Exception {
+        Printer.boldPrintln("\n\nAssembling project...\n");
+        RunnerService runnerService = new RunnerService();
+        Command compileCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
+                null, "assemble", null, new ArrayList<>());
+        runnerService.execute(Arrays.asList(compileCommand), "assemble", false, true, false);
+        if (runnerService.isBuildSuccessful()) {
+            Printer.println("\nSuccessfully assembled project!", Color.GREEN);
+        } else {
+            runnerService.printOutput();
+            exitWithCode("Failed to assemble project!", Color.RED, 1);
+        }
     }
 
     private static void refreshDependencies() throws Exception {

@@ -5,13 +5,15 @@ import java.util.Objects;
 public class Parameter<T> {
     private final String name;
     private final String aliasName;
+    private final String description;
     private T value;
     private boolean modified = false;
 
-    public Parameter(String name, String aliasName, T value) {
+    public Parameter(String name, String aliasName, T value, String description) {
         this.name = "--" + name;
         this.aliasName = "-" + aliasName;
         this.value = value;
+        this.description = description;
     }
 
     public boolean isModified() {
@@ -28,6 +30,10 @@ public class Parameter<T> {
 
     public T getValue() {
         return value;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setValue(T value) {
