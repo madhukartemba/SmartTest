@@ -9,8 +9,8 @@ public class Parameter<T> {
     private boolean modified = false;
 
     public Parameter(String name, String aliasName, T value) {
-        this.name = name;
-        this.aliasName = aliasName;
+        this.name = "--" + name;
+        this.aliasName = "-" + aliasName;
         this.value = value;
     }
 

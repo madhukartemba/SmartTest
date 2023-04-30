@@ -47,7 +47,7 @@ public class EnvironmentService {
     }
 
     public static void init(String PROJECT_DIR) {
-        Printer.boldPrintln("\nEnvironment\n");
+        Printer.boldPrintln("\n\nEnvironment\n");
         EnvironmentService.PROJECT_DIR = PROJECT_DIR;
         if (!EnvironmentService.PROJECT_DIR.endsWith("/")) {
             EnvironmentService.PROJECT_DIR += "/";
