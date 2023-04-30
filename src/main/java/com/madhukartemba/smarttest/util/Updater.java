@@ -1,11 +1,12 @@
-package com.madhukartemba.smarttest.service;
+package com.madhukartemba.smarttest.util;
 
 import java.awt.Color;
 
 import com.madhukartemba.smarttest.SmartTest;
-import com.madhukartemba.smarttest.util.Printer;
+import com.madhukartemba.smarttest.service.FileService;
+import com.madhukartemba.smarttest.service.RunnerService;
 
-public class SelfUpdateService {
+public class Updater {
     private static String SYSTEM_DIR = System.getProperty("user.dir");
     private static String PROJECT_DIR = (SYSTEM_DIR.endsWith("/") ? SYSTEM_DIR : SYSTEM_DIR + "/");
 
@@ -18,7 +19,7 @@ public class SelfUpdateService {
     private static final String INSTALL_DIR = UPDATE_DIR + REPO_DIR_NAME + INSTALL_DIR_NAME;
 
     public static void main(String[] args) throws Exception {
-        updateApplication();
+        Updater.updateApplication();
     }
 
     public static void updateApplication() throws Exception {
@@ -42,7 +43,7 @@ public class SelfUpdateService {
         exitCode = RunnerService.lightWeightExecute(gitCloneCommand, UPDATE_DIR);
 
         if (exitCode != 0) {
-            SelfUpdateService.cleanExit("An error occured while downloading! Error code: " + exitCode, exitCode);
+            Updater.cleanExit("An error occured while downloading! Error code: " + exitCode, exitCode);
         }
 
         Printer.println("\nDownload successful!", Color.GREEN);
@@ -54,7 +55,7 @@ public class SelfUpdateService {
         exitCode = RunnerService.lightWeightExecute(chmodCommand, INSTALL_DIR);
 
         if (exitCode != 0) {
-            SelfUpdateService.cleanExit(
+            Updater.cleanExit(
                     "An error occured while requesting for update permission! Error code: " + exitCode, exitCode);
         }
 
@@ -67,10 +68,10 @@ public class SelfUpdateService {
         exitCode = RunnerService.lightWeightExecute(installCommand, INSTALL_DIR);
 
         if (exitCode != 0) {
-            SelfUpdateService.cleanExit("An error occured during installation! Error code: " + exitCode, 1);
+            Updater.cleanExit("An error occured during installation! Error code: " + exitCode, 1);
         }
 
-        SelfUpdateService.cleanExit("Installation completed successfully!", exitCode);
+        Updater.cleanExit("Installation completed successfully!", exitCode);
     }
 
     private static void cleanExit(String message, int exitCode) throws Exception {
