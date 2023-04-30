@@ -190,6 +190,14 @@ public class SmartTest {
         Printer.boldPrintln("Thanks for using this program :)\n\n", Color.decode("#23D18B"));
     }
 
+    public static void exitWithCode(String message, int exitCode) {
+        Printer.boldPrintln("\n\n" + message + "\n\n", (exitCode == 0 ? Color.GREEN : Color.RED));
+        if (exitCode == 0) {
+            printEndMessage();
+        }
+        System.exit(exitCode);
+    }
+
     public static void exitWithCode(String message, Color color, int exitCode) {
         Printer.boldPrintln("\n\n" + message + "\n\n", color);
         if (exitCode == 0) {
@@ -233,7 +241,7 @@ public class SmartTest {
         }
     }
 
-    private static void printLogoAndVersion() {
+    public static void printLogoAndVersion() {
         Printer.boldPrintln(
                 "\r\n   _____                      __ ______          __ \r\n  / ___/____ ___  ____ ______/ //_  __/__  _____/ /_\r\n  \\__ \\/ __ `__ \\/ __ `/ ___/ __// / / _ \\/ ___/ __/\r\n ___/ / / / / / / /_/ / /  / /_ / / /  __(__  ) /_  \r\n/____/_/ /_/ /_/\\__,_/_/   \\__//_/  \\___/____/\\__/  \r\n                                                    \r\n",
                 Color.GREEN);

@@ -514,4 +514,36 @@ public class FileService {
 
         return (directory.exists() && directory.isDirectory());
     }
+
+    public static void createDirectory(String directoryName, boolean cleanDirectory) {
+        File directory = new File(directoryName);
+
+        // Create the directory if it does not exist
+        if (!directory.exists()) {
+            boolean success = directory.mkdirs();
+            if (success) {
+                Printer.println("Output directory created successfully.", Color.GREEN);
+            } else {
+                Printer.boldPrintln("Failed to create output directory.", Color.RED);
+            }
+        } else if (cleanDirectory) {
+            Printer.println("Output directory already exists, cleaning up the directory...", Color.GREEN);
+
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+            Printer.println("Output directory cleaned successfully.", Color.GREEN);
+        }
+    }
+
+    public static void deleteDirectory(String directory) throws Exception {
+        Path path = Paths.get(directory);
+        Files.walk(path)
+                .sorted(java.util.Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
+    }
 }

@@ -1,11 +1,11 @@
 package com.madhukartemba.smarttest.service;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -312,30 +312,26 @@ public class RunnerService {
     }
 
     public static void createOutputDirectory(boolean cleanDirectory) {
-        File directory = new File(OUTPUT_DIR);
-
-        // Create the directory if it does not exist
-        if (!directory.exists()) {
-            boolean success = directory.mkdirs();
-            if (success) {
-                Printer.println("Output directory created successfully.", Color.GREEN);
-            } else {
-                Printer.boldPrintln("Failed to create output directory.", Color.RED);
-            }
-        } else if (cleanDirectory) {
-            Printer.println("Output directory already exists, cleaning up the directory...", Color.GREEN);
-            cleanOutputDirectory();
-        }
+        FileService.createDirectory(OUTPUT_DIR, cleanDirectory);
     }
 
-    public static void cleanOutputDirectory() {
-        File directory = new File(OUTPUT_DIR);
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                file.delete();
-            }
+    public static int lightWeightExecute(String command, String directory) throws Exception {
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\s+"));
+        processBuilder.directory(new File(directory));
+        Process process = processBuilder.start();
+        int exitCode = process.waitFor();
+
+        // Read the process's output and error streams and print them to the console
+        BufferedReader outputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        String line;
+        while ((line = outputReader.readLine()) != null) {
+            Printer.formatPrint(line);
         }
-        Printer.println("Output directory cleaned successfully.", Color.GREEN);
+        while ((line = errorReader.readLine()) != null) {
+            Printer.formatPrint(line);
+        }
+
+        return exitCode;
     }
 }
