@@ -10,12 +10,13 @@ import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.entity.Parameter;
 import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.util.Printer;
+import com.madhukartemba.smarttest.util.Updater;
 
 public class ParametersService {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         List<String> inputArgs = Arrays.asList("-mergereqpatterns", "refdeps", "-refdeps");
-        setParameters(inputArgs);
+        ParametersService.setParameters(inputArgs);
 
         Map<String, String> map = new HashMap<>();
         map.put("apple", "fruit");
@@ -30,7 +31,7 @@ public class ParametersService {
         Printer.formatPrint("Closest match: " + closestMatch);
     }
 
-    public static void setParameters(List<String> args) {
+    public static void setParameters(List<String> args) throws Exception {
 
         for (int i = 0; i < args.size(); i++) {
             String arg = args.get(i);
@@ -75,6 +76,15 @@ public class ParametersService {
             Parameter<Boolean> booleanParameter = Parameters.BOOLEAN_PARAMETER_MAP.getOrDefault(arg, null);
             if (booleanParameter != null) {
                 booleanParameter.setValue(true);
+
+                if (Parameters.HELP.getValue()) {
+                    Parameters.printHelpAndExit();
+                } else if (Parameters.VERSION.getValue()) {
+                    SmartTest.exitWithCode("VERSION: " + SmartTest.VERSION, 0);
+                } else if (Parameters.UPDATE_APP.getValue()) {
+                    Updater.updateApplication();
+                }
+
                 continue;
             }
 

@@ -3,7 +3,6 @@ package com.madhukartemba.smarttest;
 import com.madhukartemba.smarttest.entity.Command;
 import com.madhukartemba.smarttest.entity.Parameters;
 import com.madhukartemba.smarttest.service.*;
-import com.madhukartemba.smarttest.util.ArgsParser;
 import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.TestSieve;
 import com.madhukartemba.smarttest.util.Timer;
@@ -14,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class SmartTest {
 
@@ -26,8 +26,7 @@ public class SmartTest {
         timer.start();
 
         // Set the user provided parameters.
-        List<String> parsedArgs = ArgsParser.parseArgs(args);
-        ParametersService.setParameters(parsedArgs);
+        ParametersService.setParameters(Arrays.stream(args).collect(Collectors.toList()));
 
         // Print the logo.
         SmartTest.printLogoAndVersion();

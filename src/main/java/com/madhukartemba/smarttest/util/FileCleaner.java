@@ -14,7 +14,7 @@ public class FileCleaner {
 
     public static void main(String[] args) throws IOException {
         Path path = Paths.get("input.txt");
-        System.out.println(clean(path));
+        Printer.println(clean(path));
     }
 
     /**

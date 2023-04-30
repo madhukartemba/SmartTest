@@ -1,15 +1,20 @@
 package com.madhukartemba.smarttest.entity;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.ThreadUtil;
 
 public class Parameters {
 
         public static final String GRADLE_OPTION_NAME = "--tests";
+
+        public static Parameter<Boolean> HELP = new Parameter<>("help", "h", false, "Prints the help documentation.");
+
+        public static Parameter<Boolean> VERSION = new Parameter<>("version", "v", false, "Prints the version.");
 
         public static Parameter<Color> DEFAULT_COLOR_1 = new Parameter<>("defaultColor1", "color1",
                         Color.decode("#03A9F4"),
@@ -48,13 +53,15 @@ public class Parameters {
         public static Parameter<Boolean> VIA_PACKAGE = new Parameter<>("viaPackage", "viapkg", false,
                         "Flag to explore files only via package name (very fast but very inefficient as well).");
         public static Parameter<Boolean> DELETE_CHILD_FILES = new Parameter<>("deleteChildFiles", "delchd", false,
-                        "Flag to perform a full test.");
-        public static Parameter<Boolean> FULL_TEST = new Parameter<>("fullTest", "ftest", false,
-                        "Flag to print output after the tests are complete.");
-        public static Parameter<Boolean> PRINT_OUTPUT = new Parameter<>("printOutput", "pout", false,
                         "Flag to delete child files after the program ends.");
+        public static Parameter<Boolean> FULL_TEST = new Parameter<>("fullTest", "ftest", false,
+                        "Flag to perform a full test.");
+        public static Parameter<Boolean> PRINT_OUTPUT = new Parameter<>("printOutput", "pout", false,
+                        "Flag to print output after the tests are complete.");
         public static Parameter<Boolean> USE_LEGACY_PRINTER = new Parameter<>("useLegacyPrinter", "ulp", false,
                         "Flag to print using the old printer (it does not refresh the text). It maybe useful if you are trying to log the output to a file.");
+        public static Parameter<Boolean> UPDATE_APP = new Parameter<>("updateApp", "update", false,
+                        "Updates the SmartTest app to the latest version.");
 
         public static final Map<String, Parameter<Color>> COLOR_PARAMETER_MAP = new HashMap<>();
         public static final Map<String, Parameter<String>> STRING_PARAMETER_MAP = new HashMap<>();
@@ -63,7 +70,31 @@ public class Parameters {
 
         public static final Map<String, Parameter<?>> PARAMETER_MAP = new HashMap<>();
 
+        public static final List<Parameter<?>> PARAMETERS = Arrays.asList(
+                        Parameters.HELP,
+                        Parameters.VERSION,
+                        Parameters.DEFAULT_COLOR_1,
+                        Parameters.DEFAULT_COLOR_2,
+                        Parameters.PROJECT_DIR,
+                        Parameters.GRADLE_COMMAND,
+                        Parameters.GIT_COMMAND,
+                        Parameters.OFFICIAL_MERGE_REQUEST_PATTERN,
+                        Parameters.MAX_THREADS,
+                        Parameters.SKIP_COMPILE_JAVA,
+                        Parameters.SERIAL_EXECUTE,
+                        Parameters.ASSEMBLE,
+                        Parameters.CLEAN,
+                        Parameters.REFRESH_DEPENDENCIES,
+                        Parameters.VIA_CLASSNAME,
+                        Parameters.VIA_PACKAGE,
+                        Parameters.DELETE_CHILD_FILES,
+                        Parameters.FULL_TEST,
+                        Parameters.PRINT_OUTPUT,
+                        Parameters.USE_LEGACY_PRINTER,
+                        Parameters.UPDATE_APP);
+
         static {
+
                 COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_1.getName(), Parameters.DEFAULT_COLOR_1);
                 COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_1.getAliasName(), Parameters.DEFAULT_COLOR_1);
                 COLOR_PARAMETER_MAP.put(Parameters.DEFAULT_COLOR_2.getName(), Parameters.DEFAULT_COLOR_2);
@@ -106,6 +137,12 @@ public class Parameters {
                 BOOLEAN_PARAMETER_MAP.put(Parameters.PRINT_OUTPUT.getAliasName(), Parameters.PRINT_OUTPUT);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.USE_LEGACY_PRINTER.getName(), Parameters.USE_LEGACY_PRINTER);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.USE_LEGACY_PRINTER.getAliasName(), Parameters.USE_LEGACY_PRINTER);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.UPDATE_APP.getName(), Parameters.UPDATE_APP);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.UPDATE_APP.getAliasName(), Parameters.UPDATE_APP);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.VERSION.getName(), Parameters.VERSION);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.VERSION.getAliasName(), Parameters.VERSION);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.HELP.getName(), Parameters.HELP);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.HELP.getAliasName(), Parameters.HELP);
 
                 PARAMETER_MAP.putAll(COLOR_PARAMETER_MAP);
                 PARAMETER_MAP.putAll(STRING_PARAMETER_MAP);
@@ -149,12 +186,10 @@ public class Parameters {
 
         public static void printHelpAndExit() {
 
-                Printer.formatPrint("Usage: SmartTest [options]");
-                Printer.formatPrint("Options:");
-                Printer.formatPrint("  --help, -h      : Print this help message and exit");
-                Printer.formatPrint("  --version, -v   : Print the version and exit");
+                Printer.boldFormatPrint("\nUsage: SmartTest [options]");
+                Printer.boldFormatPrint("\nOptions:");
 
-                for (Parameter<?> parameter : PARAMETER_MAP.values()) {
+                for (Parameter<?> parameter : PARAMETERS) {
                         if (parameter.getValue() instanceof Boolean) {
                                 Printer.boldPrintln("\n  " + parameter.getName() + ", " + parameter.getAliasName());
                         } else {
@@ -164,11 +199,6 @@ public class Parameters {
                         }
                         Printer.println("    " + parameter.getDescription(), Printer.DEFAULT_COLOR_2);
                 }
-
-                Printer.boldPrintln("\n  --updateApp, -update");
-                Printer.println("    Updates the SmartTest application to the latest version.",
-                                Printer.DEFAULT_COLOR_2);
-                Printer.println("");
 
                 System.exit(0);
 
