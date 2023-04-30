@@ -47,7 +47,7 @@ public class SmartTest {
         List<String> gitChangedFiles = Parameters.FULL_TEST.getValue() ? null : gitService.getChangedFiles();
 
         if (!Parameters.FULL_TEST.getValue() && (gitChangedFiles == null || gitChangedFiles.isEmpty())) {
-            exitWithCode("The list of changed files determined by Git is empty!", Color.YELLOW, 0);
+            SmartTest.exitWithCode("The list of changed files determined by Git is empty!", Color.YELLOW, 0);
         }
 
         // Pass the list of changed files to ExplorerService.
@@ -64,7 +64,7 @@ public class SmartTest {
         }
 
         if (changedFiles == null || changedFiles.isEmpty()) {
-            exitWithCode("The list of changed files found by explorer is empty!", Color.YELLOW, 0);
+            SmartTest.exitWithCode("The list of changed files found by explorer is empty!", Color.YELLOW, 0);
         }
 
         // Extract the test files from the set of changed files.
@@ -73,7 +73,7 @@ public class SmartTest {
                 : fileService.getTestFiles(changedFiles);
 
         if (testFiles == null || testFiles.isEmpty()) {
-            exitWithCode("There are no affected test files!", Color.GREEN, 0);
+            SmartTest.exitWithCode("There are no affected test files!", Color.GREEN, 0);
         }
 
         // Convert the list of files to commands using TestSieve.
@@ -81,7 +81,7 @@ public class SmartTest {
         List<Command> commands = testSieve.groupify(testFiles);
 
         if (commands == null || commands.isEmpty()) {
-            exitWithCode("There are no generated commands for the given test files!", Color.RED, 1);
+            SmartTest.exitWithCode("There are no generated commands for the given test files!", Color.RED, 1);
         }
 
         // Create the output directory.
@@ -98,9 +98,14 @@ public class SmartTest {
             SmartTest.compileCode();
         }
 
+        // Clean the project.
+        if (Parameters.CLEAN.getValue()) {
+            SmartTest.clean();
+        }
+
         // Assemble the project.
         if (Parameters.ASSEMBLE.getValue()) {
-            assemble();
+            SmartTest.assemble();
         }
 
         // Execute the test processes using TestRunnerService.
@@ -123,17 +128,31 @@ public class SmartTest {
 
     }
 
+    private static void clean() throws Exception {
+        Printer.boldPrintln("\n\nCleaning project...\n");
+        RunnerService runnerService = new RunnerService();
+        Command compileCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
+                null, "clean", null, new ArrayList<>());
+        runnerService.execute(Arrays.asList(compileCommand), "clean", false, true, false);
+        if (runnerService.isBuildSuccessful()) {
+            Printer.println("\nSuccessfully cleaned project!", Color.GREEN);
+        } else {
+            runnerService.printOutput();
+            SmartTest.exitWithCode("Failed to clean project!", Color.RED, 1);
+        }
+    }
+
     private static void assemble() throws Exception {
         Printer.boldPrintln("\n\nAssembling project...\n");
         RunnerService runnerService = new RunnerService();
         Command compileCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
-                null, (Parameters.CLEAN.getValue() ? "clean" : "") + "assemble", null, new ArrayList<>());
+                null, "assemble", null, new ArrayList<>());
         runnerService.execute(Arrays.asList(compileCommand), "assemble", false, true, false);
         if (runnerService.isBuildSuccessful()) {
             Printer.println("\nSuccessfully assembled project!", Color.GREEN);
         } else {
             runnerService.printOutput();
-            exitWithCode("Failed to assemble project!", Color.RED, 1);
+            SmartTest.exitWithCode("Failed to assemble project!", Color.RED, 1);
         }
     }
 
@@ -147,7 +166,7 @@ public class SmartTest {
             Printer.println("\nSuccessfully refreshed dependencies!", Color.GREEN);
         } else {
             runnerService.printOutput();
-            exitWithCode("Failed to refresh dependencies!", Color.RED, 1);
+            SmartTest.exitWithCode("Failed to refresh dependencies!", Color.RED, 1);
         }
     }
 
@@ -161,7 +180,7 @@ public class SmartTest {
             Printer.println("\nCompilation successful!", Color.GREEN);
         } else {
             runnerService.printOutput();
-            exitWithCode("Compilation failed!", Color.RED, 1);
+            SmartTest.exitWithCode("Compilation failed!", Color.RED, 1);
         }
     }
 
