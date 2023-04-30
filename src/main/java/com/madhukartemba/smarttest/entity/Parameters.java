@@ -165,6 +165,11 @@ public class Parameters {
                         Printer.println("    " + parameter.getDescription(), Printer.DEFAULT_COLOR_2);
                 }
 
+                Printer.boldPrintln("\n  --updateApp, -update");
+                Printer.println("    Updates the SmartTest application to the latest version.",
+                                Printer.DEFAULT_COLOR_2);
+                Printer.println("");
+
                 System.exit(0);
 
         }
