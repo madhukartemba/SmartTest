@@ -38,6 +38,11 @@ public class Parameters {
                         "Flag to skip the compilation of the project before testing.");
         public static Parameter<Boolean> REFRESH_DEPENDENCIES = new Parameter<>("refreshDependencies", "refdeps",
                         false, "Flag to refresh dependencies.");
+        public static Parameter<Boolean> ASSEMBLE = new Parameter<>("assemble", "asm",
+                        false, "Flag to assemble project.");
+        public static Parameter<Boolean> CLEAN = new Parameter<>("clean", "c",
+                        false,
+                        "Flag that removes all generated build files, test results, and other temporary files that are created during the build process.");
         public static Parameter<Boolean> VIA_CLASSNAME = new Parameter<>("viaClassName", "viaclass", false,
                         "Flag to explore files only via class name (slightly faster than normal mode but slightly inefficient as well).");
         public static Parameter<Boolean> VIA_PACKAGE = new Parameter<>("viaPackage", "viapkg", false,
@@ -82,6 +87,10 @@ public class Parameters {
                 BOOLEAN_PARAMETER_MAP.put(Parameters.SKIP_COMPILE_JAVA.getAliasName(), Parameters.SKIP_COMPILE_JAVA);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.SERIAL_EXECUTE.getName(), Parameters.SERIAL_EXECUTE);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.SERIAL_EXECUTE.getAliasName(), Parameters.SERIAL_EXECUTE);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.ASSEMBLE.getName(), Parameters.ASSEMBLE);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.ASSEMBLE.getAliasName(), Parameters.ASSEMBLE);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.CLEAN.getName(), Parameters.CLEAN);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.CLEAN.getAliasName(), Parameters.CLEAN);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.REFRESH_DEPENDENCIES.getName(), Parameters.REFRESH_DEPENDENCIES);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.REFRESH_DEPENDENCIES.getAliasName(),
                                 Parameters.REFRESH_DEPENDENCIES);
@@ -128,6 +137,8 @@ public class Parameters {
                 Printer.formatPrint("serialExecute: " + SERIAL_EXECUTE.getValue());
                 Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES.getValue());
                 Printer.formatPrint("skipCompileJava: " + SKIP_COMPILE_JAVA.getValue());
+                Printer.formatPrint("assemble:" + ASSEMBLE.getValue());
+                Printer.formatPrint("clean:" + CLEAN.getValue());
                 Printer.formatPrint("viaClassname: " + VIA_CLASSNAME.getValue());
                 Printer.formatPrint("viaPackage: " + VIA_PACKAGE.getValue());
                 Printer.formatPrint("fullTest: " + FULL_TEST.getValue());
