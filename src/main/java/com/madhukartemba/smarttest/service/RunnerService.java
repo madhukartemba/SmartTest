@@ -62,7 +62,7 @@ public class RunnerService {
 
         List<String> finalCommands = Arrays.asList(CommandBuilder.build(commands, EnvironmentService.TASK_PRIORITY));
         List<String> outputStreams = Arrays
-                .asList((Parameters.PROJECT_DIR.isModified() ? OUTPUT_DIR : OUTPUT_DIR_NAME) + outputFileName);
+                .asList((EnvironmentService.ON_SYSTEM_DIR ? OUTPUT_DIR_NAME : OUTPUT_DIR) + outputFileName);
 
         baseExecute(finalCommands, outputStreams, cleanDirectory, addToFinalOutput, deleteChildFiles);
     }
@@ -267,7 +267,7 @@ public class RunnerService {
 
     protected String createOutputStreamFileName(Command command, int streamId) {
 
-        return (Parameters.PROJECT_DIR.isModified() ? OUTPUT_DIR : OUTPUT_DIR_NAME)
+        return (EnvironmentService.ON_SYSTEM_DIR ? OUTPUT_DIR_NAME : OUTPUT_DIR)
                 + (command.getProjectName() == null ? "" : command.getProjectName() + "-")
                 + command.getTaskName() + "-output" + streamId
                 + ".txt";
