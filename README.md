@@ -1,3 +1,6 @@
+![Screenshot from 2023-05-01 22-02-53](https://user-images.githubusercontent.com/97425422/235488768-e89ea9db-aa55-4de9-8e27-c0635f52ea91.png)
+
+
 # SmartTest
 
 <p> SmartTest is a tool designed to intelligently select and run relevant unit tests based on the changes made to a codebase. It is useful for developers who want to run tests quickly and efficiently without having to manually select which tests to run. It also runs the tests in parallel to save time.</p>
