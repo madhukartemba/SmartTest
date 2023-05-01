@@ -70,6 +70,9 @@ public class GitService {
         String fileName = gitOutput.readLine();
 
         while (fileName != null) {
+            if (!EnvironmentService.ON_SYSTEM_DIR && !fileName.startsWith(PROJECT_DIR)) {
+                fileName = PROJECT_DIR + fileName;
+            }
             changedFiles.add(fileName);
             fileName = gitOutput.readLine();
         }
