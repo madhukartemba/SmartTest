@@ -38,9 +38,9 @@ public class Parameters {
                         "Sets the maximum number of threads to be used by the program.");
 
         public static Parameter<Boolean> SKIP_COMPILE_JAVA = new Parameter<>("skipCompileJava", "skipcompile", false,
-                        "Flag to execute tasks serially.");
+        "Flag to skip the compilation of the project before testing." );
         public static Parameter<Boolean> SERIAL_EXECUTE = new Parameter<>("serialExecute", "serexe", false,
-                        "Flag to skip the compilation of the project before testing.");
+        "Flag to execute tasks serially.");
         public static Parameter<Boolean> REFRESH_DEPENDENCIES = new Parameter<>("refreshDependencies", "refdeps",
                         false, "Flag to refresh dependencies.");
         public static Parameter<Boolean> ASSEMBLE = new Parameter<>("assemble", "asm",
