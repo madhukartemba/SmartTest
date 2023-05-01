@@ -1,4 +1,4 @@
-![Screenshot from 2023-05-01 22-02-53](https://user-images.githubusercontent.com/97425422/235488768-e89ea9db-aa55-4de9-8e27-c0635f52ea91.png)
+![Screenshot from 2023-05-01 22-17-25](https://user-images.githubusercontent.com/97425422/235490775-64635864-36a1-44dc-b7f8-66648f7658be.png)
 
 
 # SmartTest
