@@ -98,8 +98,8 @@ public class SmartTest {
         }
 
         // Compile the code.
-        if (!Parameters.SKIP_COMPILE_JAVA.getValue()) {
-            SmartTest.compileCode();
+        if (!Parameters.SKIP_COMPILE_TEST_JAVA.getValue()) {
+            SmartTest.compileTestCode();
         }
 
         // Assemble the project.
@@ -169,17 +169,17 @@ public class SmartTest {
         }
     }
 
-    private static void compileCode() throws Exception {
-        Printer.boldPrintln("\n\nCompiling code...\n");
+    private static void compileTestCode() throws Exception {
+        Printer.boldPrintln("\n\nCompiling test files...\n");
         RunnerService runnerService = new RunnerService();
         Command compileCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
-                null, "compileJava", null, new ArrayList<>());
-        runnerService.execute(Arrays.asList(compileCommand), "compileJava", false, true, false);
+                null, "compileTestJava", null, new ArrayList<>());
+        runnerService.execute(Arrays.asList(compileCommand), "compileTestJava", false, true, false);
         if (runnerService.isBuildSuccessful()) {
-            Printer.println("\nCompilation successful!", Color.GREEN);
+            Printer.println("\nSuccessfully compiled test files!", Color.GREEN);
         } else {
             runnerService.printOutput();
-            SmartTest.exitWithCode("Compilation failed!", Color.RED, 1);
+            SmartTest.exitWithCode("Failed to compile test files!", Color.RED, 1);
         }
     }
 

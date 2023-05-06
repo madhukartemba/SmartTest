@@ -37,8 +37,8 @@ public class Parameters {
                         ThreadUtil.getOptimalThreadCount(),
                         "Sets the maximum number of threads to be used by the program.");
 
-        public static Parameter<Boolean> SKIP_COMPILE_JAVA = new Parameter<>("skipCompileJava", "skipcompile", false,
-        "Flag to skip the compilation of the project before testing." );
+        public static Parameter<Boolean> SKIP_COMPILE_TEST_JAVA = new Parameter<>("skipCompileTestJava", "skipc", false,
+        "Flag to skip the compilation of the test files before testing." );
         public static Parameter<Boolean> SERIAL_EXECUTE = new Parameter<>("serialExecute", "serexe", false,
         "Flag to execute tasks serially.");
         public static Parameter<Boolean> REFRESH_DEPENDENCIES = new Parameter<>("refreshDependencies", "refdeps",
@@ -80,7 +80,7 @@ public class Parameters {
                         Parameters.GIT_COMMAND,
                         Parameters.OFFICIAL_MERGE_REQUEST_PATTERN,
                         Parameters.MAX_THREADS,
-                        Parameters.SKIP_COMPILE_JAVA,
+                        Parameters.SKIP_COMPILE_TEST_JAVA,
                         Parameters.SERIAL_EXECUTE,
                         Parameters.ASSEMBLE,
                         Parameters.CLEAN,
@@ -114,8 +114,8 @@ public class Parameters {
                 INTEGER_PARAMETER_MAP.put(Parameters.MAX_THREADS.getName(), Parameters.MAX_THREADS);
                 INTEGER_PARAMETER_MAP.put(Parameters.MAX_THREADS.getAliasName(), Parameters.MAX_THREADS);
 
-                BOOLEAN_PARAMETER_MAP.put(Parameters.SKIP_COMPILE_JAVA.getName(), Parameters.SKIP_COMPILE_JAVA);
-                BOOLEAN_PARAMETER_MAP.put(Parameters.SKIP_COMPILE_JAVA.getAliasName(), Parameters.SKIP_COMPILE_JAVA);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.SKIP_COMPILE_TEST_JAVA.getName(), Parameters.SKIP_COMPILE_TEST_JAVA);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.SKIP_COMPILE_TEST_JAVA.getAliasName(), Parameters.SKIP_COMPILE_TEST_JAVA);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.SERIAL_EXECUTE.getName(), Parameters.SERIAL_EXECUTE);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.SERIAL_EXECUTE.getAliasName(), Parameters.SERIAL_EXECUTE);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.ASSEMBLE.getName(), Parameters.ASSEMBLE);
@@ -173,7 +173,7 @@ public class Parameters {
                                 + (MAX_THREADS.isModified() ? " (user provided)" : " (determined automatically)"));
                 Printer.formatPrint("serialExecute: " + SERIAL_EXECUTE.getValue());
                 Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES.getValue());
-                Printer.formatPrint("skipCompileJava: " + SKIP_COMPILE_JAVA.getValue());
+                Printer.formatPrint("skipCompileTestJava: " + SKIP_COMPILE_TEST_JAVA.getValue());
                 Printer.formatPrint("assemble:" + ASSEMBLE.getValue());
                 Printer.formatPrint("clean:" + CLEAN.getValue());
                 Printer.formatPrint("viaClassname: " + VIA_CLASSNAME.getValue());
