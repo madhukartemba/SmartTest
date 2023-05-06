@@ -113,7 +113,7 @@ public class EnvironmentService {
         }
 
         if (PROJECT_NAMES == null || PROJECT_NAMES.isEmpty()) {
-            SmartTest.exitWithCode("Cannot find any java projects in the current directory!", Color.RED, 1);
+            SmartTest.exitWithCode("Cannot find any testable java projects in the current directory!", Color.RED, 1);
         }
 
         return PROJECT_NAMES;

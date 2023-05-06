@@ -39,7 +39,7 @@ public class TestRunnerService extends RunnerService {
                     "Number of unsuccessful test processes: " + getUnsuccessfulCount() + " out of " + getTotalCount(),
                     Color.GREEN);
             Printer.boldPrintln("\n\nBUILD SUCCESSFUL in " + timer.getElapsedTime() + "\n\n",
-                    Color.decode("#23D18B"));
+                    Printer.BUILD_SUCCESSFUL);
         } else {
             Printer.formatPrint(
                     "Number of unsuccessful test processes: " + getUnsuccessfulCount() + " out of " + getTotalCount(),

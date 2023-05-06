@@ -6,6 +6,7 @@ import com.madhukartemba.smarttest.service.*;
 import com.madhukartemba.smarttest.util.Printer;
 import com.madhukartemba.smarttest.util.TestSieve;
 import com.madhukartemba.smarttest.util.Timer;
+import com.madhukartemba.smarttest.util.Updater;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class SmartTest {
 
-    public static String VERSION = "1.2.0";
+    public static String VERSION = "1.2.1";
 
     public static void main(String[] args) throws Exception {
 
@@ -120,7 +121,16 @@ public class SmartTest {
 
         testRunnerService.printResults(timer);
 
-        printEndMessage();
+        SmartTest.printEndMessage();
+
+        if (Updater.checkForUpdates(true) < 0) {
+            Printer.boldPrint("\n\nNew update ", Printer.BUILD_SUCCESSFUL);
+            Printer.boldPrint("(" + Updater.GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
+            Printer.boldPrintln(" available!", Printer.BUILD_SUCCESSFUL);
+            Printer.boldPrint("Please run ", Printer.BUILD_SUCCESSFUL);
+            Printer.boldPrint("'SmartTest --updateApp'", Printer.DEFAULT_COLOR_2);
+            Printer.boldPrintln(" to install the latest version.\nThank you!\n\n", Printer.BUILD_SUCCESSFUL);
+        }
 
         // Return with exit code.
         System.exit(testRunnerService.isBuildSuccessful() ? 0 : 1);
@@ -186,13 +196,13 @@ public class SmartTest {
     // Print the end message
     // Print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
     public static void printEndMessage() {
-        Printer.boldPrintln("Thanks for using this program :)\n\n", Color.decode("#23D18B"));
+        Printer.boldPrintln("Thanks for using this program :)\n\n", Printer.BUILD_SUCCESSFUL);
     }
 
     public static void exitWithCode(String message, int exitCode) {
         Printer.boldPrintln("\n\n" + message + "\n\n", (exitCode == 0 ? Color.GREEN : Color.RED));
         if (exitCode == 0) {
-            printEndMessage();
+            SmartTest.printEndMessage();
         }
         System.exit(exitCode);
     }
@@ -200,7 +210,7 @@ public class SmartTest {
     public static void exitWithCode(String message, Color color, int exitCode) {
         Printer.boldPrintln("\n\n" + message + "\n\n", color);
         if (exitCode == 0) {
-            printEndMessage();
+            SmartTest.printEndMessage();
         }
         System.exit(exitCode);
     }

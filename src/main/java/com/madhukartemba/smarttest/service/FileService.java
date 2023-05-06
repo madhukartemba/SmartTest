@@ -457,7 +457,7 @@ public class FileService {
 
                     Printer.print(prefix);
                     // Print in the OG 'BUILD SUCCESSFUL' color from VSCode :)
-                    Printer.boldPrint(successString, Color.decode("#23D18B"));
+                    Printer.boldPrint(successString, Printer.BUILD_SUCCESSFUL);
                     Printer.println(suffix);
                 } else if (failedIndex >= 0) {
                     String prefix = line.substring(0, failedIndex);

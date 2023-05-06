@@ -15,9 +15,10 @@ import com.madhukartemba.smarttest.service.FileService;
 import com.madhukartemba.smarttest.service.RunnerService;
 
 public class Updater {
+    public static String GITHUB_VERSION = null;
+
     private static String SYSTEM_DIR = System.getProperty("user.dir");
     private static String PROJECT_DIR = (SYSTEM_DIR.endsWith("/") ? SYSTEM_DIR : SYSTEM_DIR + "/");
-    private static String GITHUB_VERSION = null;
 
     private static final String REPO_URL = "https://github.com/madhukartemba/SmartTest.git";
     private static final String VERSION_URL = "https://raw.githubusercontent.com/madhukartemba/SmartTest/main/VERSION.txt";
@@ -29,7 +30,14 @@ public class Updater {
     private static final String INSTALL_DIR = UPDATE_DIR + REPO_DIR_NAME + INSTALL_DIR_NAME;
 
     public static void main(String[] args) throws Exception {
-        System.out.println(checkForUpdates(true));
+
+        Printer.boldPrint("\n\nNew update ", Printer.BUILD_SUCCESSFUL);
+        Printer.boldPrint("(" + Updater.GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
+        Printer.boldPrintln(" available!", Printer.BUILD_SUCCESSFUL);
+        Printer.boldPrint("Please run ", Printer.BUILD_SUCCESSFUL);
+        Printer.boldPrint("'SmartTest --updateApp'", Printer.DEFAULT_COLOR_2);
+        Printer.boldPrintln(" to install the latest version.\nThank you!\n\n", Printer.BUILD_SUCCESSFUL);
+        // System.out.println(checkForUpdates(true));
         // Updater.updateApplication();
         // String GITHUB_VERSION = getVersionNumberFromGithub(VERSION_URL);
         // System.out.println(compareVersions(SmartTest.VERSION, "1.2.0"));
@@ -42,8 +50,8 @@ public class Updater {
         Printer.println("Checking for updates...\n");
         int res = checkForUpdates(false);
 
-        if (res <= 0) {
-            if (res < 0) {
+        if (res >= 0) {
+            if (res > 0) {
                 Printer.print("You are running a newer version ");
                 Printer.print("(" + SmartTest.VERSION + ")", Printer.DEFAULT_COLOR_2);
                 Printer.print(" than the latest available version ");

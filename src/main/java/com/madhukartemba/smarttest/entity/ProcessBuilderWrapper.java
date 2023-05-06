@@ -52,7 +52,7 @@ public class ProcessBuilderWrapper {
                     this.getName() +
                             " : BUILD SUCCESSFUL in " + timer.getElapsedTime(),
                     Color.WHITE,
-                    Color.decode("#23D18B"));
+                    Printer.BUILD_SUCCESSFUL);
         } else {
             Printer.boldFormatPrint(this.getName() +
                     ": BUILD FAILED WITH EXIT CODE " + this.getExitCode() + " in " + timer.getElapsedTime(),
@@ -69,7 +69,7 @@ public class ProcessBuilderWrapper {
                 + ": " + Printer.RESET + Printer.BOLD;
 
         if (processStatus == ProcessStatus.SUCCESSFUL) {
-            output += Printer.getColorCode(Color.decode("#23D18B")) + "BUILD SUCCESSFUL in " + timer.getElapsedTime();
+            output += Printer.getColorCode(Printer.BUILD_SUCCESSFUL) + "BUILD SUCCESSFUL in " + timer.getElapsedTime();
         } else if (processStatus == ProcessStatus.FAILED) {
             output += Printer.getColorCode(Color.RED) + "BUILD FAILED WITH EXIT CODE " + this.getExitCode() + " in "
                     + timer.getElapsedTime();
