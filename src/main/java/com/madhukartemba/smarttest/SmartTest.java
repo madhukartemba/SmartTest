@@ -97,7 +97,7 @@ public class SmartTest {
             SmartTest.refreshDependencies();
         }
 
-        // Compile the code.
+        // Compile the test code.
         if (!Parameters.SKIP_COMPILE_TEST_JAVA.getValue()) {
             SmartTest.compileTestCode();
         }
