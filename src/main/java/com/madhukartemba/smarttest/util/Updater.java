@@ -4,6 +4,11 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Timer;
+import java.util.Scanner;
+import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.madhukartemba.smarttest.SmartTest;
 import com.madhukartemba.smarttest.service.FileService;
@@ -26,19 +31,28 @@ public class Updater {
     public static void main(String[] args) throws Exception {
         // Updater.updateApplication();
         // String GITHUB_VERSION = getVersionNumberFromGithub(VERSION_URL);
-        System.out.println(compareVersions(SmartTest.VERSION, "1.2.0"));
+        // System.out.println(compareVersions(SmartTest.VERSION, "1.2.0"));
+        System.out.println(askToProceed());
     }
 
     public static void updateApplication() throws Exception {
         SmartTest.printLogoAndVersion();
 
+        Printer.println("Checking for updates...\n");
         int res = checkForUpdates();
 
-        if (res < 0) {
-            Printer.println("You have version");
+        if (res <= 0) {
+            if (res < 0) {
+                Printer.println("You are running a newer version (" + SmartTest.VERSION
+                        + ") than the latest available version (" + GITHUB_VERSION + ").");
+            } else {
+                Printer.println("You are running the latest version (" + GITHUB_VERSION + ").");
+            }
+            Printer.println("Do you wish to proceed? (Y/n)");
+
         }
 
-        Printer.boldPrintln("Starting to update application to the latest version...");
+        Printer.boldPrintln("Starting to update application to the latest version (" + GITHUB_VERSION + ") ...");
 
         Printer.println("\nCreating a temporary output directory...");
         if (FileService.directoryExists(UPDATE_DIR)) {
@@ -132,6 +146,68 @@ public class Updater {
             }
         }
         return 0;
+    }
+
+    public static boolean askToProceed() {
+        final int TIMEOUT = 3000; // 30 seconds in milliseconds
+        final Scanner scanner = new Scanner(System.in);
+        final Timer timer = new Timer();
+        final AtomicBoolean inputValid = new AtomicBoolean(false);
+        final AtomicBoolean shouldExit = new AtomicBoolean(false);
+        final CountDownLatch latch = new CountDownLatch(1);
+        final Thread inputThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String input = scanner.nextLine().trim().toLowerCase();
+
+                    scanner.close();
+
+                    // Treat empty input as equivalent to default value of "Y"
+                    if (input.isEmpty()) {
+                        input = "y";
+                    }
+
+                    inputValid.set(!input.equals("n"));
+                } catch (Exception e) {
+                    // Ignore exceptions and exit thread
+                } finally {
+                    latch.countDown();
+                }
+            }
+        });
+
+        // Start the timer to abort the application if no input is received in 30
+        // seconds
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                inputThread.interrupt();
+                shouldExit.set(true);
+                latch.countDown();
+            }
+        }, TIMEOUT);
+
+        // Prompt the user for input
+        Printer.print("Do you wish to proceed? ");
+        Printer.print("(Y/n)  ", Printer.DEFAULT_COLOR_2);
+
+        // Start the input thread
+        inputThread.start();
+
+        // Wait for the input thread to finish or the timer to expire
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            // Ignore interrupts and continue
+        }
+
+        // Cancel the timer and return the result
+        timer.cancel();
+        if (shouldExit.get()) {
+            System.exit(1);
+        }
+        return inputValid.get() && scanner != null;
     }
 
 }
