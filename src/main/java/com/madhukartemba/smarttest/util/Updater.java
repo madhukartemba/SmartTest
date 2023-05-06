@@ -29,30 +29,40 @@ public class Updater {
     private static final String INSTALL_DIR = UPDATE_DIR + REPO_DIR_NAME + INSTALL_DIR_NAME;
 
     public static void main(String[] args) throws Exception {
+        System.out.println(checkForUpdates(true));
         // Updater.updateApplication();
         // String GITHUB_VERSION = getVersionNumberFromGithub(VERSION_URL);
         // System.out.println(compareVersions(SmartTest.VERSION, "1.2.0"));
-        System.out.println(askToProceed());
+        // System.out.println(askToProceed());
     }
 
     public static void updateApplication() throws Exception {
         SmartTest.printLogoAndVersion();
 
         Printer.println("Checking for updates...\n");
-        int res = checkForUpdates();
+        int res = checkForUpdates(false);
 
         if (res <= 0) {
             if (res < 0) {
-                Printer.println("You are running a newer version (" + SmartTest.VERSION
-                        + ") than the latest available version (" + GITHUB_VERSION + ").");
+                Printer.print("You are running a newer version ");
+                Printer.print("(" + SmartTest.VERSION + ")", Printer.DEFAULT_COLOR_2);
+                Printer.print(" than the latest available version ");
+                Printer.println("(" + GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
             } else {
-                Printer.println("You are running the latest version (" + GITHUB_VERSION + ").");
+                Printer.print("You are running the latest version ");
+                Printer.println("(" + GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
             }
-            Printer.println("Do you wish to proceed? (Y/n)");
 
+            boolean proceed = askToProceed();
+
+            if (!proceed) {
+                Updater.cleanExit("Installation aborted!", Color.ORANGE, 0);
+            }
         }
 
-        Printer.boldPrintln("Starting to update application to the latest version (" + GITHUB_VERSION + ") ...");
+        Printer.boldPrint("Starting to update application to the latest version ");
+        Printer.boldPrintln("(" + (GITHUB_VERSION == null ? "UNKNOWN" : GITHUB_VERSION) + ")",
+                Printer.DEFAULT_COLOR_2);
 
         Printer.println("\nCreating a temporary output directory...");
         if (FileService.directoryExists(UPDATE_DIR)) {
@@ -109,29 +119,50 @@ public class Updater {
         SmartTest.exitWithCode(message, exitCode);
     }
 
-    public static int checkForUpdates() throws Exception {
-        String GITHUB_VERSION = getVersionNumberFromGithub(VERSION_URL);
+    private static void cleanExit(String message, Color color, int exitCode) throws Exception {
+        if (FileService.directoryExists(UPDATE_DIR)) {
+            FileService.deleteDirectory(UPDATE_DIR);
+        }
+
+        SmartTest.exitWithCode(message, color, exitCode);
+    }
+
+    public static int checkForUpdates(boolean silent) throws Exception {
+        String GITHUB_VERSION = getVersionNumberFromGithub(VERSION_URL, silent);
+        if (GITHUB_VERSION == null) {
+            return silent ? 0 : 1;
+        }
         return compareVersions(SmartTest.VERSION, GITHUB_VERSION);
     }
 
-    private static String getVersionNumberFromGithub(String rawUrl) throws Exception {
+    private static String getVersionNumberFromGithub(String rawUrl, boolean silent) throws Exception {
 
         if (GITHUB_VERSION != null) {
             return GITHUB_VERSION;
         }
 
-        URL url = new URL(rawUrl);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.startsWith("VERSION")) {
-                String versionNumber = line.substring("VERSION".length()).trim();
-                reader.close();
-                return GITHUB_VERSION = versionNumber;
+        try {
+
+            URL url = new URL(rawUrl);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("VERSION")) {
+                    String versionNumber = line.substring("VERSION".length()).trim();
+                    reader.close();
+                    return GITHUB_VERSION = versionNumber;
+                }
+            }
+            reader.close();
+        } catch (Exception e) {
+            if (!silent) {
+                Printer.formatPrint(e.toString());
             }
         }
-        reader.close();
-        throw new RuntimeException("Cannot get the version number from GitHub");
+        if (!silent) {
+            Printer.boldPrintln("\nCannot get the version number from GitHub!\n", Color.ORANGE);
+        }
+        return null;
     }
 
     private static int compareVersions(String version1, String version2) {
@@ -148,8 +179,8 @@ public class Updater {
         return 0;
     }
 
-    public static boolean askToProceed() {
-        final int TIMEOUT = 3000; // 30 seconds in milliseconds
+    public static boolean askToProceed() throws Exception {
+        final int TIMEOUT = 30000; // 30 seconds in milliseconds
         final Scanner scanner = new Scanner(System.in);
         final Timer timer = new Timer();
         final AtomicBoolean inputValid = new AtomicBoolean(false);
@@ -165,7 +196,7 @@ public class Updater {
 
                     // Treat empty input as equivalent to default value of "Y"
                     if (input.isEmpty()) {
-                        input = "y";
+                        input = "n";
                     }
 
                     inputValid.set(!input.equals("n"));
@@ -190,7 +221,7 @@ public class Updater {
 
         // Prompt the user for input
         Printer.print("Do you wish to proceed? ");
-        Printer.print("(Y/n)  ", Printer.DEFAULT_COLOR_2);
+        Printer.print("(y/N)  ", Printer.DEFAULT_COLOR_2);
 
         // Start the input thread
         inputThread.start();
@@ -205,7 +236,7 @@ public class Updater {
         // Cancel the timer and return the result
         timer.cancel();
         if (shouldExit.get()) {
-            System.exit(1);
+            Updater.cleanExit("User input timeout!", Color.ORANGE, 0);
         }
         return inputValid.get() && scanner != null;
     }
