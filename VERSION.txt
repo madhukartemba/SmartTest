@@ -1,0 +1,8 @@
+VERSION 1.2.0
+
+Changelog:
+
+1. Faster exploration due to parallelization and not using grep command.
+2. More accurate exploration, now checks for both package name and class name by default.
+3. Compile test files before execution.
+4. Added Gradle assemble, refresh dependencies and clean feature.
