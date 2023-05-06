@@ -47,7 +47,7 @@ public class Updater {
     public static void updateApplication() throws Exception {
         SmartTest.printLogoAndVersion();
 
-        Printer.println("Checking for updates...\n");
+        Printer.boldPrintln("Checking for updates...\n");
         int res = checkForUpdates(false);
 
         if (res >= 0) {
