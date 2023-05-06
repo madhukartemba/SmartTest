@@ -12,6 +12,7 @@ import com.madhukartemba.smarttest.service.RunnerService;
 public class Updater {
     private static String SYSTEM_DIR = System.getProperty("user.dir");
     private static String PROJECT_DIR = (SYSTEM_DIR.endsWith("/") ? SYSTEM_DIR : SYSTEM_DIR + "/");
+    private static String GITHUB_VERSION = null;
 
     private static final String REPO_URL = "https://github.com/madhukartemba/SmartTest.git";
     private static final String VERSION_URL = "https://raw.githubusercontent.com/madhukartemba/SmartTest/main/VERSION.txt";
@@ -30,6 +31,12 @@ public class Updater {
 
     public static void updateApplication() throws Exception {
         SmartTest.printLogoAndVersion();
+
+        int res = checkForUpdates();
+
+        if (res < 0) {
+            Printer.println("You have version");
+        }
 
         Printer.boldPrintln("Starting to update application to the latest version...");
 
@@ -88,7 +95,17 @@ public class Updater {
         SmartTest.exitWithCode(message, exitCode);
     }
 
+    public static int checkForUpdates() throws Exception {
+        String GITHUB_VERSION = getVersionNumberFromGithub(VERSION_URL);
+        return compareVersions(SmartTest.VERSION, GITHUB_VERSION);
+    }
+
     private static String getVersionNumberFromGithub(String rawUrl) throws Exception {
+
+        if (GITHUB_VERSION != null) {
+            return GITHUB_VERSION;
+        }
+
         URL url = new URL(rawUrl);
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
         String line;
@@ -96,11 +113,11 @@ public class Updater {
             if (line.startsWith("VERSION")) {
                 String versionNumber = line.substring("VERSION".length()).trim();
                 reader.close();
-                return versionNumber;
+                return GITHUB_VERSION = versionNumber;
             }
         }
         reader.close();
-        return null;
+        throw new RuntimeException("Cannot get the version number from GitHub");
     }
 
     private static int compareVersions(String version1, String version2) {
