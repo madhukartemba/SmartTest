@@ -64,7 +64,7 @@ public class Updater {
             boolean proceed = askToProceed();
 
             if (!proceed) {
-                Updater.cleanExit("Installation aborted!", Color.ORANGE, 0);
+                Updater.cleanExit("Installation aborted!", 0);
             }
         }
 
