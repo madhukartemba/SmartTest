@@ -160,7 +160,7 @@ public class Updater {
     }
 
     public static int checkForUpdates(boolean silent) throws Exception {
-        String GITHUB_VERSION = getVersionNumberFromGithub(VERSION_URL, silent);
+        String GITHUB_VERSION = getVersionNumFromGithub(VERSION_URL, silent);
         if (GITHUB_VERSION == null) {
             return silent ? 0 : 1;
         }
@@ -176,7 +176,7 @@ public class Updater {
 
     }
 
-    private static String getVersionNumberFromGithub(String rawUrl, boolean silent) throws Exception {
+    private static String getVersionNumFromGithub(String rawUrl, boolean silent) throws Exception {
 
         if (GITHUB_VERSION != null) {
             return GITHUB_VERSION;
