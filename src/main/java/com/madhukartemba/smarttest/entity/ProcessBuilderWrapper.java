@@ -113,7 +113,7 @@ public class ProcessBuilderWrapper {
                     + timer.getElapsedTime();
         } else if (processStatus == ProcessStatus.RUNNING) {
             if (isFailing) {
-                output += Printer.getColorCode(Printer.BUILD_IS_FAILING) + "RUNNING (UNSTABLE) ";
+                output += Printer.getColorCode(Printer.BUILD_IS_FAILING) + "RUNNING (FAILING) ";
             } else {
                 output += Printer.getColorCode(Printer.DEFAULT_COLOR_2) + "RUNNING ";
             }
