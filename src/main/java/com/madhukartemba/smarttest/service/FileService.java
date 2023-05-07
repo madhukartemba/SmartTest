@@ -88,19 +88,32 @@ public class FileService {
         return inputFiles.stream().filter(filePath -> isTestFile(filePath)).collect(Collectors.toList());
     }
 
-    public boolean analyseGitFiles(List<String> visitedFiles) {
+    public boolean analyseGitFiles(List<String> visitedFiles) throws Exception {
 
         completeRunRequired = false;
 
         int affectedFiles = 0;
         int affectedNonJavaFiles = 0;
+        int controllerModified = 0;
 
         for (String visitedFile : visitedFiles) {
             if (!isJavaFile(visitedFile) && !isIgnored(visitedFile)) {
                 affectedNonJavaFiles++;
-            } else {
+            } else if (!isIgnored(visitedFile)) {
                 affectedFiles++;
+                String cleanFile = FileCleaner.clean(Paths.get(visitedFile));
+                if (cleanFile.contains("@Controller") || cleanFile.contains("@RestController")) {
+                    controllerModified++;
+                }
             }
+        }
+
+        if (controllerModified > 0) {
+            Printer.println(
+                    "\nFound " + controllerModified + " changed java controller file"
+                            + (controllerModified == 1 ? "" : "s")
+                            + ". It is recommended to perform a full test run.",
+                    Color.YELLOW);
         }
 
         if (affectedNonJavaFiles > 0) {
