@@ -23,6 +23,8 @@ public class Updater {
     private static String SYSTEM_DIR = System.getProperty("user.dir");
     private static String PROJECT_DIR = (SYSTEM_DIR.endsWith("/") ? SYSTEM_DIR : SYSTEM_DIR + "/");
 
+    private static final AtomicBoolean SHOULD_EXIT = new AtomicBoolean(false);
+    private static final CountDownLatch LATCH = new CountDownLatch(1);
     private static final String REPO_URL = "https://github.com/madhukartemba/SmartTest.git";
     private static final String VERSION_URL = "https://raw.githubusercontent.com/madhukartemba/SmartTest/main/VERSION.txt";
     private static final String UPDATE_DIR_NAME = "SmartTestUpdateFolder/";
@@ -51,6 +53,20 @@ public class Updater {
     }
 
     public static void updateApplication() throws Exception {
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                try {
+                    if (FileService.directoryExists(UPDATE_DIR)) {
+                        FileService.deleteDirectory(UPDATE_DIR);
+                    }
+                    LATCH.countDown();
+                } catch (Exception e) {
+                    System.exit(0);
+                }
+            }
+        });
+
         SmartTest.printLogoAndVersion();
 
         Printer.boldPrintln("Checking for updates...\n");
@@ -221,8 +237,6 @@ public class Updater {
         final Scanner scanner = new Scanner(System.in);
         final Timer timer = new Timer();
         final AtomicBoolean inputValid = new AtomicBoolean(false);
-        final AtomicBoolean shouldExit = new AtomicBoolean(false);
-        final CountDownLatch latch = new CountDownLatch(1);
         final Thread inputThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -240,7 +254,7 @@ public class Updater {
                 } catch (Exception e) {
                     // Ignore exceptions and exit thread
                 } finally {
-                    latch.countDown();
+                    LATCH.countDown();
                 }
             }
         });
@@ -251,8 +265,8 @@ public class Updater {
             @Override
             public void run() {
                 inputThread.interrupt();
-                shouldExit.set(true);
-                latch.countDown();
+                SHOULD_EXIT.set(true);
+                LATCH.countDown();
             }
         }, TIMEOUT);
 
@@ -265,14 +279,14 @@ public class Updater {
 
         // Wait for the input thread to finish or the timer to expire
         try {
-            latch.await();
+            LATCH.await();
         } catch (InterruptedException e) {
             // Ignore interrupts and continue
         }
 
         // Cancel the timer and return the result
         timer.cancel();
-        if (shouldExit.get()) {
+        if (SHOULD_EXIT.get()) {
             Updater.cleanExit("User input timeout!", Color.ORANGE, 0);
         }
         return inputValid.get() && scanner != null;
