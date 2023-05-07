@@ -183,16 +183,10 @@ public class SmartTest {
     private static void compileCode() throws Exception {
         Printer.boldPrintln("\n\nCompiling code...\n");
         RunnerService runnerService = new RunnerService();
-        Command compileCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
-                null, "compileJava", null, new ArrayList<>());
         Command compileTestCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
                 null, "compileTestJava", null, new ArrayList<>());
 
-        if (Parameters.SERIAL_EXECUTE.getValue()) {
-            runnerService.execute(Arrays.asList(compileCommand, compileTestCommand), "compile", false, true, false);
-        } else {
-            runnerService.parallelExecute(Arrays.asList(compileCommand, compileTestCommand), false, true, false);
-        }
+        runnerService.execute(Arrays.asList(compileTestCommand), "compile", false, true, false);
 
         if (runnerService.isBuildSuccessful()) {
             Printer.println("\nSuccessfully compiled code!", Color.GREEN);
