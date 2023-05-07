@@ -35,7 +35,10 @@ public class ProcessBuilderWrapper {
         this.outputMonitorTask = () -> {
             try {
                 String input = new String(Files.readAllBytes(Paths.get(this.name)), StandardCharsets.UTF_8);
-                isFailing = input.contains("FAILED");
+                if (input.contains("FAILED")) {
+                    isFailing = true;
+                    this.stopOutputMonitor();
+                }
             } catch (Exception e) {
                 // Ignore error
             }
