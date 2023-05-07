@@ -13,6 +13,7 @@ public class Printer {
     public static final Color DEFAULT_COLOR_2 = Parameters.DEFAULT_COLOR_2.getValue();
     public static final String DEFAULT_COLOR_2_CODE = getColorCode(DEFAULT_COLOR_2);
     public static final Color BUILD_SUCCESSFUL = Color.decode("#23D18B");
+    public static final Color BUILD_IS_FAILING = Color.decode("#FFA500");
     public static final String SEPERATOR = ":";
     public static final String CLEAR_LINE = "\033[2K\r";
 
