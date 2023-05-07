@@ -44,7 +44,7 @@ public class Printer {
 
     public static void formatPrint(String str, Color color1, Color color2) {
         if (str == null || str.isEmpty() || !str.contains(SEPERATOR)) {
-            println(str);
+            println(str, color1);
             return;
         }
         String strs[] = str.split(SEPERATOR);
@@ -83,7 +83,7 @@ public class Printer {
 
     public static void boldFormatPrint(String str, Color color1, Color color2) {
         if (str == null || str.isEmpty() || !str.contains(SEPERATOR)) {
-            boldPrintln(str);
+            boldPrintln(str, color1);
             return;
         }
         String strs[] = str.split(SEPERATOR);

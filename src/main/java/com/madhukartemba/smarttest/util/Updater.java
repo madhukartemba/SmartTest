@@ -5,6 +5,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Timer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
@@ -16,6 +18,7 @@ import com.madhukartemba.smarttest.service.RunnerService;
 
 public class Updater {
     public static String GITHUB_VERSION = null;
+    public static List<String> CHANGELOG = new ArrayList<>();
 
     private static String SYSTEM_DIR = System.getProperty("user.dir");
     private static String PROJECT_DIR = (SYSTEM_DIR.endsWith("/") ? SYSTEM_DIR : SYSTEM_DIR + "/");
@@ -31,14 +34,17 @@ public class Updater {
 
     public static void main(String[] args) throws Exception {
 
-        Printer.boldPrint("\n\nNew update ", Printer.BUILD_SUCCESSFUL);
-        Printer.boldPrint("(" + Updater.GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
-        Printer.boldPrintln(" available!", Printer.BUILD_SUCCESSFUL);
-        Printer.boldPrint("Please run ", Printer.BUILD_SUCCESSFUL);
-        Printer.boldPrint("'SmartTest --updateApp'", Printer.DEFAULT_COLOR_2);
-        Printer.boldPrintln(" to install the latest version.\nThank you!\n\n", Printer.BUILD_SUCCESSFUL);
+        // printChangelog(Printer.BUILD_SUCCESSFUL);
+        // Printer.boldPrint("\n\nNew update ", Printer.BUILD_SUCCESSFUL);
+        // Printer.boldPrint("(" + Updater.GITHUB_VERSION + ")",
+        // Printer.DEFAULT_COLOR_2);
+        // Printer.boldPrintln(" available!", Printer.BUILD_SUCCESSFUL);
+        // Printer.boldPrint("Please run ", Printer.BUILD_SUCCESSFUL);
+        // Printer.boldPrint("'SmartTest --updateApp'", Printer.DEFAULT_COLOR_2);
+        // Printer.boldPrintln(" to install the latest version.\nThank you!\n\n",
+        // Printer.BUILD_SUCCESSFUL);
         // System.out.println(checkForUpdates(true));
-        // Updater.updateApplication();
+        Updater.updateApplication();
         // String GITHUB_VERSION = getVersionNumberFromGithub(VERSION_URL);
         // System.out.println(compareVersions(SmartTest.VERSION, "1.2.0"));
         // System.out.println(askToProceed());
@@ -50,14 +56,16 @@ public class Updater {
         Printer.boldPrintln("Checking for updates...\n");
         int res = checkForUpdates(false);
 
+        Updater.printChangelog(Printer.BUILD_SUCCESSFUL);
+
         if (res >= 0) {
             if (res > 0) {
-                Printer.print("You are running a newer version ");
+                Printer.print("\nYou are running a newer version ");
                 Printer.print("(" + SmartTest.VERSION + ")", Printer.DEFAULT_COLOR_2);
                 Printer.print(" than the latest available version ");
                 Printer.println("(" + GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
             } else {
-                Printer.print("You are running the latest version ");
+                Printer.print("\nYou are running the latest version ");
                 Printer.println("(" + GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
             }
 
@@ -143,6 +151,15 @@ public class Updater {
         return compareVersions(SmartTest.VERSION, GITHUB_VERSION);
     }
 
+    public static void printChangelog(Color color) throws Exception {
+        List<String> CHANGELOG = getChangelogFromGitHub(VERSION_URL);
+
+        for (String line : CHANGELOG) {
+            Printer.boldFormatPrint(line, color, Printer.DEFAULT_COLOR_2);
+        }
+
+    }
+
     private static String getVersionNumberFromGithub(String rawUrl, boolean silent) throws Exception {
 
         if (GITHUB_VERSION != null) {
@@ -150,27 +167,39 @@ public class Updater {
         }
 
         try {
-
-            URL url = new URL(rawUrl);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith("VERSION")) {
+            List<String> CHANGELOG = getChangelogFromGitHub(rawUrl);
+            for (String line : CHANGELOG) {
+                if (line.contains("VERSION")) {
                     String versionNumber = line.substring("VERSION".length()).trim();
-                    reader.close();
                     return GITHUB_VERSION = versionNumber;
                 }
             }
-            reader.close();
+
         } catch (Exception e) {
             if (!silent) {
                 Printer.formatPrint(e.toString());
             }
         }
+
         if (!silent) {
             Printer.boldPrintln("\nCannot get the version number from GitHub!\n", Color.ORANGE);
         }
+
         return null;
+    }
+
+    public static List<String> getChangelogFromGitHub(String rawUrl) throws Exception {
+        if (!CHANGELOG.isEmpty()) {
+            return CHANGELOG;
+        }
+        URL url = new URL(rawUrl);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            CHANGELOG.add(line);
+        }
+        reader.close();
+        return CHANGELOG;
     }
 
     private static int compareVersions(String version1, String version2) {

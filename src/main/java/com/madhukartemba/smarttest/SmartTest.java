@@ -126,8 +126,9 @@ public class SmartTest {
         if (Updater.checkForUpdates(true) < 0) {
             Printer.boldPrint("\n\nNew update ", Printer.BUILD_SUCCESSFUL);
             Printer.boldPrint("(" + Updater.GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
-            Printer.boldPrintln(" available!", Printer.BUILD_SUCCESSFUL);
-            Printer.boldPrint("Please run ", Printer.BUILD_SUCCESSFUL);
+            Printer.boldPrintln(" available!\n", Printer.BUILD_SUCCESSFUL);
+            Updater.printChangelog(Printer.DEFAULT_COLOR_1);
+            Printer.boldPrint("\nPlease run ", Printer.BUILD_SUCCESSFUL);
             Printer.boldPrint("'SmartTest --updateApp'", Printer.DEFAULT_COLOR_2);
             Printer.boldPrintln(" to install the latest version.\nThank you!\n\n", Printer.BUILD_SUCCESSFUL);
         }
