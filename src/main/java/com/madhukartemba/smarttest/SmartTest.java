@@ -180,7 +180,7 @@ public class SmartTest {
     }
 
     private static void compileCode() throws Exception {
-        Printer.boldPrintln("\n\nCompiling test files...\n");
+        Printer.boldPrintln("\n\nCompiling code...\n");
         RunnerService runnerService = new RunnerService();
         Command compileCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
                 null, "compileJava", null, new ArrayList<>());
@@ -190,10 +190,10 @@ public class SmartTest {
         runnerService.parallelExecute(Arrays.asList(compileCommand, compileTestCommand), false, true, false);
 
         if (runnerService.isBuildSuccessful()) {
-            Printer.println("\nSuccessfully compiled test files!", Color.GREEN);
+            Printer.println("\nSuccessfully compiled code!", Color.GREEN);
         } else {
             runnerService.printOutput();
-            SmartTest.exitWithCode("Failed to compile test files!", Color.RED, 1);
+            SmartTest.exitWithCode("Failed to compile code!", Color.RED, 1);
         }
     }
 
