@@ -173,7 +173,7 @@ public class Parameters {
                                 + (MAX_THREADS.isModified() ? " (user provided)" : " (determined automatically)"));
                 Printer.formatPrint("serialExecute: " + SERIAL_EXECUTE.getValue());
                 Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES.getValue());
-                Printer.formatPrint("skipCompileTestJava: " + SKIP_COMPILE.getValue());
+                Printer.formatPrint("skipCompile: " + SKIP_COMPILE.getValue());
                 Printer.formatPrint("assemble:" + ASSEMBLE.getValue());
                 Printer.formatPrint("clean:" + CLEAN.getValue());
                 Printer.formatPrint("viaClassname: " + VIA_CLASSNAME.getValue());
