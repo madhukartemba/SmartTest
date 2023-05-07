@@ -9,6 +9,8 @@ import com.madhukartemba.smarttest.util.Timer;
 import com.madhukartemba.smarttest.util.Updater;
 
 import java.awt.Color;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +21,31 @@ import java.util.stream.Collectors;
 public class SmartTest {
 
     public static String VERSION = "1.2.1";
+    public static int RETRY_COUNT = 5;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+
+        for (int retry = 0; retry < RETRY_COUNT; retry++) {
+
+            try {
+                SmartTest.run(args);
+            } catch (Exception e) {
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                String stackTrace = sw.toString();
+
+                Printer.boldPrintln("\n\nERROR: " + stackTrace, Color.RED);
+                Printer.boldPrintln("\n\nAN INTERNAL ERROR OCCURED!\n\n", Color.RED);
+                Printer.boldPrintln("RETRYING...\n", Color.ORANGE);
+            }
+        }
+
+        SmartTest.exitWithCode("RETRY LIMIT REACHED", 1);
+
+    }
+
+    public static void run(String args[]) throws Exception {
 
         // Start the timer.
         Timer timer = new Timer();
