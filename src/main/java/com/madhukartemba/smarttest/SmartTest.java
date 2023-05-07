@@ -188,7 +188,11 @@ public class SmartTest {
         Command compileTestCommand = new Command(Parameters.GRADLE_COMMAND.getValue(),
                 null, "compileTestJava", null, new ArrayList<>());
 
-        runnerService.parallelExecute(Arrays.asList(compileCommand, compileTestCommand), false, true, false);
+        if (Parameters.SERIAL_EXECUTE.getValue()) {
+            runnerService.execute(Arrays.asList(compileCommand, compileTestCommand), "compile", false, true, false);
+        } else {
+            runnerService.parallelExecute(Arrays.asList(compileCommand, compileTestCommand), false, true, false);
+        }
 
         if (runnerService.isBuildSuccessful()) {
             Printer.println("\nSuccessfully compiled code!", Color.GREEN);
