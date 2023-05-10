@@ -92,7 +92,7 @@ public class Updater {
             }
         }
 
-        Printer.boldPrint("Starting to update application to the latest version ");
+        Printer.boldPrint("\n\nStarting to update application to the latest version ");
         Printer.boldPrintln("(" + (GITHUB_VERSION == null ? "UNKNOWN" : GITHUB_VERSION) + ")",
                 Printer.DEFAULT_COLOR_2);
 
@@ -139,6 +139,9 @@ public class Updater {
         if (exitCode != 0) {
             Updater.cleanExit("An error occured during installation! Error code: " + exitCode, 1);
         }
+
+        Printer.println("\n\n");
+        Updater.printChangelog(Printer.BUILD_SUCCESSFUL);
 
         Updater.cleanExit("Installation completed successfully!", exitCode);
     }
