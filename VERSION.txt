@@ -1,8 +1,7 @@
-VERSION 1.2.1
+VERSION 1.2.2
 
 Changelog:
 
-1. Build fail prediction while running.
-2. Improved built-in updater.
-3. Fixed compilation bug.
-4. Better error handling.
+1. Fixed deleted Git file crash (File not found error).
+2. Print changelog after successful update.
+3. Added 5 second delay between retries.
