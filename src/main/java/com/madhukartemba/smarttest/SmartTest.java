@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class SmartTest {
 
-    public static String VERSION = "1.2.1";
+    public static String VERSION = "1.2.2";
     public static int RETRY_COUNT = 5;
 
     public static void main(String[] args) {
@@ -38,6 +38,13 @@ public class SmartTest {
                 Printer.boldPrintln("\n\nERROR: " + stackTrace, Color.RED);
                 Printer.boldPrintln("\n\nAN INTERNAL ERROR OCCURED!\n\n", Color.RED);
                 Printer.boldPrintln("RETRYING...\n", Color.ORANGE);
+
+                try {
+                    Thread.sleep(5000);
+                } catch (Exception sleepException) {
+                    // Ignore exception
+                }
+
             }
         }
 
