@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
+import com.madhukartemba.smarttest.service.FileService;
+
 public class FileCleaner {
 
     private static ConcurrentHashMap<Path, String> fileToCleanOutputCache = new ConcurrentHashMap<>();
@@ -29,6 +31,10 @@ public class FileCleaner {
 
         if (fileToCleanOutputCache.containsKey(path)) {
             return fileToCleanOutputCache.get(path);
+        }
+
+        if (!FileService.fileExists(path.toString())) {
+            return null;
         }
 
         // Read the input file into a string

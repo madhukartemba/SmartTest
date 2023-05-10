@@ -93,6 +93,11 @@ public class TestSieve {
     }
 
     public boolean isValid(String filePath, String projectName, String testDirName) {
+
+        if (!FileService.fileExists(filePath)) {
+            return false;
+        }
+
         if (projectNames.contains(projectName) == false) {
             throw new RuntimeException(
                     "The project name: " + projectName + " for file: " + filePath + " does not exist!");

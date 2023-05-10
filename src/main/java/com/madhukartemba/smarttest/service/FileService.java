@@ -65,6 +65,10 @@ public class FileService {
             filePath = PROJECT_DIR + filePath;
         }
 
+        if (!FileService.fileExists(filePath)) {
+            return false;
+        }
+
         CodeParser testCodeParser = new CodeParser("@Test");
 
         try {
@@ -102,7 +106,7 @@ public class FileService {
             } else if (!isIgnored(visitedFile)) {
                 affectedFiles++;
                 String cleanFile = FileCleaner.clean(Paths.get(visitedFile));
-                if (cleanFile.contains("@Controller") || cleanFile.contains("@RestController")) {
+                if (cleanFile != null && (cleanFile.contains("@Controller") || cleanFile.contains("@RestController"))) {
                     controllerModified++;
                 }
             }
@@ -163,6 +167,11 @@ public class FileService {
         if (EnvironmentService.ON_SYSTEM_DIR) {
             filePath = PROJECT_DIR + filePath;
         }
+
+        if (!FileService.fileExists(filePath)) {
+            return null;
+        }
+
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -246,6 +255,10 @@ public class FileService {
 
                         String cleanFileOutput = FileCleaner.clean(path);
 
+                        if (cleanFileOutput == null) {
+                            return true;
+                        }
+
                         return packageCodeParser.containsKeyword(cleanFileOutput);
 
                     } catch (Exception e) {
@@ -278,7 +291,7 @@ public class FileService {
 
         int maxDepth = Integer.MAX_VALUE;
 
-        CodeParser codeParser = new CodeParser(className);
+        CodeParser classCodeParser = new CodeParser(className);
 
         try (Stream<Path> stream = Files.find(startPath, maxDepth,
                 (path, attr) -> {
@@ -304,7 +317,11 @@ public class FileService {
 
                         String cleanFileOutput = FileCleaner.clean(path);
 
-                        return codeParser.containsKeyword(cleanFileOutput);
+                        if (cleanFileOutput == null) {
+                            return true;
+                        }
+
+                        return classCodeParser.containsKeyword(cleanFileOutput);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -366,6 +383,10 @@ public class FileService {
 
                         String cleanFileOutput = FileCleaner.clean(path);
 
+                        if (cleanFileOutput == null) {
+                            return true;
+                        }
+
                         return classCodeParser.containsKeyword(cleanFileOutput)
                                 && packageCodeParser.containsKeyword(cleanFileOutput);
 
@@ -416,6 +437,10 @@ public class FileService {
                         }
 
                         String cleanFileOutput = FileCleaner.clean(path);
+
+                        if (cleanFileOutput == null) {
+                            return true;
+                        }
 
                         return testCodeParser.containsKeyword(cleanFileOutput);
 
@@ -516,6 +541,11 @@ public class FileService {
         }
 
         return false;
+    }
+
+    public static boolean fileExists(String path) {
+        File file = new File(path);
+        return file.exists();
     }
 
     public boolean isCompleteRunRequired() {
