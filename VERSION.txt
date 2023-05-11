@@ -1,7 +1,7 @@
-VERSION 1.2.2
+VERSION 1.2.3
 
 Changelog:
 
-1. Fixed deleted Git file crash (File not found error).
-2. Print changelog after successful update.
-3. Added 5 second delay between retries.
+1. Hopefully fixed NPE error occuring sometimes due to ArrayDeque and HashSet.
+2. Added flag to take unstaged/modifed files into account as well (--includeUnstaged, -unstg).
+3. Now the output folders will be ignored by Git.
