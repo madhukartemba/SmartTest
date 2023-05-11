@@ -104,6 +104,7 @@ public class Updater {
             Printer.println("Previous output directory deleted successfully!", Color.GREEN);
         }
         FileService.createDirectory(UPDATE_DIR, true);
+        FileService.createFile(UPDATE_DIR + ".gitignore", "*");
 
         Printer.boldPrintln("\n\nDownloading the latest version...\n");
         String gitCloneCommand = "git clone " + REPO_URL;
