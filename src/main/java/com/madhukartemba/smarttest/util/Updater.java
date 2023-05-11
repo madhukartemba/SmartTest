@@ -36,6 +36,7 @@ public class Updater {
 
     public static void main(String[] args) throws Exception {
 
+        // checkForUpdates(false);
         // printChangelog(Printer.BUILD_SUCCESSFUL);
         // Printer.boldPrint("\n\nNew update ", Printer.BUILD_SUCCESSFUL);
         // Printer.boldPrint("(" + Updater.GITHUB_VERSION + ")",
@@ -79,10 +80,10 @@ public class Updater {
                 Printer.print("\nYou are running a newer version ");
                 Printer.print("(" + SmartTest.VERSION + ")", Printer.DEFAULT_COLOR_2);
                 Printer.print(" than the latest available version ");
-                Printer.println("(" + GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
+                Printer.println("(" + Updater.GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
             } else {
                 Printer.print("\nYou are running the latest version ");
-                Printer.println("(" + GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
+                Printer.println("(" + Updater.GITHUB_VERSION + ")", Printer.DEFAULT_COLOR_2);
             }
 
             boolean proceed = askToProceed();
@@ -93,7 +94,7 @@ public class Updater {
         }
 
         Printer.boldPrint("\n\nStarting to update application to the latest version ");
-        Printer.boldPrintln("(" + (GITHUB_VERSION == null ? "UNKNOWN" : GITHUB_VERSION) + ")",
+        Printer.boldPrintln("(" + (Updater.GITHUB_VERSION == null ? "UNKNOWN" : Updater.GITHUB_VERSION) + ")",
                 Printer.DEFAULT_COLOR_2);
 
         Printer.println("\nCreating a temporary output directory...");
@@ -125,7 +126,7 @@ public class Updater {
 
         if (exitCode != 0) {
             Updater.cleanExit(
-                    "An error occured while requesting for update permission! Error code: " + exitCode, exitCode);
+                    "An error occured while requesting for execute permission! Error code: " + exitCode, exitCode);
         }
 
         Printer.println("\nExecute permission granted!", Color.GREEN);
@@ -172,9 +173,18 @@ public class Updater {
 
     public static void printChangelog(Color color) throws Exception {
         List<String> CHANGELOG = getChangelogFromGitHub(VERSION_URL);
-
+        boolean hasHigherVersion = false;
         for (String line : CHANGELOG) {
-            Printer.boldFormatPrint(line, color, Printer.DEFAULT_COLOR_2);
+            if (hasHigherVersion == false && line.contains("VERSION")) {
+                String versionNumber = line.substring("VERSION".length()).trim();
+                if (Updater.compareVersions(SmartTest.VERSION, versionNumber, false) < 0) {
+                    hasHigherVersion = true;
+                }
+            }
+
+            if (hasHigherVersion) {
+                Printer.boldFormatPrint(line, color, Printer.DEFAULT_COLOR_2);
+            }
         }
 
     }
@@ -190,9 +200,10 @@ public class Updater {
             for (String line : CHANGELOG) {
                 if (line.contains("VERSION")) {
                     String versionNumber = line.substring("VERSION".length()).trim();
-                    return GITHUB_VERSION = versionNumber;
+                    GITHUB_VERSION = versionNumber;
                 }
             }
+            return GITHUB_VERSION;
 
         } catch (Exception e) {
             if (!silent) {
@@ -213,10 +224,12 @@ public class Updater {
         }
         URL url = new URL(rawUrl);
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        String line;
+        String line = "";
+
         while ((line = reader.readLine()) != null) {
             CHANGELOG.add(line);
         }
+
         reader.close();
         return CHANGELOG;
     }
