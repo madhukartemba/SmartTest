@@ -143,7 +143,7 @@ public class FileService {
             Printer.println(
                     "\nFound " + controllerAffected + " affected java controller file"
                             + (controllerAffected == 1 ? "" : "s")
-                            + ". It is recommended to perform a full test run by giving the command 'SmartTest --fullTest'.",
+                            + ".\nIt is recommended to perform a full test run by giving the command 'SmartTest --fullTest'.",
                     Color.ORANGE);
         }
 
