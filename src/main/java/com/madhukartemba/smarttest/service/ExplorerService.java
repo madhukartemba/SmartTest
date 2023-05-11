@@ -104,10 +104,13 @@ public class ExplorerService {
         Printer.boldPrint(" END", Color.GREEN);
 
         Printer.println("\n\nExploration complete!", Color.GREEN);
-        fileService.analyseResult(visitedFiles);
 
-        return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
+        List<String> outputFiles = visitedFiles.stream().filter(x -> !blackListFiles.contains(x))
+                .collect(Collectors.toList());
 
+        fileService.analyseVisitedFiles(outputFiles);
+
+        return outputFiles;
     }
 
     public List<String> exploreViaClassname(List<String> inputFiles) throws Exception {
@@ -186,10 +189,13 @@ public class ExplorerService {
         Printer.boldPrint(" END", Color.GREEN);
 
         Printer.println("\n\nExploration complete!", Color.GREEN);
-        fileService.analyseResult(visitedFiles);
 
-        return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
+        List<String> outputFiles = visitedFiles.stream().filter(x -> !blackListFiles.contains(x))
+                .collect(Collectors.toList());
 
+        fileService.analyseVisitedFiles(outputFiles);
+
+        return outputFiles;
     }
 
     public List<String> exploreViaPackageName(List<String> inputFiles) throws Exception {
@@ -268,9 +274,13 @@ public class ExplorerService {
         Printer.boldPrint(" END", Color.GREEN);
 
         Printer.println("\n\nExploration complete!", Color.GREEN);
-        fileService.analyseResult(visitedFiles);
 
-        return visitedFiles.stream().filter(x -> !blackListFiles.contains(x)).collect(Collectors.toList());
+        List<String> outputFiles = visitedFiles.stream().filter(x -> !blackListFiles.contains(x))
+                .collect(Collectors.toList());
+
+        fileService.analyseVisitedFiles(outputFiles);
+
+        return outputFiles;
     }
 
     public List<String> exploreAll() throws Exception {
@@ -278,19 +288,19 @@ public class ExplorerService {
 
         Printer.boldPrint("ROOT", Color.GREEN);
 
-        List<String> output = fileService.findAllTestFiles();
+        List<String> outputFiles = fileService.findAllTestFiles();
 
         Printer.print(" -->");
-        Printer.print(" " + output.size(), Parameters.DEFAULT_COLOR_2.getValue());
+        Printer.print(" " + outputFiles.size(), Parameters.DEFAULT_COLOR_2.getValue());
 
         Printer.print(" -->");
         Printer.boldPrint(" END", Color.GREEN);
 
         Printer.println("\n\nExploration complete!", Color.GREEN);
 
-        fileService.analyseResult(output.stream().collect(Collectors.toSet()));
+        fileService.analyseVisitedFiles(outputFiles);
 
-        return output;
+        return outputFiles;
     }
 
     public boolean isCompleteRunRequired() {
