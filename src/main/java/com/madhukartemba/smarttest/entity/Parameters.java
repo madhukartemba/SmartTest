@@ -58,6 +58,8 @@ public class Parameters {
                         "Flag to perform a full test.");
         public static Parameter<Boolean> PRINT_OUTPUT = new Parameter<>("printOutput", "pout", false,
                         "Flag to print output after the tests are complete.");
+        public static Parameter<Boolean> INCLUDE_MODIFIED = new Parameter<>("includeModifed", "incmod", false,
+                        "Flag to include the modified/unstaged files as well.");
         public static Parameter<Boolean> USE_LEGACY_PRINTER = new Parameter<>("useLegacyPrinter", "ulp", false,
                         "Flag to print using the old printer (it does not refresh the text). It maybe useful if you are trying to log the output to a file.");
         public static Parameter<Boolean> UPDATE_APP = new Parameter<>("updateApp", "update", false,
@@ -80,8 +82,9 @@ public class Parameters {
                         Parameters.GIT_COMMAND,
                         Parameters.OFFICIAL_MERGE_REQUEST_PATTERN,
                         Parameters.MAX_THREADS,
-                        Parameters.SKIP_COMPILE,
+                        Parameters.INCLUDE_MODIFIED,
                         Parameters.SERIAL_EXECUTE,
+                        Parameters.SKIP_COMPILE,
                         Parameters.ASSEMBLE,
                         Parameters.CLEAN,
                         Parameters.REFRESH_DEPENDENCIES,
@@ -135,6 +138,8 @@ public class Parameters {
                 BOOLEAN_PARAMETER_MAP.put(Parameters.FULL_TEST.getAliasName(), Parameters.FULL_TEST);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.PRINT_OUTPUT.getName(), Parameters.PRINT_OUTPUT);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.PRINT_OUTPUT.getAliasName(), Parameters.PRINT_OUTPUT);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.INCLUDE_MODIFIED.getName(), Parameters.INCLUDE_MODIFIED);
+                BOOLEAN_PARAMETER_MAP.put(Parameters.INCLUDE_MODIFIED.getAliasName(), Parameters.INCLUDE_MODIFIED);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.USE_LEGACY_PRINTER.getName(), Parameters.USE_LEGACY_PRINTER);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.USE_LEGACY_PRINTER.getAliasName(), Parameters.USE_LEGACY_PRINTER);
                 BOOLEAN_PARAMETER_MAP.put(Parameters.UPDATE_APP.getName(), Parameters.UPDATE_APP);
@@ -171,6 +176,7 @@ public class Parameters {
                 Printer.formatPrint("officialMergeRequestPattern: " + OFFICIAL_MERGE_REQUEST_PATTERN.getValue());
                 Printer.formatPrint("maxThreads: " + MAX_THREADS.getValue()
                                 + (MAX_THREADS.isModified() ? " (user provided)" : " (determined automatically)"));
+                Printer.formatPrint("includeModified: " + INCLUDE_MODIFIED.getValue());
                 Printer.formatPrint("serialExecute: " + SERIAL_EXECUTE.getValue());
                 Printer.formatPrint("refreshDependencies: " + REFRESH_DEPENDENCIES.getValue());
                 Printer.formatPrint("skipCompile: " + SKIP_COMPILE.getValue());
