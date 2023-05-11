@@ -60,7 +60,8 @@ public class GitService {
                 "Comparing the staged and committed changes wrt. official merge: " + mergeNumber);
         Printer.println(mergeLine, Color.GREEN);
 
-        String command = "git diff --name-only --staged " + mergeSHA;
+        String command = "git diff --name-only " + (Parameters.INCLUDE_MODIFIED.getValue() ? "" : "--staged ")
+                + mergeSHA;
 
         processBuilder.command(command.split("\\s"));
         Process gitProcess = processBuilder.start();
