@@ -167,7 +167,7 @@ public class Updater {
         if (GITHUB_VERSION == null) {
             return silent ? 0 : 1;
         }
-        return compareVersions(SmartTest.VERSION, GITHUB_VERSION);
+        return compareVersions(SmartTest.VERSION, GITHUB_VERSION, silent);
     }
 
     public static void printChangelog(Color color) throws Exception {
@@ -221,16 +221,27 @@ public class Updater {
         return CHANGELOG;
     }
 
-    private static int compareVersions(String version1, String version2) {
-        String[] arr1 = version1.split("\\.");
-        String[] arr2 = version2.split("\\.");
-        int len = Math.max(arr1.length, arr2.length);
-        for (int i = 0; i < len; i++) {
-            int v1 = i < arr1.length ? Integer.parseInt(arr1[i]) : 0;
-            int v2 = i < arr2.length ? Integer.parseInt(arr2[i]) : 0;
-            if (v1 != v2) {
-                return v1 > v2 ? 1 : -1;
+    private static int compareVersions(String version1, String version2, boolean silent) {
+        try {
+
+            String[] arr1 = version1.split("\\.");
+            String[] arr2 = version2.split("\\.");
+            int len = Math.max(arr1.length, arr2.length);
+            for (int i = 0; i < len; i++) {
+                int v1 = i < arr1.length ? Integer.parseInt(arr1[i]) : 0;
+                int v2 = i < arr2.length ? Integer.parseInt(arr2[i]) : 0;
+                if (v1 != v2) {
+                    return v1 > v2 ? 1 : -1;
+                }
             }
+        } catch (Exception e) {
+            if (!silent) {
+                Printer.println(
+                        "An error occurred while parsing the version! " + version1 + " " + version2 + " "
+                                + e.toString(),
+                        Color.RED);
+            }
+            return silent ? 0 : 1;
         }
         return 0;
     }
