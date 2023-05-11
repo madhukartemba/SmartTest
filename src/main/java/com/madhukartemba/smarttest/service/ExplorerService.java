@@ -1,11 +1,11 @@
 package com.madhukartemba.smarttest.service;
 
 import java.awt.Color;
-import java.util.ArrayDeque;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 import com.madhukartemba.smarttest.entity.Parameters;
@@ -32,10 +32,10 @@ public class ExplorerService {
         completeRunRequired = false;
 
         Printer.formatPrint("Number of changed files: " + inputFiles.size());
-        Queue<String> javaFileQueue = new ArrayDeque<>();
-        Set<String> visitedFiles = new HashSet<>();
-        Set<String> blackListFiles = new HashSet<>();
-        Set<String> visitedClassNameAndPackageName = new HashSet<>();
+        Queue<String> javaFileQueue = new ConcurrentLinkedDeque<>();
+        Set<String> visitedFiles = new ConcurrentSkipListSet<>();
+        Set<String> blackListFiles = new ConcurrentSkipListSet<>();
+        Set<String> visitedClassNameAndPackageName = new ConcurrentSkipListSet<>();
 
         completeRunRequired = fileService.analyseGitFiles(inputFiles);
 
@@ -122,10 +122,10 @@ public class ExplorerService {
         completeRunRequired = false;
 
         Printer.formatPrint("Number of changed files: " + inputFiles.size());
-        Queue<String> javaFileQueue = new ArrayDeque<>();
-        Set<String> visitedFiles = new HashSet<>();
-        Set<String> blackListFiles = new HashSet<>();
-        Set<String> visitedClassNames = new HashSet<>();
+        Queue<String> javaFileQueue = new ConcurrentLinkedDeque<>();
+        Set<String> visitedFiles = new ConcurrentSkipListSet<>();
+        Set<String> blackListFiles = new ConcurrentSkipListSet<>();
+        Set<String> visitedClassNames = new ConcurrentSkipListSet<>();
 
         completeRunRequired = fileService.analyseGitFiles(inputFiles);
 
@@ -204,10 +204,10 @@ public class ExplorerService {
 
         Printer.boldPrintln("\n\nStarting to explore affected files via package name only...\n");
         Printer.formatPrint("Number of changed files: " + inputFiles.size());
-        Queue<String> javaFileQueue = new ArrayDeque<>();
-        Set<String> visitedFiles = new HashSet<>();
-        Set<String> blackListFiles = new HashSet<>();
-        Set<String> visitedPackages = new HashSet<>();
+        Queue<String> javaFileQueue = new ConcurrentLinkedDeque<>();
+        Set<String> visitedFiles = new ConcurrentSkipListSet<>();
+        Set<String> blackListFiles = new ConcurrentSkipListSet<>();
+        Set<String> visitedPackages = new ConcurrentSkipListSet<>();
 
         completeRunRequired = fileService.analyseGitFiles(inputFiles);
 
