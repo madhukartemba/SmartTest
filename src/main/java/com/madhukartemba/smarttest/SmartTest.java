@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class SmartTest {
 
-    public static String VERSION = "1.2.2";
+    public static String VERSION = "1.2.3";
     public static int RETRY_COUNT = 5;
 
     public static void main(String[] args) {
