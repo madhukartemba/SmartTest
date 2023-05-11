@@ -116,7 +116,7 @@ public class FileService {
             Printer.println(
                     "\nFound " + controllerModified + " changed java controller file"
                             + (controllerModified == 1 ? "" : "s")
-                            + ". It is recommended to perform a full test run.",
+                            + ". It is recommended to perform a full test run by giving the command 'SmartTest --fullTest'.",
                     Color.YELLOW);
         }
 
@@ -129,7 +129,7 @@ public class FileService {
                 Printer.println(
                         "\nFound " + affectedNonJavaFiles + " changed non-java file"
                                 + (affectedNonJavaFiles == 1 ? "" : "s")
-                                + ". It is recommended to perform a full test run.",
+                                + ". It is recommended to perform a full test run by giving the command 'SmartTest --fullTest'.",
                         Color.YELLOW);
             }
         }
