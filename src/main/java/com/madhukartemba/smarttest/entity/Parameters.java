@@ -58,7 +58,7 @@ public class Parameters {
                         "Flag to perform a full test.");
         public static Parameter<Boolean> PRINT_OUTPUT = new Parameter<>("printOutput", "pout", false,
                         "Flag to print output after the tests are complete.");
-        public static Parameter<Boolean> INCLUDE_MODIFIED = new Parameter<>("includeModifed", "incmod", false,
+        public static Parameter<Boolean> INCLUDE_MODIFIED = new Parameter<>("includeModified", "incmod", false,
                         "Flag to include the modified/unstaged files as well.");
         public static Parameter<Boolean> USE_LEGACY_PRINTER = new Parameter<>("useLegacyPrinter", "ulp", false,
                         "Flag to print using the old printer (it does not refresh the text). It maybe useful if you are trying to log the output to a file.");
