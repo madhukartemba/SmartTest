@@ -558,6 +558,16 @@ public class FileService {
         return (directory.exists() && directory.isDirectory());
     }
 
+    public static void createFile(String fileName, String content) {
+        try {
+            FileWriter fileWriter = new FileWriter(fileName);
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (IOException e) {
+            Printer.println("An error occured while create the file " + fileName + ": " + e.toString());
+        }
+    }
+
     public static void createDirectory(String directoryName, boolean cleanDirectory) {
         File directory = new File(directoryName);
 

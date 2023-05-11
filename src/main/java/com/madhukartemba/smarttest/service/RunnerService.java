@@ -313,6 +313,9 @@ public class RunnerService {
 
     public static void createOutputDirectory(boolean cleanDirectory) {
         FileService.createDirectory(OUTPUT_DIR, cleanDirectory);
+        if (cleanDirectory == true) {
+            FileService.createFile(OUTPUT_DIR + ".gitignore", "*");
+        }
     }
 
     public static int lightWeightExecute(String command, String directory) throws Exception {
