@@ -37,14 +37,15 @@ public class SmartTest {
 
                 Printer.boldPrintln("\n\nERROR: " + stackTrace, Color.RED);
                 Printer.boldPrintln("\n\nAN INTERNAL ERROR OCCURED!\n\n", Color.RED);
-                Printer.boldPrintln("RETRYING...\n", Color.ORANGE);
+                if (retry + 1 < RETRY_COUNT) {
+                    Printer.boldPrintln("RETRYING...\n", Color.ORANGE);
 
-                try {
-                    Thread.sleep(5000);
-                } catch (Exception sleepException) {
-                    // Ignore exception
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception sleepException) {
+                        // Ignore exception
+                    }
                 }
-
             }
         }
 
